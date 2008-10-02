@@ -1,0 +1,12 @@
+diff -Naur afflib-3.3.3.orig/lib/s3.cpp afflib-3.3.3/lib/s3.cpp
+--- afflib-3.3.3.orig/lib/s3.cpp	2008-09-07 22:56:53.000000000 -0600
++++ afflib-3.3.3/lib/s3.cpp	2008-09-12 14:02:20.791983368 -0600
+@@ -88,7 +88,7 @@
+ typedef vector <Contents> cvector;
+ void s3_ls(FILE *out,const char *prefix,cvector *cv)
+ {
+-    unsigned int64_t total=0;
++    uint64_t total=0;
+     string bucket = opt_bucket;
+     if(out) fprintf(out,"S3 BUCKET %s:",bucket.c_str());
+     if(strlen(prefix)>0){

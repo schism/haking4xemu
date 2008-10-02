@@ -1,0 +1,26 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+CONFIGFILE=${CONFIGFILE?-/etc/snortsam.conf}
+
+depend() {
+	need net
+	before snort
+}
+
+start() {
+	if [[ ! -f /etc/snortsam.conf ]] ; then
+	fi
+	ebegin "Starting snortsam daemon"
+	start-stop-daemon --start --background --pidfile /var/run/snortsam.pid \
+		--make-pidfile --exec /usr/bin/snortsam
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping snortsam daemon"
+	start-stop-daemon --stop --pidfile /var/run/snortsam.pid --name snortsam
+	eend $?
+}

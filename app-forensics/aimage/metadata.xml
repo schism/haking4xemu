@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>haking4xemu</herd>
+	<maintainer><email>schism@subverted.org</email></maintainer>
+	<use>
+		<flag name='ewf'>
+			EWF (SMART/EnCase) image support via <pkg>app-forensics/libewf</pkg>
+		</flag>
+	</use>
+</pkgmetadata>
