@@ -9,12 +9,10 @@ MY_P=${P/_beta/b}
 DESCRIPTION="A graphical interface to the digital forensic analysis tools in The Sleuth Kit."
 HOMEPAGE="http://www.sleuthkit.org/autopsy/"
 SRC_URI="http://sleuthkit.org/betas/${MY_P}.tar.gz"
-#SRC_URI="mirror://sourceforge/sleuthkit/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
 IUSE=""
 
 S="${WORKDIR}/${MY_P}"
@@ -26,26 +24,18 @@ RDEPEND=">=dev-lang/perl-5.8.0
 	sys-apps/file"
 DEPEND=""
 
-src_unpack() {
-	unpack "${A}"
-	cd "${S}"
+src_compile() {
+	./configure 2>&1 >/dev/null << EOF
+n
+/tmp
+EOF
 
 	echo "#!/usr/bin/perl -wT" > autopsy
 	echo "use lib '/usr/lib/autopsy/';" >> autopsy
 	echo "use lib '/usr/lib/autopsy/lib/';" >> autopsy
 	cat base/autopsy.base >> autopsy
-	sed -i 's:conf.pl:/etc/autopsy.pl:' README.txt \
-		autopsy \
-		help/hash_db.html \
-		lib/Main.pm man/man1/autopsy.1
-}
 
-src_compile() {
-	./configure << EOF
-n
-n
-/tmp
-EOF
+	sed -i 's:conf.pl:/etc/autopsy.pl:' $(grep -lr conf\.pl ./)
 	sed -i "s:INSTALLDIR = .*:INSTALLDIR = \'/usr/lib/autopsy\';:" conf.pl
 }
 
@@ -66,6 +56,6 @@ src_install() {
 	dosym /usr/lib/autopsy/autopsy /usr/bin/autopsy
 	fperms +x /usr/lib/autopsy/autopsy
 
-	doman man/man1/autopsy.1
-	dodoc CHANGES.txt README.txt TODO.txt docs/sleuthkit-informer-13.txt
+	doman $(find man/ -type f)
+	dodoc CHANGES.txt README* TODO.txt docs/sleuthkit-informer*.txt
 }
