@@ -4,18 +4,14 @@
 
 inherit eutils
 
-MY_P=${P/_beta/b}
-
 DESCRIPTION="A graphical interface to the digital forensic analysis tools in The Sleuth Kit."
 HOMEPAGE="http://www.sleuthkit.org/autopsy/"
-SRC_URI="http://sleuthkit.org/betas/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/autopsy/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
 IUSE=""
-
-S="${WORKDIR}/${MY_P}"
 
 # Runtime depend on grep and file deliberate
 RDEPEND=">=dev-lang/perl-5.8.0
