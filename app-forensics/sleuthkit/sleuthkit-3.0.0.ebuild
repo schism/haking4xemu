@@ -4,7 +4,7 @@
 
 inherit eutils flag-o-matic autotools
 
-SLOT=3
+SLOT=0
 
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
