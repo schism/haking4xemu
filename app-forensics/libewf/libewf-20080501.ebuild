@@ -10,7 +10,7 @@ SRC_URI="http://www.uitwisselplatform.nl/frs/download.php/529/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="x86 amd64"
 IUSE="unicode rawio debug"
 
 DEPEND="sys-fs/e2fsprogs
