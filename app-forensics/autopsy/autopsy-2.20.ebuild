@@ -15,7 +15,7 @@ IUSE=""
 
 # Runtime depend on grep and file deliberate
 RDEPEND=">=dev-lang/perl-5.8.0
-	>=app-forensics/sleuthkit-3
+	>=app-forensics/sleuthkit-3.0.0
 	sys-apps/grep
 	sys-apps/file"
 DEPEND=""
