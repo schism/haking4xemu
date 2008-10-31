@@ -13,6 +13,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE="debug unicode"
 
 DEPEND="sys-apps/sg3_utils"
+RDEPEND=${DEPEND}
 
 src_compile() {
 	econf \
