@@ -13,6 +13,7 @@ KEYWORDS="~x86 ~amd64"
 IUSE="debug unicode"
 
 DEPEND="dev-libs/libuna"
+RDEPEND=${DEPEND}
 
 src_compile() {
 	econf \
