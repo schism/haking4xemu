@@ -1,0 +1,23 @@
+diff -Naur bloom-0.0.3.orig/configure.ac bloom-0.0.3/configure.ac
+--- bloom-0.0.3.orig/configure.ac	2008-09-20 17:28:22.000000000 -0600
++++ bloom-0.0.3/configure.ac	2008-10-31 13:10:43.928109967 -0600
+@@ -24,11 +24,6 @@
+         CPPFLAGS="-I${spfx}/include $CPPFLAGS"
+         LDFLAGS="-L${spfx}/lib $LDFLAGS"
+     fi
+-    echo checking ${spfx}/lib/mysql
+-    if test -d ${spfx}/lib/mysql; then
+-        LDFLAGS="-L${spfx}/lib/mysql $LDFLAGS"
+-        CPPFLAGS="-I${spfx}/include $CPPFLAGS"
+-    fi
+ done
+ 
+ AC_CHECK_FUNCS([printf getrusage])
+@@ -36,7 +31,6 @@
+ AC_CHECK_HEADERS([openssl/md5.h openssl/sha.h])
+ AC_CHECK_HEADERS([copyfile.h])
+ AC_HEADER_STDC
+-AC_CHECK_LIB([mysqlclient],[mysql_real_connect],,AC_MSG_WARN([mysql client not found]))
+ AC_CHECK_LIB([ssl],[ssl3_new],, AC_MSG_ERROR([OpenSSL developer library 'libssl-dev' not installed; cannot continue.]))
+ AC_CHECK_LIB([crypto],[MD5_Update],, AC_MSG_ERROR([OpenSSL developer library 'libcrypto' not installed; cannot continue.]))
+ AC_CHECK_HEADERS([openssl/sha.h])
