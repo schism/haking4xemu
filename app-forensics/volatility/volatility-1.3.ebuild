@@ -12,7 +12,7 @@ SRC_URI="https://www.volatilesystems.com/${PN}/${PV}/${MY_P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.5"
