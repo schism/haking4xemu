@@ -1,0 +1,72 @@
+diff -Naur a/libxrdp/Makefile b/libxrdp/Makefile
+--- a/libxrdp/Makefile	2007-04-08 15:19:42.000000000 -0600
++++ b/libxrdp/Makefile	2008-12-02 12:26:07.535785873 -0700
+@@ -13,7 +13,7 @@
+ DEFINES = -DXRDP_CFG_FILE=\"$(CFGDIR)/xrdp.ini\" \
+           -DXRDP_KEY_FILE=\"$(CFGDIR)/rsakeys.ini\"
+ 
+-CFLAGS = -Wall -O2 -I../common -fPIC $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -fPIC $(DEFINES)
+ #CFLAGS += -DXRDP_DEBUG
+ C_OS_FLAGS = $(CFLAGS) -c
+ LDFLAGS = -shared
+diff -Naur a/rdp/Makefile b/rdp/Makefile
+--- a/rdp/Makefile	2006-08-07 00:03:17.000000000 -0600
++++ b/rdp/Makefile	2008-12-02 12:26:07.535785873 -0700
+@@ -10,7 +10,7 @@
+ 
+ DEFINES =
+ 
+-CFLAGS = -Wall -O2 -I../common -fPIC $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -fPIC $(DEFINES)
+ #CFLAGS += -DXRDP_DEBUG
+ C_OS_FLAGS = $(CFLAGS) -c
+ LDFLAGS = -shared
+diff -Naur a/sesman/Makefile b/sesman/Makefile
+--- a/sesman/Makefile	2007-05-27 17:30:34.000000000 -0600
++++ b/sesman/Makefile	2008-12-02 12:39:13.265824710 -0700
+@@ -16,7 +16,7 @@
+ 	  -DSESMAN_PID_FILE=\"$(PIDDIR)/sesman.pid\" \
+ 	  -DSESMAN_SESSVC_FILE=\"sessvc\"
+ 
+-CFLAGS = -Wall -O2 -I../common -I/usr/include/nptl -I./libscp $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -I/usr/include/nptl -I./libscp $(DEFINES)
+ LDFLAGS = -L/usr/gnu/lib -L/usr/lib/nptl -L./libscp -Wl,-rpath,. -lpthread -ldl -lscp
+ C_OS_FLAGS = $(CFLAGS) -c
+ CC = gcc
+diff -Naur a/vnc/Makefile b/vnc/Makefile
+--- a/vnc/Makefile	2007-05-11 22:19:43.000000000 -0600
++++ b/vnc/Makefile	2008-12-02 12:40:09.798130967 -0700
+@@ -10,7 +10,7 @@
+ 
+ DEFINES =
+ 
+-CFLAGS = -Wall -O2 -I../common -fPIC $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -fPIC $(DEFINES)
+ C_OS_FLAGS = $(CFLAGS) -c -g
+ LDFLAGS = -shared
+ LIBS = -ldl
+diff -Naur a/xrdp/Makefile b/xrdp/Makefile
+--- a/xrdp/Makefile	2007-04-12 21:50:59.000000000 -0600
++++ b/xrdp/Makefile	2008-12-02 12:26:07.545787896 -0700
+@@ -15,7 +15,7 @@
+ DEFINES = -DXRDP_CFG_FILE=\"$(CFGDIR)/xrdp.ini\" \
+           -DXRDP_PID_FILE=\"$(PIDDIR)/xrdp.pid\"
+ 
+-CFLAGS = -Wall -O2 -I../common -I../libxrdp $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -I../libxrdp $(DEFINES)
+ #CFLAGS += -DXRDP_DEBUG
+ C_OS_FLAGS = $(CFLAGS) -c
+ LDFLAGS = -L/usr/gnu/lib -L../libxrdp -Wl,-rpath,.
+diff -Naur a/xup/Makefile b/xup/Makefile
+--- a/xup/Makefile	2007-05-11 22:20:14.000000000 -0600
++++ b/xup/Makefile	2008-12-02 12:26:07.545787896 -0700
+@@ -10,7 +10,7 @@
+ 
+ DEFINES =
+ 
+-CFLAGS = -Wall -O2 -I../common -fPIC $(DEFINES)
++CFLAGS = $(MYCFLAGS) -I../common -fPIC $(DEFINES)
+ #CFLAGS += -DXRDP_DEBUG
+ C_OS_FLAGS = $(CFLAGS) -c
+ LDFLAGS = -shared
