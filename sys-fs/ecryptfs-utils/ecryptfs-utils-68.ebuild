@@ -5,8 +5,8 @@
 inherit pam
 
 DESCRIPTION="eCryptfs userspace utilities"
-HOMEPAGE="http://www.ecryptfs.org/"
-SRC_URI="mirror://sourceforge/ecryptfs/${P}.tar.bz2"
+HOMEPAGE="http://launchpad.net/ecryptfs"
+SRC_URI="http://launchpad.net/ecryptfs/trunk/${PV}/+download/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
