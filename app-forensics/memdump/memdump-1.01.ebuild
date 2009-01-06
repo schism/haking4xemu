@@ -10,7 +10,7 @@ SLOT="0"
 KEYWORDS="amd64 ppc x86"
 DEPEND="sys-apps/sed
 	sys-apps/grep"
-RDEPEND="virtual/libc"
+RDEPEND=${DEPEND}
 IUSE=""
 
 src_compile() {

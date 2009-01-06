@@ -19,7 +19,7 @@ DEPEND="ewf? ( app-forensics/libewf )
 RDEPEND="${DEPEND} dev-perl/DateManip"
 
 src_unpack() {
-	unpack "${A}"
+	unpack ${A}
 	cd "${S}"
 	# AC_FUNC_REALLOC in configure.ac that hasn't been propagated
 	eautoreconf
