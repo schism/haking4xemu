@@ -2,38 +2,38 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit toolchain-funcs eutils autotools
+inherit eutils flag-o-matic autotools
 
 SLOT=0
+
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 
 LICENSE="GPL-2 IBM"
-SLOT="0"
 KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
 IUSE="ewf aff hfs"
 
-DEPEND=" !sys-apps/dstat
-	ewf? ( app-forensics/libewf )
+DEPEND="ewf? ( app-forensics/libewf )
 	aff? ( app-forensics/afflib )"
-RDEPEND="${DEPEND} dev-perl/DateManip"
+RDEPEND="${DEPEND}"
 
-src_unpack() {
-	unpack "${A}"
-	cd "${S}"
-	epatch "${FILESDIR}/${P}-fscheck_locale.patch"
-	use hfs && sed -i 's/define TSK_USE_HFS 0/define TSK_USE_HFS 1/' tsk/tsk_fs_i.h
-	eautoreconf || die "autoconf failed"
-}
+#src_unpack() {
+	#unpack ${A}
+	#cd "${S}"
+	## AC_FUNC_REALLOC in configure.ac that hasn't been propagated
+	#eautoreconf
+#}
 
 src_compile() {
+	use hfs && append-flags "-DTSK_USE_HFS"
 	econf	$(use_enable aff afflib) \
-			$(use_enable ewf)
-	emake
+			$(use_enable ewf) \
+		|| die "configure failed"
+	emake || die "make failed"
 }
 
 src_install() {
 	emake install DESTDIR="${D}"
-	dodoc docs/*.txt
+	dodoc docs/*.txt README.txt CHANGES.txt
 }
