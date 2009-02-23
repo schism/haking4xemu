@@ -36,13 +36,13 @@ src_unpack() {
 }
 
 src_compile() {
-	emake DESTDIR="${DESTDIR}" || die "emake failed"
+	emake -j1 DESTDIR="${DESTDIR}" || die "emake failed"
 }
 
 src_install() {
-	emake DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
-	emake -C sesman/tools DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
-	emake -C sesman/libscp DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	emake -j1 DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	emake -j1 -C sesman/tools DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	emake -j1 -C sesman/libscp DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
 	dodoc design.txt readme.txt sesman/startwm.sh
 	doman "${D}/usr/man/"*/*
 	keepdir /var/log/${PN}
