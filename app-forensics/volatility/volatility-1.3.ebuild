@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit distutils
+inherit distutils python
 
 MY_P=${P/v/V}
 MY_P="${MY_P}_Beta"
@@ -12,10 +12,16 @@ SRC_URI="https://www.volatilesystems.com/${PN}/${PV}/${MY_P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.5"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
+PYTHON_MODNAME="volatility"
+
+src_unpack() {
+	distutils_src_unpack
+	epatch "${FILESDIR}/${P}-setup.py.patch"
+}
