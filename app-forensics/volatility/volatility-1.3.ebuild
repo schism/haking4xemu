@@ -9,7 +9,7 @@ MY_P="${MY_P}_Beta"
 DESCRIPTION="Win32 memory dissection framework"
 HOMEPAGE="https://www.volatilesystems.com/default/volatility"
 SRC_URI="https://www.volatilesystems.com/${PN}/${PV}/${MY_P}.tar.gz \
-	plugins? ( http://mirror/${PN}-plugins-${PV}.tar.gz )"
+	plugins? ( mirror://gentoo/${PN}-plugins-${PV}.tar.gz )"
 
 LICENSE="GPL"
 SLOT="0"
