@@ -17,6 +17,9 @@ DEPEND=">=dev-perl/perl-tk-804.027
 	dev-lang/perl"
 
 RDEPEND="app-arch/mt-st
+	sys-apps/dcfldd
+	net-analyzer/netcat
+	net-analyzer/cryptcat
 	dev-lang/perl
 	userland_GNU? ( sys-apps/coreutils )"
 
@@ -49,10 +52,5 @@ src_install() {
 }
 
 pkg_postinst() {
-	elog "This will use programs from the following packages if installed:"
-	elog "sys-apps/dcfldd"
-	elog "net-analyzer/netcat"
-	elog "net-analyzer/cryptcat"
-
 	elog "The author, steve@unixgurus.com, would appreciate and email of the install file /usr/share/doc/${PF}/air-install.log"
 }
