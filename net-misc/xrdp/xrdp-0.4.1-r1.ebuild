@@ -14,7 +14,9 @@ IUSE=""
 
 DEPEND="sys-libs/pam"
 RDEPEND="${DEPEND}
-	|| ( net-misc/vnc[server] net-misc/tightvnc )"
+	|| ( net-misc/vnc[server]
+		net-misc/tigervnc[server]
+		net-misc/tightvnc[server] )"
 
 DESTDIR="/usr/$(get_libdir)/${PN}"
 
