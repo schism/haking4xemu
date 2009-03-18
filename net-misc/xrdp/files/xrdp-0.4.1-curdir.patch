@@ -1,6 +1,6 @@
-diff -ur xrdp-0.4.0.orig/sesman/Makefile xrdp-0.4.0/sesman/Makefile
---- xrdp-0.4.0.orig/sesman/Makefile	2008-04-02 15:43:01.000000000 +0200
-+++ xrdp-0.4.0/sesman/Makefile	2008-04-02 16:08:34.000000000 +0200
+diff -ur a/sesman/Makefile b/sesman/Makefile
+--- a/sesman/Makefile	2008-04-02 15:43:01.000000000 +0200
++++ b/sesman/Makefile	2008-04-02 16:08:34.000000000 +0200
 @@ -14,7 +14,8 @@
  
  DEFINES = -DSESMAN_CFG_FILE=\"$(CFGDIR)/sesman.ini\" \
@@ -11,9 +11,9 @@ diff -ur xrdp-0.4.0.orig/sesman/Makefile xrdp-0.4.0/sesman/Makefile
  
  CFLAGS = $(MYCFLAGS) -I../common -I/usr/include/nptl -I./libscp $(DEFINES)
  LDFLAGS = -L/usr/gnu/lib -L/usr/lib/nptl -L./libscp -Wl,-rpath,. -lpthread -ldl -lscp
-diff -ur xrdp-0.3.1.orig/sesman/sesman.c xrdp-0.3.1/sesman/sesman.c
---- xrdp-0.3.1.orig/sesman/sesman.c	2006-08-01 19:35:48.000000000 -0400
-+++ xrdp-0.3.1/sesman/sesman.c	2006-08-01 20:48:15.000000000 -0400
+diff -ur a/sesman/sesman.c b/sesman/sesman.c
+--- a/sesman/sesman.c	2006-08-01 19:35:48.000000000 -0400
++++ b/sesman/sesman.c	2006-08-01 20:48:15.000000000 -0400
 @@ -137,6 +137,8 @@
    int pid;
    char pid_s[8];
@@ -23,9 +23,9 @@ diff -ur xrdp-0.3.1.orig/sesman/sesman.c xrdp-0.3.1/sesman/sesman.c
    if (1 == argc)
    {
      /* no options on command line. normal startup */
-diff -ur xrdp-0.3.1.orig/xrdp/Makefile xrdp-0.3.1/xrdp/Makefile
---- xrdp-0.3.1.orig/xrdp/Makefile	2006-08-01 19:35:48.000000000 -0400
-+++ xrdp-0.3.1/xrdp/Makefile	2006-08-01 19:56:15.000000000 -0400
+diff -ur a/xrdp/Makefile b/xrdp/Makefile
+--- a/xrdp/Makefile	2006-08-01 19:35:48.000000000 -0400
++++ b/xrdp/Makefile	2006-08-01 19:56:15.000000000 -0400
 @@ -12,7 +12,8 @@
  DOCDIR = /usr/doc/xrdp
  
@@ -36,9 +36,9 @@ diff -ur xrdp-0.3.1.orig/xrdp/Makefile xrdp-0.3.1/xrdp/Makefile
  
  CFLAGS = $(MYCFLAGS) -I../common -I../libxrdp $(DEFINES)
  #CFLAGS += -DXRDP_DEBUG
-diff -ur xrdp-0.3.1.orig/xrdp/xrdp.c xrdp-0.3.1/xrdp/xrdp.c
---- xrdp-0.3.1.orig/xrdp/xrdp.c	2006-08-01 19:35:48.000000000 -0400
-+++ xrdp-0.3.1/xrdp/xrdp.c	2006-08-01 19:55:45.000000000 -0400
+diff -ur a/xrdp/xrdp.c b/xrdp/xrdp.c
+--- a/xrdp/xrdp.c	2006-08-01 19:35:48.000000000 -0400
++++ b/xrdp/xrdp.c	2006-08-01 19:55:45.000000000 -0400
 @@ -291,6 +291,8 @@
    char text[32];
  #endif

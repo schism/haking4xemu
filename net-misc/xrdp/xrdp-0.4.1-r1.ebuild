@@ -1,6 +1,5 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/xrdp/xrdp-0.3.1.ebuild,v 1.4 2007/07/12 02:52:15 mr_bones_ Exp $
 
 inherit eutils multilib
 
@@ -15,7 +14,9 @@ IUSE=""
 
 DEPEND="sys-libs/pam"
 RDEPEND="${DEPEND}
-	|| ( net-misc/vnc[server] net-misc/tightvnc )"
+	|| ( net-misc/vnc[server]
+		net-misc/tigervnc[server]
+		net-misc/tightvnc[server] )"
 
 DESTDIR="/usr/$(get_libdir)/${PN}"
 
@@ -23,27 +24,34 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	epatch "${FILESDIR}/${P}-respect-cflags.patch"
 	epatch "${FILESDIR}/${P}-curdir.patch"
 
-	sed -ie '/instfiles\/xrdp_control1.sh/ d' Makefile
-	sed -ie "s:/usr/xrdp:${DESTDIR}:g" Makefile */Makefile
-	# fix insecure rpath
-	sed -ie "s:rpath,.:rpath,${DESTDIR}:" xrdp/Makefile
+	# fix cflags, broken paths, multilib, and insecure rpath in all makefiles
+	for MAKE in $(find . -name Makefile) ; do
+		sed -i "s:CFLAGS = -Wall -O. :CFLAGS += :
+			s:/usr/xrdp:${DESTDIR}:g
+			s:/usr/lib/:/usr/$(get_libdir)/:g
+			s:rpath,\.:rpath,${DESTDIR}:g" ${MAKE}
+	done
+
+	sed -i '/instfiles\/xrdp_control1.sh/ d' Makefile
 }
 
 src_compile() {
-	emake MYCFLAGS="${CFLAGS}" DESTDIR="${DESTDIR}" || die "emake failed"
+	emake -j1 DESTDIR="${DESTDIR}" || die "emake failed"
 }
 
 src_install() {
-	emake DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
-	dodoc design.txt readme.txt "${D}${DESTDIR}/startwm.sh"
+	emake -j1 DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	emake -j1 -C sesman/tools DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	emake -j1 -C sesman/libscp DESTDIRDEB="${D}" installdeb || die "emake installdeb failed"
+	dodoc design.txt readme.txt sesman/startwm.sh
 	doman "${D}/usr/man/"*/*
 	keepdir /var/log/${PN}
 	rm -rf "${D}${DESTDIR}/startwm.sh" "${D}/usr/man"
 	exeinto "${DESTDIR}"
 	doexe "${FILESDIR}/startwm.sh"
+	doexe "sesman/sessvc"
 	newinitd "${FILESDIR}/${PN}-initd" ${PN}
 	newconfd ${FILESDIR}/${PN}-confd ${PN}
 	sed -i "s:LIBDIR:$(get_libdir):" "${D}/etc/init.d/${PN}"

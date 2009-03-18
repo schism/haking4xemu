@@ -18,4 +18,5 @@ src_compile() {
 src_install() {
 	dobin build/bin/*
 	doman doc/man/man1/*
+	dodoc doc/devel/*.txt
 }

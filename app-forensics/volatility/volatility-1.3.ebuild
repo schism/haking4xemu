@@ -8,14 +8,22 @@ MY_P=${P/v/V}
 MY_P="${MY_P}_Beta"
 DESCRIPTION="Win32 memory dissection framework"
 HOMEPAGE="https://www.volatilesystems.com/default/volatility"
-SRC_URI="https://www.volatilesystems.com/${PN}/${PV}/${MY_P}.tar.gz"
+SRC_URI="https://www.volatilesystems.com/${PN}/${PV}/${MY_P}.tar.gz \
+	plugins? ( mirror://gentoo/${PN}-plugins-${PV}.tar.gz )"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS=""
-IUSE=""
+KEYWORDS="~x86 ~amd64"
+IUSE="plugins"
 
-DEPEND=">=dev-lang/python-2.5"
+DEPEND=">=dev-lang/python-2.5
+	plugins? ( dev-util/libdasm )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
+
+src_unpack() {
+	distutils_src_unpack
+	epatch "${FILESDIR}/${P}-setup.py.patch"
+	sed -i -e "s:^#!.*:#!/usr/bin/python:" ${PN}
+}

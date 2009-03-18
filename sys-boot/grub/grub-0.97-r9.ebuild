@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/sys-boot/grub/grub-0.97-r9.ebuild,v 1.1 2009/01/02 01:51:05 robbat2 Exp $
 
 # XXX: we need to review menu.lst vs grub.conf handling.  We've been converting
 #      all systems to grub.conf (and symlinking menu.lst to grub.conf), but
@@ -9,7 +9,7 @@
 
 inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
-PATCHVER="1.7"
+PATCHVER="1.9.1" # Should match the revision ideally
 DESCRIPTION="GNU GRUB Legacy boot loader"
 HOMEPAGE="http://www.gnu.org/software/grub/"
 SRC_URI="mirror://gentoo/${P}.tar.gz
@@ -19,8 +19,8 @@ SRC_URI="mirror://gentoo/${P}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
-IUSE="custom-cflags ncurses netboot static"
+KEYWORDS="~amd64 ~x86 ~x86-fbsd"
+IUSE="custom-cflags ncurses netboot static tpm"
 
 DEPEND="ncurses? (
 		>=sys-libs/ncurses-5.2-r5
@@ -90,7 +90,15 @@ src_compile() {
 	# Per bug 216625, the emul packages do not provide .a libs for performing
 	# suitable static linking
 	if use amd64 && use static ; then
-		die "You must use the grub-static package if you want a static Grub on amd64!"
+		if [ -z "${GRUB_STATIC_PACKAGE_BUILDING}" ]; then
+			die "You must use the grub-static package if you want a static Grub on amd64!"
+		else
+			eerror "You have set GRUB_STATIC_PACKAGE_BUILDING. This"
+			eerror "is specifically intended for building the tarballs for the"
+			eerror "grub-static package via USE='static -ncurses'."
+			eerror "All bets are now off."
+			ebeep 10
+		fi
 	fi
 
 	# build the net-bootable grub first, but only if "netboot" is set
@@ -99,6 +107,8 @@ src_compile() {
 		--libdir=/lib \
 		--datadir=/usr/lib/grub \
 		--exec-prefix=/ \
+		$(use_enable tpm ima) \
+		--disable-imatest \
 		--disable-auto-linux-mem-opt \
 		--enable-diskless \
 		--enable-{3c{5{03,07,09,29,95},90x},cs89x0,davicom,depca,eepro{,100}} \
@@ -120,6 +130,8 @@ src_compile() {
 		--libdir=/lib \
 		--datadir=/usr/lib/grub \
 		--exec-prefix=/ \
+		$(use_enable tpm ima) \
+		--disable-imatest \
 		--disable-auto-linux-mem-opt \
 		$(use_with ncurses curses) \
 		|| die "econf failed"
@@ -146,6 +158,12 @@ src_install() {
 	dodoc AUTHORS BUGS ChangeLog NEWS README THANKS TODO
 	newdoc docs/menu.lst grub.conf.sample
 	dodoc "${FILESDIR}"/grub.conf.gentoo
+	prepalldocs
+
+	[ -n "${GRUB_STATIC_PACKAGE_BUILDING}" ] && \
+		mv \
+		"${D}"/usr/share/doc/${PF} \
+		"${D}"/usr/share/doc/grub-static-${PF/grub-}
 
 	insinto /usr/share/grub
 	doins "${DISTDIR}"/splash.xpm.gz

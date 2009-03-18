@@ -61,6 +61,7 @@ src_install() {
 	rm man/man1/icat.1
 	rm man/man1/mactime.1
 	rm man/man1/lastcomm.1
+	rm man/man1/timeout.1 || die "fubar"
 	rm man/man5/magic.5
 	doman man/*/* || die "man installation failed"
 
