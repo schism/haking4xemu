@@ -13,11 +13,10 @@ SRC_URI="mirror://sourceforge/libewf/${MY_P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-# upstream bug #2597171, pyewf has implicit declarations
-#IUSE="debug python rawio unicode"
-IUSE="debug rawio unicode"
+IUSE="debug python rawio unicode"
 
 DEPEND="
+	python? ( dev-lang/python )
 	sys-libs/e2fsprogs-libs
 	sys-libs/zlib
 	dev-libs/openssl"
@@ -31,6 +30,7 @@ src_unpack() {
 
 src_compile() {
 	econf \
+		$(use_enable python) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable rawio raw-access) \
 		$(use_enable debug verbose-output) \
@@ -40,6 +40,5 @@ src_compile() {
 
 src_install() {
 	emake install DESTDIR="${D}"
-	dodoc AUTHORS ChangeLog NEWS README documents/*.txt
-	doman manuals/*.1 manuals/*.3
+	dodoc AUTHORS ChangeLog NEWS README doc/tests.txt
 }
