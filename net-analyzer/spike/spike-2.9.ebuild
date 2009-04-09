@@ -5,7 +5,7 @@
 inherit autotools
 
 DESCRIPTION="Network protocol weakness analyzer"
-HOMEPAGE="http://www.immunitysec.com"
+HOMEPAGE="http://www.immunitysec.com/resources-freesoftware.shtml"
 SRC_URI="${HOMEPAGE}/downloads/SPIKE${PV}.tgz"
 
 LICENSE="GPL-2"

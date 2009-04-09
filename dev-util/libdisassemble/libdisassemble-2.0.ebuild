@@ -5,7 +5,7 @@
 inherit distutils python
 
 DESCRIPTION="A Python library that will disassemble X86."
-HOMEPAGE="http://www.immunitysec.com"
+HOMEPAGE="http://www.immunitysec.com/resources-freesoftware.shtml"
 SRC_URI="${HOMEPAGE}/downloads/${PN}${PV}.tar.gz"
 
 LICENSE="LGPL-2.1"

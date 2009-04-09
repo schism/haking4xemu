@@ -1,6 +1,8 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
+EAPI="2"
+
 inherit eutils multilib
 
 DESCRIPTION="An open source remote desktop protocol(rdp) server."
@@ -53,6 +55,6 @@ src_install() {
 	doexe "${FILESDIR}/startwm.sh"
 	doexe "sesman/sessvc"
 	newinitd "${FILESDIR}/${PN}-initd" ${PN}
-	newconfd ${FILESDIR}/${PN}-confd ${PN}
+	newconfd "${FILESDIR}/${PN}-confd" ${PN}
 	sed -i "s:LIBDIR:$(get_libdir):" "${D}/etc/init.d/${PN}"
 }

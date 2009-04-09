@@ -10,7 +10,7 @@ SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86 ~amd64"
 
 DEPEND="dev-libs/openssl"
 RDEPEND=${DEPEND}

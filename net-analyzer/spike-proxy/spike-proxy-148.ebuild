@@ -5,7 +5,7 @@
 inherit autotools
 
 DESCRIPTION="Web application analysis tool"
-HOMEPAGE="http://www.immunitysec.com"
+HOMEPAGE="http://www.immunitysec.com/resources-freesoftware.shtml"
 SRC_URI="${HOMEPAGE}/downloads/SP${PV}.tgz"
 
 LICENSE="GPL-2"

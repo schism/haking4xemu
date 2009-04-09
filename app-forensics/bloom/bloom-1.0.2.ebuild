@@ -15,14 +15,7 @@ KEYWORDS="~x86 ~amd64"
 DEPEND="dev-libs/openssl"
 RDEPEND=${DEPEND}
 
-src_unpack() {
-	unpack "${A}"
-	cd "${S}"
-	epatch ${FILESDIR}/${P}-mysql.patch
-	eautoreconf
-}
-
 src_install() {
-	dobin bloom bloomcat regression || die "install failed"
+	emake install DESTDIR="${D}" || die "install failed"
 	dodoc ChangeLog
 }

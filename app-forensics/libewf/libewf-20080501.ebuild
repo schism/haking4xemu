@@ -5,8 +5,8 @@
 inherit eutils autotools
 
 DESCRIPTION="Implementation of the EWF (SMART and EnCase) image format"
-HOMEPAGE="http://www.uitwisselplatform.nl/projects/libewf/"
-SRC_URI="http://www.uitwisselplatform.nl/frs/download.php/529/${P}.tar.gz"
+HOMEPAGE="http://sourceforge.net/projects/libewf/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
