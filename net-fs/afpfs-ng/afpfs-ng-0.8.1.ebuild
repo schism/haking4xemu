@@ -19,15 +19,11 @@ DEPEND="dev-libs/libgcrypt
 	sys-fs/fuse"
 
 src_unpack() {
-	unpack "${A}"
-	cd ${S}
+	unpack ${A}
+	cd "${S}"
 	eautoreconf
 }
 
 src_install() {
-	emake install DESTDIR="${D}"
-	#dobin cmdline/.libs/afpcmd cmdline/.libs/afpgetstatus fuse/.libs/afpfsd fuse/.libs/mount_afp
-	#dolib lib/.libs/libafpclient.{so.0.0.0,a}
-	#dodoc COPYING AUTHORS ChangeLog docs/README docs/performance docs/FEATURES.txt docs/REPORTING-BUGS.txt
-	#doman fuse/*.1 cmdline/*.1
+	emake install DESTDIR="${D}" || die "install failed"
 }
