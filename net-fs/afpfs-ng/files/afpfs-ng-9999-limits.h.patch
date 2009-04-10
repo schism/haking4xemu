@@ -1,0 +1,11 @@
+diff -Naur afpfs-ng.old/afpfs-ng/include/afp.h afpfs-ng/afpfs-ng/include/afp.h
+--- afpfs-ng.old/afpfs-ng/include/afp.h	2009-04-10 10:26:14.294110621 -0600
++++ afpfs-ng/afpfs-ng/include/afp.h	2009-04-10 10:27:10.905903421 -0600
+@@ -11,6 +11,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <limits.h>
+ #include <netinet/in.h>
+ 
+ #ifdef __cplusplus

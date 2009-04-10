@@ -25,9 +25,16 @@ DEPEND="dev-libs/libgcrypt
 src_unpack() {
 	cvs_src_unpack
 	cd "${S}"
+	epatch ${FILESDIR}/${P}-limits.h.patch
 	eautoreconf
+}
+
+src_compile() {
+	econf  || die "econf failed"
+	emake -j1 || die "emake failed"
 }
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
+	dodoc Bugs.txt ChangeLog NEWS docs/README docs/FEATURES.txt
 }
