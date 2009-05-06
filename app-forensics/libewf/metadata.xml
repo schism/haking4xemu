@@ -5,5 +5,6 @@
 	<maintainer><email>schism@subverted.org</email></maintainer>
 	<use>
 		<flag name='rawio'>Raw device I/O support</flag>
+		<flag name='v2-api'>Enable experimental v2 API</flag>
 	</use>
 </pkgmetadata>
