@@ -22,7 +22,7 @@ DEPEND="sys-libs/e2fsprogs-libs
 	sys-libs/zlib
 	dev-libs/openssl
 	unicode? ( dev-libs/libuna )
-	python? ( dev-libs/python )"
+	python? ( dev-lang/python )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
