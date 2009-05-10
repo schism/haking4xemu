@@ -33,13 +33,6 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch ${FILESDIR}/${P}-*
-	eautoreconf
-}
-
 src_compile() {
 	econf \
 		$(use_enable unicode wide-character-type) \
