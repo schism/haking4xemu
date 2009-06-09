@@ -53,7 +53,7 @@ DEPEND="
 
 src_configure() {
 	local myconf
-	myconf="--enable-proc-uptime"
+	myconf=""
 	if useq X; then
 		myconf="${myconf} --enable-x11 --enable-double-buffer --enable-xdamage --enable-own-window"
 		myconf="${myconf} $(use_enable truetype xft)"
