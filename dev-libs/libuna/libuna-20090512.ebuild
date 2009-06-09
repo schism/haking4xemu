@@ -2,20 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-MY_P=${P/libuna/libuna-alpha}
+MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library to support Unicode and ASCII (byte string) conversions"
 HOMEPAGE="http://www.sourceforge.net/projects/libuna"
-SRC_URI="mirror://sourceforge/libuna/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="unicode"
-
-src_compile() {
-	econf $(use_enable unicode wide-character-support) || die "configure failed"
-	emake || die "make failed"
-}
+IUSE=""
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
