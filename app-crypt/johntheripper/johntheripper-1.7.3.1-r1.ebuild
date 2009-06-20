@@ -6,7 +6,7 @@ EAPI=1
 inherit eutils flag-o-matic toolchain-funcs pax-utils
 
 JUMBO='all-5'
-MPI='mpi9'
+MPI='mpi10'
 
 MY_PN="${PN/theripper/}"
 MY_P="${MY_PN/theripper/}-${PV}"
