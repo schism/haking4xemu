@@ -27,7 +27,7 @@ RDEPEND="${DEPEND}
 KISMET_PLUGINS="ptw spectools"
 
 src_prepare() {
-	sed -i -e "s:# *logprefix=.*:/tmp:" conf/kismet.conf.in
+	sed -i -e "s:# *logprefix=.*:logprefix=/tmp:" conf/kismet.conf.in
 }
 
 src_configure() {
