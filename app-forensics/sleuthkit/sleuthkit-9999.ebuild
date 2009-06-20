@@ -1,6 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+EAPI="2"
 
 inherit eutils flag-o-matic autotools subversion
 
@@ -18,18 +19,19 @@ DEPEND="ewf? ( app-forensics/libewf )
 	aff? ( app-forensics/afflib )"
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-	subversion_src_unpack
-	cd "${S}"
+src_prepare() {
 	eautoreconf
+}
+
+src_configure() {
+	econf	$(use_enable aff afflib) \
+			$(use_enable ewf) \
+		|| die "configure failed"
 }
 
 src_compile() {
 	use hfs && append-flags "-DTSK_USE_HFS"
-	econf	$(use_enable aff afflib) \
-			$(use_enable ewf) \
-		|| die "configure failed"
-	emake || die "make failed"
+	default_src_compile
 }
 
 src_install() {
