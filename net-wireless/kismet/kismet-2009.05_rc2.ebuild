@@ -16,24 +16,35 @@ SRC_URI="http://www.kismetwireless.net/code/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="+client +pcap pcre plugins suid"
+IUSE="+client kernel_linux +pcap pcre plugins suid"
 
 DEPEND="pcap? ( net-libs/libpcap )
 	pcre? ( dev-libs/libpcre )
 	kernel_linux? ( dev-libs/libnl )
 	client? ( sys-libs/ncurses )"
-RDEPEND="${DEPEND}
-	net-wireless/wireless-tools"
+RDEPEND="${DEPEND}"
 KISMET_PLUGINS="ptw spectools"
+
+pkg_setup() {
+	if has_version "=net-libs/libpcap-1.0.1_pre*" ; then
+		ewarn "Detected development version of libpcap"
+		ewarn "Kismet will work, but this version of libpcap has a broken"
+		ewarn "get_selectable_fd() implementation that will cause Kismet to"
+		ewarn "consume 100% CPU and disable local sources.  Use the 1.0.0"
+		ewarn "series to avoid this"
+	fi
+}
 
 src_prepare() {
 	sed -i -e "s:# *logprefix=.*:logprefix=/tmp:" conf/kismet.conf.in
 }
 
 src_configure() {
-	econf $(use_enable client)\
+	econf $(use_enable kernel_linux linuxwext) \
+		$(use_enable client) \
 		$(use_enable pcre) \
-		$(use_enable pcap) || die "econf failed"
+		$(use_enable pcap) \
+		|| die "econf failed"
 }
 
 src_compile() {
@@ -42,25 +53,33 @@ src_compile() {
 	if use plugins ; then
 		local plugin
 		for plugin in $KISMET_PLUGINS ; do
-			emake -C plugin-$plugin KIS_SRC_DIR="${S}" \
+			emake -C "plugin-$plugin" KIS_SRC_DIR="${S}" \
 				|| die "emake $plugin failed"
 		done
 	fi
 }
 
 src_install () {
-	local INST='install'
+	emake DESTDIR="${D}" install || die "emake install failed"
 	if use suid ; then
-		INST='suidinstall'
+		enewgroup kismet
+		dosbin kismet_capture
+		fowners :kismet ${D}/usr/sbin/kismet_capture
+		fperms 4550 ${D}/usr/sbin/kismet_capture \
+			|| die "could not install setuid helper"
+		elog "Kismet has been installed with a setuid-root helper binary"
+		elog "to enable minimal-root operation.  Users need to be part of"
+		elog "the 'kismet' group to perform captures from physical devices"
 	fi
-	emake DESTDIR="${D}" ${INST} || die "emake install failed"
+
 	dodoc README*
 	newinitd "${FILESDIR}"/${PN}-init.d kismet
 	newconfd "${FILESDIR}"/${PN}-conf.d kismet
+
 	if use plugins ; then
 		local plugin
 		for plugin in $KISMET_PLUGINS ; do
-			make -C plugin-$plugin KIS_DEST_DIR="${D}/usr" install
+			emake -C "plugin-$plugin" KIS_DEST_DIR="${D}/usr" install
 		done
 	fi
 }
