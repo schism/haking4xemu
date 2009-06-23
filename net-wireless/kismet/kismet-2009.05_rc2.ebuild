@@ -59,17 +59,22 @@ src_compile() {
 	fi
 }
 
-src_install () {
-	emake DESTDIR="${D}" install || die "emake install failed"
+pkg_preinst()  {
 	if use suid ; then
 		enewgroup kismet
+		elog "Kismet has been installed with a setuid-root helper binary"
+		elog "to enable minimal-root operation.  Users need to be part of"
+		elog "the 'kismet' group to perform captures from physical devices"
+	fi
+}
+
+src_install() {
+	emake DESTDIR="${D}" install || die "emake install failed"
+	if use suid ; then
 		dosbin kismet_capture
 		fowners :kismet ${D}/usr/sbin/kismet_capture
 		fperms 4550 ${D}/usr/sbin/kismet_capture \
 			|| die "could not install setuid helper"
-		elog "Kismet has been installed with a setuid-root helper binary"
-		elog "to enable minimal-root operation.  Users need to be part of"
-		elog "the 'kismet' group to perform captures from physical devices"
 	fi
 
 	dodoc README*
