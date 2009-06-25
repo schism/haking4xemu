@@ -6,7 +6,7 @@ EAPI="2"
 inherit eutils
 
 MY_P=${P/[\.]/-}
-MY_P=${MY_P/_rc/-RC}
+MY_P=${MY_P/./-R}
 S="${WORKDIR}/${MY_P}"
 
 DESCRIPTION="IEEE 802.11 wireless LAN sniffer"
@@ -70,8 +70,8 @@ src_install() {
 	doins conf/kismet_drone.conf
 
 	dodoc README*
-	newinitd "${FILESDIR}"/${PN}-init.d kismet
-	newconfd "${FILESDIR}"/${PN}-conf.d kismet
+	newinitd "${FILESDIR}"/${PN}.initd kismet
+	newconfd "${FILESDIR}"/${PN}.confd kismet
 
 	if use plugins ; then
 		local plugin

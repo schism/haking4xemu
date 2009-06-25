@@ -5,6 +5,6 @@
 	<use>
 		<flag name='client'>Enable building of kismet_client UI elements</flag>
 		<flag name='plugins'>Build additional plugins</flag>
-		<flag name='suid'>Install setuid capture helper binary (more secure)</flag>
+		<flag name='suid'>Install setuid binaries (more secure for newcore)</flag>
 	</use>
 </pkgmetadata>
