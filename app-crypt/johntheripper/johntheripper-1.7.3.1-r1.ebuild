@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-crypt/johntheripper/johntheripper-1.7.3.1.ebuild,v 1.8 2009/05/07 10:26:15 jer Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-crypt/johntheripper/johntheripper-1.7.3.1.ebuild,v 1.9 2009/06/23 00:03:52 rich0 Exp $
 
 EAPI=1
 inherit eutils flag-o-matic toolchain-funcs pax-utils
@@ -17,12 +17,12 @@ HOMEPAGE="http://www.openwall.com/john/"
 
 SRC_URI="http://www.openwall.com/john/g/${MY_P}.tar.gz
 	!minimal? ( ftp://ftp.openwall.com/john/contrib/${MY_P}-${JUMBO}.diff.gz )
-	mpi? ( http://bindshell.net/tools/johntheripper/${MY_P}-${MPI}.patch.gz )"
+	mpi? ( ftp://ftp.openwall.com/john/contrib/mpi/2009-bindshell/${MY_P}-${MPI}.patch.gz )"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha ~amd64 hppa ~mips ppc ~ppc64 sparc x86"
-IUSE="mmx altivec sse2 custom-cflags -minimal -mpi"
+KEYWORDS="~alpha ~amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc ~x86"
+IUSE="mmx altivec sse2 custom-cflags minimal mpi"
 
 # Seems a bit fussy with other MPI implementations.
 RDEPEND="!minimal? ( >=dev-libs/openssl-0.9.7 )
@@ -66,13 +66,13 @@ get_target() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	PATCHLIST=""
+	PATCHLIST="stackdef.S"
 	if use mpi ; then
 		epatch "${WORKDIR}"/${MY_P}-${MPI}.patch
 	fi
 	if ! use minimal ; then
 		epatch "${WORKDIR}"/${MY_P}-${JUMBO}.diff
-		PATCHLIST=stackdef.S
+		PATCHLIST="${PATCHLIST} ${JUMBO}-stackdef.S"
 	fi
 	PATCHLIST="${PATCHLIST} params.h mkdir-sandbox"
 
