@@ -3,8 +3,6 @@
 # $Header: $
 EAPI="2"
 
-inherit autotools
-
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library that provides basic file input/output abstraction"
 HOMEPAGE="http://www.sourceforge.net/projects/libbfio"
@@ -12,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86 ~amd64"
 IUSE="unicode"
 
 DEPEND="dev-libs/libuna"
