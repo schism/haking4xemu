@@ -13,7 +13,8 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="debug unicode"
 
-DEPEND="dev-libs/libuna"
+DEPEND="unicode? ( dev-libs/libuna )
+		dev-libs/libbfio"
 RDEPEND=${DEPEND}
 
 src_configure() {
