@@ -163,6 +163,7 @@ src_install() {
 	mv "${D}"/usr/bin/qemu-img "${D}"/usr/bin/kvm-img
 	mv "${D}"/usr/bin/qemu-nbd "${D}"/usr/bin/kvm-nbd
 	mv "${D}"/usr/bin/qemu-io "${D}"/usr/bin/kvm-io
+	rm "${D}"/usr/share/kvm/openbios-{sparc32,sparc64,ppc}
 
 	insinto /etc/udev/rules.d/
 	doins kvm/scripts/65-kvm.rules
