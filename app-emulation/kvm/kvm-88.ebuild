@@ -147,13 +147,15 @@ src_compile() {
 
 src_install() {
 	# Fix docs manually (dynamically generated during compile)
-	sed -i -e 's/QEMU/KVM/ig;s/kvm-\([a-z\-]*\)\.texi/qemu-\1\.texi/g' \
+	sed -i -e 's/QEMU/KVM/g;\
+			s/qemu/kvm/g;\
+			s/Qemu/Kvm/g;\
+			s/kvm-\([a-z\-]*\)\.texi/qemu-\1\.texi/g' \
 		*.texi *.1 *.8
 
 	emake DESTDIR="${D}" install || die "make install failed"
 
-	exeinto /usr/bin/
-	doexe kvm/kvm_stat
+	dobin kvm/kvm_stat
 
 	mv "${D}"/usr/share/man/man1/qemu.1 "${D}"/usr/share/man/man1/kvm.1
 	mv "${D}"/usr/share/man/man1/qemu-img.1 "${D}"/usr/share/man/man1/kvm-img.1
@@ -181,7 +183,6 @@ pkg_postinst() {
 	elog "ensure that the kernel module is loaded is to load it on boot."
 	elog "For AMD CPUs the module is called 'kvm-amd'"
 	elog "For Intel CPUs the module is called 'kvm-intel'"
-	elog "Please review /etc/conf.d/modules for how to load these"
 	elog
 	elog "Make sure your user is in the 'kvm' group"
 	elog "Just run 'gpasswd -a <USER> kvm', then have <USER> re-login."
