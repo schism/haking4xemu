@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-im/silc-server/silc-server-1.1.14.ebuild,v 1.1 2008/11/27 10:31:43 armin76 Exp $
 
+EAPI="2"
+
 inherit eutils autotools flag-o-matic
 
 DESCRIPTION="Server for Secure Internet Live Conferencing"
@@ -16,22 +18,14 @@ IUSE="ipv6 debug"
 RDEPEND="!<=net-im/silc-toolkit-0.9.12-r1
 	!<=net-im/silc-client-1.0.1"
 
-src_compile() {
+src_configure() {
 	econf \
-		--datadir=/usr/share/${PN} \
-		--datarootdir=/usr/share/${PN} \
-		--mandir=/usr/share/man \
-		--sysconfdir=/etc/silc \
-		--with-helpdir=/usr/share/${PN}/help \
-		--libdir=/usr/$(get_libdir)/${PN} \
-		--docdir=/usr/share/doc/${PF} \
 		--disable-optimizations \
 		--with-logsdir=/var/log/${PN} \
 		--with-silcd-pid-file=/var/run/silcd.pid \
 		$(use_enable ipv6) \
 		$(use_enable debug) \
 		|| die "econf failed"
-	emake -j1 || die "emake failed"
 }
 
 src_install() {
