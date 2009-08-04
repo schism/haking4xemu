@@ -10,7 +10,7 @@ MY_PN="qemu-${PN}-devel"
 MY_P="${MY_PN}-${PV}"
 
 # Patchset git repo is at http://github.com/dang/kvm-patches/tree/master
-PATCHSET="kvm-patches-20090714"
+PATCHSET="kvm-patches-20090725"
 SRC_URI="mirror://sourceforge/kvm/${MY_P}.tar.gz
 	http://dev.gentoo.org/~dang/files/${PATCHSET}.tar.gz"
 
@@ -34,7 +34,7 @@ RDEPEND="sys-libs/zlib
 	sdl? ( >=media-libs/libsdl-1.2.11[X] )
 	vde? ( net-misc/vde )
 	bluetooth? ( net-wireless/bluez )
-	modules? ( =app-emulation/kvm-kmod-${PV} )"
+	modules? ( ~app-emulation/kvm-kmod-${PV} )"
 
 #    bios? (
 #        sys-devel/dev86
@@ -109,9 +109,6 @@ src_configure() {
 	conf_opts="$conf_opts --prefix=/usr"
 	conf_opts="$conf_opts --disable-strip"
 	conf_opts="$conf_opts --disable-xen"
-	if has_multilib_profile && [[ "${DEFAULT_ABI}" == "x86" ]] ; then
-		conf_opts="$conf_opts --arch=i686"
-	fi
 
 	./configure ${conf_opts} --audio-drv-list="$audio_opts" || die "econf failed"
 }
@@ -136,11 +133,6 @@ src_compile() {
 			unset GCC_SPECS
 		fi
 	fi
-
-#    if use bios; then
-#        emake bios || die "emake bios failed"
-#        emake vgabios || die "emake vgabios failed"
-#    fi
 
 	emake || die "emake failed"
 }
@@ -184,6 +176,7 @@ pkg_postinst() {
 	elog "ensure that the kernel module is loaded is to load it on boot."
 	elog "For AMD CPUs the module is called 'kvm-amd'"
 	elog "For Intel CPUs the module is called 'kvm-intel'"
+	elog "Please review /etc/conf.d/modules for how to load these"
 	elog
 	elog "Make sure your user is in the 'kvm' group"
 	elog "Just run 'gpasswd -a <USER> kvm', then have <USER> re-login."
