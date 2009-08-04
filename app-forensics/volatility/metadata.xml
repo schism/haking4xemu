@@ -3,4 +3,5 @@
 <pkgmetadata>
 	<herd>haking4xemu</herd>
 	<maintainer><email>schism@subverted.org</email></maintainer>
+	<flag name='plugins'>Installs several popular plugins</flag>
 </pkgmetadata>
