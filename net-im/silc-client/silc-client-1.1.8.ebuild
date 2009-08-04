@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-im/silc-client/silc-client-1.1.6.ebuild,v 1.1 2008/11/27 10:29:18 armin76 Exp $
 
+EAPI="2"
+
 inherit eutils multilib
 
 DESCRIPTION="IRSSI-based text client for Secure Internet Live Conferencing"
@@ -11,9 +13,9 @@ HOMEPAGE="http://silcnet.org/"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="ipv6 perl debug"
+IUSE="ipv6 perl debug threads"
 
-COMMONDEPEND="perl? (	dev-lang/perl )
+COMMONDEPEND="perl? ( sys-devel/libperl )
 	sys-libs/ncurses
 	>=dev-libs/glib-2.8
 	!<=net-im/silc-toolkit-0.9.12-r1"
@@ -27,18 +29,13 @@ RDEPEND="${COMMONDEPEND}
 		!net-irc/irssi-svn
 	)"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+src_prepare() {
 	sed -i -e "s:-g -O2:${CFLAGS}:g" configure
 	use amd64 && sed -i -e 's:felf\([^6]\):felf64\1:g' configure
 }
 
-src_compile() {
+src_configure() {
 	local myconf=""
-	use ipv6 && myconf="${myconf} --enable-ipv6"
-
 	econf \
 		--datadir=/usr/share/${PN} \
 		--datarootdir=/usr/share/${PN} \
@@ -49,10 +46,11 @@ src_compile() {
 		--libdir=/usr/$(get_libdir)/${PN} \
 		--docdir=/usr/share/doc/${PF} \
 		--disable-optimizations \
+		$(use_enable ipv6) \
 		$(use_enable debug) \
+		$(use_with perl) \
+		$(use_with threads pthreads) \
 		${myconf}
-
-	emake || die "emake failed"
 }
 
 src_install() {
