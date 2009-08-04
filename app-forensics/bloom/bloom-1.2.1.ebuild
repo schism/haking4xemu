@@ -1,8 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-inherit autotools eutils
+EAPI="2"
 
 DESCRIPTION="Bloom file manipulation tools"
 HOMEPAGE="http://www.afflib.org/"
@@ -18,4 +17,5 @@ RDEPEND=${DEPEND}
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
 	dodoc ChangeLog
+	rm ${D}/usr/bin/demo_*
 }
