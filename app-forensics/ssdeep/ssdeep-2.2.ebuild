@@ -1,8 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-inherit eutils
+EAPI="2"
 
 DESCRIPTION="Tool that performs fuzzy hash analysis of similar (but not identical) files"
 HOMEPAGE="http://ssdeep.sourceforge.net/"
@@ -18,4 +17,5 @@ RDEPEND=""
 
 src_install() {
 	emake install DESTDIR="${D}"
+	dodoc AUTHORS README NEWS ChangeLog FILEFORMAT
 }
