@@ -22,5 +22,6 @@ src_unpack() {
 }
 
 src_prepare() {
+	epatch ${FILESDIR}/${P}-setup.py.patch
 	sed -i -e "s:^#!.*:#!/usr/bin/python:" ${PN}
 }
