@@ -23,7 +23,7 @@ NEED_PYTHON="2.5"
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-setup.py.patch"
+	epatch "${FILESDIR}/${P}-"{setup.py,sys-path}.patch
 	sed -i -e "s:^#!.*:#!/usr/bin/python:" ${PN}
 	sed -i -e 's/import sha/import hashlib/' forensics/win32/crashdump.py
 }

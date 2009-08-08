@@ -1,0 +1,15 @@
+--- forensics/registry.py.orig	2009-08-07 20:19:30.000000000 -0600
++++ forensics/registry.py	2009-08-07 20:14:26.000000000 -0600
+@@ -69,6 +69,12 @@
+         
+         ## Recurse over all the plugin directories recursively
+         for path in PLUGINS.split(':'):
++            for libpath in sys.path:
++                try:
++                    if path in os.listdir(libpath):
++                        path = os.path.join(libpath, path)
++                except:
++                    pass
+             for dirpath, dirnames, filenames in os.walk(path):
+                 sys.path.append(dirpath)
+                 
