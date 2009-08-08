@@ -13,7 +13,7 @@ SRC_URI="http://www.cc.gatech.edu/~brendan/volatility/dl/${MY_P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND=">=app-forensics/volatility-1.3"
