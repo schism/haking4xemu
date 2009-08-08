@@ -17,7 +17,9 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND=">=app-forensics/volatility-1.3"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	dev-python/pefile
+	dev-util/libdasm"
 
 src_unpack() {
 	mkdir ${P}
