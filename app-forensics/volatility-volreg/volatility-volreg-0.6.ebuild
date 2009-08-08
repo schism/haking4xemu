@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit distutils
 
-MY_P=${P#volatility-plugin-}
+MY_P=${P#volatility-}
 DESCRIPTION="Volatility plugin for accessing registry data"
 HOMEPAGE="http://www.cc.gatech.edu/~brendan/volatility/"
 SRC_URI="http://www.cc.gatech.edu/~brendan/volatility/dl/${MY_P}.tar.gz"
