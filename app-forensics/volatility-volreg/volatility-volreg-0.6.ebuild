@@ -19,6 +19,7 @@ IUSE=""
 DEPEND=">=app-forensics/volatility-1.3"
 RDEPEND="${DEPEND}
 	dev-python/pefile
+	dev-python/pycrypto
 	dev-util/libdasm"
 
 src_unpack() {
