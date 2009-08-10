@@ -1,10 +1,10 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/silc-server/silc-server-1.1.14.ebuild,v 1.1 2008/11/27 10:31:43 armin76 Exp $
+# $Header: $
 
 EAPI="2"
 
-inherit eutils autotools flag-o-matic
+inherit eutils
 
 DESCRIPTION="Server for Secure Internet Live Conferencing"
 SRC_URI="http://www.silcnet.org/download/server/sources/${P}.tar.bz2"
@@ -13,7 +13,7 @@ HOMEPAGE="http://silcnet.org/"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="ipv6 debug"
+IUSE="ipv6 debug threads"
 
 RDEPEND="!<=net-im/silc-toolkit-0.9.12-r1
 	!<=net-im/silc-client-1.0.1"
@@ -23,8 +23,11 @@ src_configure() {
 		--disable-optimizations \
 		--with-logsdir=/var/log/${PN} \
 		--with-silcd-pid-file=/var/run/silcd.pid \
+		--docdir=/usr/share/doc/${PF} \
+		--sysconfdir=/etc/silc \
 		$(use_enable ipv6) \
 		$(use_enable debug) \
+		$(use_with threads pthreads) \
 		|| die "econf failed"
 }
 
@@ -37,16 +40,14 @@ src_install() {
 	fperms 600 /etc/silc
 	keepdir /var/log/${PN}
 
-	rm -rf \
-		"${D}"/usr/libsilc* \
-		"${D}"/usr/include \
-		"${D}"/etc/silc/silcd.{pub,prv}
+	rm -rf "${D}"/etc/silc/silcd.{pub,prv}
 
 	newinitd "${FILESDIR}/silcd.initd" silcd
 
 	sed -i \
 		-e 's:10.2.1.6:0.0.0.0:' \
 		-e 's:User = "nobody";:User = "silcd";:' \
+		-e 's:Group = "nobody";:Group = "silcd";:' \
 		"${D}"/etc/silc/silcd.conf
 }
 
