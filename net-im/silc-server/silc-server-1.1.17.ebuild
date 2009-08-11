@@ -21,10 +21,17 @@ RDEPEND="!<=net-im/silc-toolkit-0.9.12-r1
 src_configure() {
 	econf \
 		--disable-optimizations \
+		--disable-asm \
 		--with-logsdir=/var/log/${PN} \
 		--with-silcd-pid-file=/var/run/silcd.pid \
 		--docdir=/usr/share/doc/${PF} \
 		--sysconfdir=/etc/silc \
+		--datadir=/usr/share/${PN} \
+		--datarootdir=/usr/share/${PN} \
+		--mandir=/usr/share/man \
+		--includedir=/usr/include/${PN} \
+		--libdir=/usr/$(get_libdir)/${PN} \
+		--enable-shared=yes \
 		$(use_enable ipv6) \
 		$(use_enable debug) \
 		$(use_with threads pthreads) \
@@ -32,7 +39,7 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "make install failed"
+	emake -j1 DESTDIR="${D}" install || die "make install failed"
 
 	insinto /usr/share/doc/${PF}/examples
 	doins doc/examples/*.conf
