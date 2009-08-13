@@ -8,7 +8,7 @@ inherit eutils subversion distutils
 
 DESCRIPTION="Win32 memory dissection framework"
 HOMEPAGE="http://code.google.com/p/volatility/"
-ESVN_REPO_URI="http://${PN}.googlecode.com/svn/trunk/${PN^v}"
+ESVN_REPO_URI="http://${PN}.googlecode.com/svn/trunk/${PN/#v/V}"
 
 LICENSE="GPL"
 SLOT="0"

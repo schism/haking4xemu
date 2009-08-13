@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit eutils distutils
 
-MY_P=${P^v}
+MY_P=${P/#v/V}
 MY_P="${MY_P}_Beta"
 
 DESCRIPTION="Win32 memory dissection framework"
