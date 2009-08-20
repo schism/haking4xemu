@@ -2,3 +2,6 @@
 # going to have to cut a new release to fix the issue.
 =net-im/silc-server-1.1.16
 =net-im/silc-server-1.1.17
+
+# May or may not be ready; it's in a state of flux
+=net-im/ejabberd-2.1.0_beta1
