@@ -1,0 +1,8 @@
+#!/bin/sh
+
+exec env HOME=/var/run/ejabberd \
+         erl -pa /var/lib/ejabberd/ebin \
+             -noinput \
+             -sname ejabberdctl \
+             -s ejabberd_ctl \
+             -extra $@
