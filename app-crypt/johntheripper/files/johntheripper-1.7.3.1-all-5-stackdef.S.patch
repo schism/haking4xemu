@@ -6,7 +6,7 @@ diff -urpN john-1.7.3.1.orig/src/md5-mmx.S john-1.7.3.1/src/md5-mmx.S
  	ret
  
 +#ifdef __ELF__
-+.section .note.GNU-stack,""@progbits
++.section .note.GNU-stack,"",@progbits
 +#endif
 diff -urpN john-1.7.3.1.orig/src/sha1-mmx.S john-1.7.3.1/src/sha1-mmx.S
 --- john-1.7.3.1.orig/src/sha1-mmx.S	2009-06-26 14:03:21.093949076 -0600
@@ -17,5 +17,5 @@ diff -urpN john-1.7.3.1.orig/src/sha1-mmx.S john-1.7.3.1/src/sha1-mmx.S
  */
 +
 +#ifdef __ELF__
-+.section .note.GNU-stack,""@progbits
++.section .note.GNU-stack,"",@progbits
 +#endif
