@@ -21,8 +21,8 @@ SRC_URI="http://www.openwall.com/john/g/${MY_P}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc ~x86"
-IUSE="mmx altivec sse2 custom-cflags minimal mpi"
+KEYWORDS="alpha amd64 hppa ~mips ppc ~ppc64 sparc x86"
+IUSE="mmx altivec sse2 custom-cflags -minimal -mpi"
 
 # Seems a bit fussy with other MPI implementations.
 RDEPEND="!minimal? ( >=dev-libs/openssl-0.9.7 )
@@ -74,24 +74,30 @@ src_unpack() {
 		epatch "${WORKDIR}"/${MY_P}-${JUMBO}.diff
 		PATCHLIST="${PATCHLIST} ${JUMBO}-stackdef.S"
 	fi
-	PATCHLIST="${PATCHLIST} params.h mkdir-sandbox"
+	PATCHLIST="${PATCHLIST} cflags mkdir-sandbox"
 
 	cd "${S}/src"
 	for p in ${PATCHLIST}; do
 		epatch "${FILESDIR}/${P}-${p}.patch"
 	done
 
-	sed -e "s/LDFLAGS  *=  */override LDFLAGS += /" -e "/LDFLAGS/s/-s//" -i Makefile || die "sed Makefile failed"
+	if ! use minimal ; then
+		sed -e "s/LDFLAGS  *=  */override LDFLAGS += /" -e "/LDFLAGS/s/-s//" \
+			-e "/LDFLAGS/s/-L[^ ]*//g" -e "/CFLAGS/s/-[IL][^ ]*//g" \
+			-i Makefile || die "sed Makefile failed"
+	fi
 }
 
 src_compile() {
 	use custom-cflags || strip-flags
+	append-flags -fPIC -fPIE
+	append-ldflags -nopie
 
 	CPP=$(tc-getCXX) CC=$(tc-getCC) AS=$(tc-getCC) LD=$(tc-getCC)
 	use mpi && CPP=mpicxx CC=mpicc AS=mpicc LD=mpicc
 	emake -C src/\
 		CPP=${CPP} CC=${CC} AS=${AS} LD=${LD} \
-		CFLAGS="-c -Wall ${CFLAGS} -DJOHN_SYSTEMWIDE -DJOHN_SYSTEMWIDE_HOME=\"\\\"/etc/john\\\"\"" \
+		CFLAGS="-c -Wall ${CFLAGS} -DJOHN_SYSTEMWIDE -DJOHN_SYSTEMWIDE_HOME=\"\\\"${ROOT}/etc/john\\\"\" -DJOHN_SYSTEMWIDE_EXEC=\"\\\"${ROOT}/usr/libexec/john\\\"\"" \
 		LDFLAGS="${LDFLAGS}" \
 		OPT_NORMAL="" \
 		$(get_target) \
