@@ -91,7 +91,7 @@ src_install() {
 	fi
 }
 
-pkg_postinst() {
+pkg_preinst() {
 	if use suid ; then
 		enewgroup kismet
 		fowners root:kismet /usr/bin/kismet_capture
