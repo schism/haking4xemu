@@ -18,23 +18,23 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="+client kernel_linux +pcap pcre plugins +suid"
 
-DEPEND="pcap? ( net-libs/libpcap )
+DEPEND="dev-util/pkgconfig
+	pcap? ( net-libs/libpcap )
 	pcre? ( dev-libs/libpcre )
-	kernel_linux? ( dev-libs/libnl )
+	plugins? ( dev-libs/openssl )
+	kernel_linux? ( dev-libs/libnl
+		sys-libs/libcap )
 	client? ( sys-libs/ncurses )"
 RDEPEND="${DEPEND}"
 KISMET_PLUGINS="ptw spectools"
 
 pkg_setup() {
-	if has_version "=net-libs/libpcap-1.0.1_pre*" ; then
-		ewarn "Detected development version of libpcap"
-		ewarn "Kismet will work, but this version of libpcap has a broken"
+	if has_version "=net-libs/libpcap-1.0.1_pre*"; then
+		ewarn "Detected potentially broken development version of libpcap"
+		ewarn "Kismet will work, but this version of libpcap has had a broken"
 		ewarn "get_selectable_fd() implementation that will cause Kismet to"
 		ewarn "consume 100% CPU and disable local sources.  Use the 1.0.0"
 		ewarn "series to avoid this"
-	fi
-	if use suid ; then
-		enewgroup kismet
 	fi
 }
 
@@ -55,7 +55,7 @@ src_compile() {
 	emake || die "emake failed"
 	if use plugins ; then
 		local plugin
-		for plugin in $KISMET_PLUGINS ; do
+		for plugin in ${KISMET_PLUGINS} ; do
 			emake -C "plugin-$plugin" KIS_SRC_DIR="${S}" \
 				|| die "emake $plugin failed"
 		done
@@ -75,19 +75,25 @@ src_install() {
 
 	if use plugins ; then
 		local plugin
-		for plugin in $KISMET_PLUGINS ; do
+		for plugin in ${KISMET_PLUGINS} ; do
 			emake -C "plugin-$plugin" KIS_DEST_DIR="${D}/usr" install
 		done
 	fi
 
 	if use suid ; then
 		dobin kismet_capture
-		fowners root:kismet /usr/bin/kismet_capture
 		fperms 4550 /usr/bin/kismet_capture \
 			|| die "could not install setuid helper"
 		elog ""
 		elog "Kismet has been installed with a setuid-root helper binary"
 		elog "to enable minimal-root operation.  Users need to be part of"
 		elog "the 'kismet' group to perform captures from physical devices"
+	fi
+}
+
+pkg_postinst() {
+	if use suid ; then
+		enewgroup kismet
+		fowners root:kismet /usr/bin/kismet_capture
 	fi
 }
