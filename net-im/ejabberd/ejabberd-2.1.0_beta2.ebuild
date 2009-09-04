@@ -62,8 +62,11 @@ src_install() {
 		LOGDIR="${D}${JABBER_LOG}" \
 		install || die "install failed"
 
+	# clean up documentation directory
+	rm -Rf "${D}/usr/share/doc/ejabberd"
+
 	# remove the default ejabberdctl as we use our own
-	rm "${D}/sbin/ejabberdctl"
+	#rm "${D}/usr/sbin/ejabberdctl"
 
 	insinto ${JABBER_ETC}
 
@@ -84,7 +87,7 @@ src_install() {
 	fi
 
 	cd "${S}/doc"
-	dodoc "release_notes_${PV/_beta1/}.txt"
+	dodoc "release_notes_${PV/_beta2/}.txt"
 	dohtml *.{html,png}
 
 	# set up /usr/sbin/ejabberd wrapper
@@ -95,10 +98,10 @@ src_install() {
 	doexe "${T}/ejabberd" || die
 
 	# set up /usr/sbin/ejabberdctl wrapper
-	cat "${FILESDIR}/ejabberdctl-wrapper-3.template" \
-		| sed -e "s:\@libdir\@:$(get_libdir):g" -e "s:\@version\@:${PV}:g" \
-		> "${T}/ejabberdctl"
-	doexe "${T}/ejabberdctl"
+	#cat "${FILESDIR}/ejabberdctl-wrapper-3.template" \
+		#| sed -e "s:\@libdir\@:$(get_libdir):g" -e "s:\@version\@:${PV}:g" \
+		#> "${T}/ejabberdctl"
+	#doexe "${T}/ejabberdctl"
 
 	dodir /var/lib/ejabberd
 	newinitd "${FILESDIR}/${PN}-2.initd" ${PN} || die
