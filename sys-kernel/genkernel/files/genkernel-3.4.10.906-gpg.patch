@@ -1,0 +1,197 @@
+diff --git a/defaults/initrd.scripts b/defaults/initrd.scripts
+index 4c233bb..8e351f7 100755
+--- a/defaults/initrd.scripts
++++ b/defaults/initrd.scripts
+@@ -651,6 +651,7 @@ openLUKS() {
+ 	[ ! -e /sbin/cryptsetup ] && bad_msg "The ramdisk does not support LUKS" && exit 1
+ 	while [ 1 ]
+ 	do
++		local gpg_cmd=""
+ 		# if crypt_silent=1 and some error occurs, enter shell quietly
+ 		if [ \( ${CRYPT_SILENT} -eq 1 \) -a \( \( \( ${DEV_ERROR} -eq 1 \) -o \( ${KEY_ERROR} -eq 1 \) \) -o \( ${KEYDEV_ERROR} -eq 1 \) \) ]
+ 		then
+@@ -735,10 +736,17 @@ openLUKS() {
+ 					fi
+ 					# At this point a candidate key exists (either mounted before or not)
+ 					good_msg "${LUKS_KEY} on device ${LUKS_KEYDEV} found" ${CRYPT_SILENT}
+-					cryptsetup_options="-d ${mntkey}${LUKS_KEY}"
++					if [ $(echo ${LUKS_KEY} | grep -o '.gpg$') == ".gpg" ] && [ -e /sbin/gpg ] ; then
++						[ -e /dev/tty ] && mv /dev/tty /dev/tty.org
++						mknod /dev/tty c 5 1
++						cryptsetup_options="-d -"
++						gpg_cmd="/sbin/gpg --logger-file /dev/null --quiet --decrypt ${mntkey}${LUKS_KEY} |"
++					else
++						cryptsetup_options="-d ${mntkey}${LUKS_KEY}"
++					fi
+ 				fi
+ 				# At this point, keyfile or not, we're ready!
+-				crypt_filter "cryptsetup ${cryptsetup_options} luksOpen ${LUKS_DEVICE} ${LUKS_NAME}"
++				crypt_filter "${gpg_cmd}cryptsetup ${cryptsetup_options} luksOpen ${LUKS_DEVICE} ${LUKS_NAME}"
+ 				if [ $? -eq 0 ]
+ 				then
+ 					good_msg "LUKS device ${LUKS_DEVICE} opened" ${CRYPT_SILENT}
+diff --git a/gen_cmdline.sh b/gen_cmdline.sh
+index 20380ac..c838f15 100755
+--- a/gen_cmdline.sh
++++ b/gen_cmdline.sh
+@@ -93,6 +93,7 @@ longusage() {
+   echo "				ramdisk"
+   echo "	--luks			Include LUKS support"
+   echo "				--> 'emerge cryptsetup-luks' with USE=-dynamic"
++  echo "	--gpg			Include GPG-armored LUKS key support"
+   echo "	--no-busybox    Do not include busybox in the initramfs."
+   echo "	--unionfs       Include support for unionfs"
+   echo "	--netboot       Create a self-contained env in the initramfs"
+@@ -515,6 +516,10 @@ parse_cmdline() {
+ 			CMD_LUKS=1
+ 			print_info 2 "CMD_LUKS: ${CMD_LUKS}"
+ 			;;
++		--gpg)
++			CMD_GPG=1
++			print_info 2 "CMD_GPG: ${CMD_GPG}"
++			;;
+ 		--firmware)
+ 			CMD_FIRMWARE=1
+ 			print_info 2 "CMD_FIRMWARE: ${CMD_FIRMWARE}"
+diff --git a/gen_compile.sh b/gen_compile.sh
+index d87d2f4..f0ce245 100755
+--- a/gen_compile.sh
++++ b/gen_compile.sh
+@@ -620,3 +620,45 @@ compile_unionfs_fuse() {
+ 		rm -rf "${UNIONFS_FUSE_DIR}" > /dev/null
+ 	fi
+ }
++
++compile_gpg() {
++	if [ ! -f "${GPG_BINCACHE}" ]
++	then
++		[ ! -f "${GPG_SRCTAR}" ] &&
++			gen_die "Could not find gnupg source tarball: ${GPG_SRCTAR}. Please place it there, or place another version, changing /etc/genkernel.conf as necessary!"
++		cd "${TEMP}"
++		rm -rf "${GPG_DIR}"
++		tar -jxf "${GPG_SRCTAR}"
++		[ ! -d "${GPG_DIR}" ] &&
++			gen_die "gnupg directory ${GPG_DIR} invalid"
++		cd "${GPG_DIR}"
++		print_info 1 'gnupg: >> Configuring...'
++		# this has to be so long because --enable-minimal fails without an
++		# autoreconf thanks to autoconf-2.61
++		LDFLAGS='-static' CFLAGS='-Os' ./configure --prefix=/ \
++			--enable-static-rnd=linux --disable-dev-random --disable-asm \
++			--disable-selinux-support --disable-gnupg-iconv --disable-card-support \
++			--disable-agent-support --disable-bzip2 --disable-exec \
++			--disable-photo-viewers --disable-keyserver-helpers --disable-ldap \
++			--disable-hkp --disable-finger --disable-generic --disable-mailto \
++			--disable-keyserver-path --disable-dns-srv --disable-dns-pka \
++			--disable-dns-cert --disable-nls --disable-threads --disable-regex \
++			--disable-optimization --with-included-zlib --without-capabilities \
++			--without-tar --without-ldap --without-libcurl --without-mailprog \
++			--without-libpth-prefix --without-libiconv-prefix --without-libintl-prefix\
++			--without-zlib --without-bzip2 --without-libusb --without-readline \
++				>> ${LOGFILE} 2>&1 || gen_die 'Configuring gnupg failed!'
++		print_info 1 'gnupg: >> Compiling...'
++		MAKE=${UTILS_MAKE} compile_generic "" ""
++		print_info 1 'gnupg: >> Copying to cache...'
++		[ -f "${TEMP}/${GPG_DIR}/g10/gpg" ] ||
++			gen_die 'gnupg executable does not exist!'
++		strip "${TEMP}/${GPG_DIR}/g10/gpg" ||
++			gen_die 'Could not strip gpg binary!'
++		bzip2 -z -c "${TEMP}/${GPG_DIR}/g10/gpg" > "${GPG_BINCACHE}" ||
++			gen_die 'Could not copy the gpg binary to the package directory, does the directory exist?'
++
++		cd "${TEMP}"
++		rm -rf "${GPG_DIR}" > /dev/null
++	fi
++}
+diff --git a/gen_determineargs.sh b/gen_determineargs.sh
+index ed84798..4746ef9 100755
+--- a/gen_determineargs.sh
++++ b/gen_determineargs.sh
+@@ -109,6 +109,7 @@ determine_real_args() {
+ 	set_config_with_override 2 REAL_ROOT			CMD_REAL_ROOT
+ 	set_config_with_override 1 DISKLABEL            CMD_DISKLABEL
+ 	set_config_with_override 1 LUKS                 CMD_LUKS
++	set_config_with_override 1 GPG                  CMD_GPG
+ 	set_config_with_override 1 MDADM                CMD_MDADM
+ 	set_config_with_override 1 MULTIPATH            CMD_MULTIPATH
+ 	set_config_with_override 1 FIRMWARE             CMD_FIRMWARE
+@@ -131,6 +132,7 @@ determine_real_args() {
+ 	BLKID_BINCACHE=`cache_replace "${BLKID_BINCACHE}"`
+ 	FUSE_BINCACHE=`cache_replace "${FUSE_BINCACHE}"`
+ 	UNIONFS_FUSE_BINCACHE=`cache_replace "${UNIONFS_FUSE_BINCACHE}"`
++	GPG_BINCACHE=`cache_replace "${GPG_BINCACHE}"`
+   
+ 	DEFAULT_KERNEL_CONFIG=`arch_replace "${DEFAULT_KERNEL_CONFIG}"`
+ 	BUSYBOX_CONFIG=`arch_replace "${BUSYBOX_CONFIG}"`
+@@ -141,6 +143,7 @@ determine_real_args() {
+ 	BLKID_BINCACHE=`arch_replace "${BLKID_BINCACHE}"`
+ 	FUSE_BINCACHE=`arch_replace "${FUSE_BINCACHE}"`
+ 	UNIONFS_FUSE_BINCACHE=`arch_replace "${UNIONFS_FUSE_BINCACHE}"`
++	GPG_BINCACHE=`arch_replace "${GPG_BINCACHE}"`
+ 
+ 	if [ -n "${CMD_BOOTLOADER}" ]
+ 	then
+diff --git a/gen_funcs.sh b/gen_funcs.sh
+index 07a7f5f..ead4f88 100755
+--- a/gen_funcs.sh
++++ b/gen_funcs.sh
+@@ -500,7 +500,7 @@ set_config_with_override() {
+ }
+ 
+ check_distfiles() {
+-	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR
++	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR $GPG_SRCTAR
+ 	do
+ 		if [ ! -f "${i}" ]
+ 		then
+diff --git a/gen_initramfs.sh b/gen_initramfs.sh
+index 2ad0deb..9a78863 100755
+--- a/gen_initramfs.sh
++++ b/gen_initramfs.sh
+@@ -401,6 +401,25 @@ append_firmware() {
+ 	rm -r "${TEMP}/initramfs-firmware-temp/"
+ }
+ 
++append_gpg() {
++	if [ -d "${TEMP}/initramfs-gpg-temp" ]
++	then
++		rm -r "${TEMP}/initramfs-gpg-temp"
++	fi
++	cd ${TEMP}
++	mkdir -p "${TEMP}/initramfs-gpg-temp/sbin/"
++	if [ ! -e ${GPG_BINCACHE} ] ; then
++		print_info 1 '		GPG: Adding support (compiling binaries)...'
++		compile_gpg
++	fi
++	bzip2 -dc "${GPG_BINCACHE}" > "${TEMP}/initramfs-gpg-temp/sbin/gpg" ||
++		gen_die 'Could not extract gpg binary cache!'
++	chmod a+x "${TEMP}/initramfs-gpg-temp/sbin/gpg"
++	cd "${TEMP}/initramfs-gpg-temp/"
++	find . -print | cpio ${CPIO_ARGS} --append -F "${CPIO}"
++	rm -rf "${TEMP}/initramfs-gpg-temp" > /dev/null
++}
++
+ print_list()
+ {
+ 	local x
+@@ -588,6 +607,7 @@ create_initramfs() {
+ 	append_data 'mdadm' "${MDADM}"
+ 	append_data 'luks' "${LUKS}"
+ 	append_data 'multipath' "${MULTIPATH}"
++	append_data 'gpg' "${GPG}"
+ 
+ 	if [ "${NORAMDISKMODULES}" -eq '0' ]
+ 	then
+diff --git a/genkernel.conf b/genkernel.conf
+index 1995b88..ffef87c 100644
+--- a/genkernel.conf
++++ b/genkernel.conf
+@@ -178,3 +178,8 @@ UNIONFS_FUSE_VER="VERSION_UNIONFS_FUSE"
+ UNIONFS_FUSE_DIR="unionfs-fuse-${UNIONFS_FUSE_VER}"
+ UNIONFS_FUSE_SRCTAR="${DISTDIR}/unionfs-fuse-${UNIONFS_FUSE_VER}.tar.bz2"
+ UNIONFS_FUSE_BINCACHE="%%CACHE%%/unionfs-fuse-${UNIONFS_FUSE_VER}-%%ARCH%%.bz2"
++
++GPG_VER="VERSION_GPG"
++GPG_DIR="gnupg-${GPG_VER}"
++GPG_SRCTAR="${DISTDIR}/gnupg-${GPG_VER}.tar.bz2"
++GPG_BINCACHE="%%CACHE%%/gnupg-${GPG_VER}-%%ARCH%%.bz2"
