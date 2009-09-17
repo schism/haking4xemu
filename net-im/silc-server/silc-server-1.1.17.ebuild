@@ -17,7 +17,6 @@ IUSE="ipv6 debug threads"
 
 DEPEND=">=net-im/silc-toolkit-1.1.10"
 RDEPEND="${DEPEND}
-	!<=net-im/silc-toolkit-0.9.12-r1
 	!<=net-im/silc-client-1.0.1"
 
 src_configure() {
