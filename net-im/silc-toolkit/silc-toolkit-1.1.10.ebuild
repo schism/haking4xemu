@@ -26,33 +26,21 @@ src_prepare() {
 }
 
 src_configure() {
-	local myconf=""
-	use ipv6 && myconf="${myconf} --enable-ipv6"
-
 	econf \
 		--datadir=/usr/share/${PN} \
 		--datarootdir=/usr/share/${PN} \
 		--mandir=/usr/share/man \
 		--includedir=/usr/include/${PN} \
 		--sysconfdir=/etc/silc \
-		--with-helpdir=/usr/share/${PN}/help \
 		--libdir=/usr/$(get_libdir)/${PN} \
 		--docdir=/usr/share/doc/${PF} \
 		--disable-optimizations \
 		--with-simdir=/usr/$(get_libdir)/${PN}/modules \
+		$(use_enable ipv6) \
 		$(use_enable debug) \
-		$(use_with threads pthreads) \
-		${myconf}
+		$(use_with threads pthreads) || die "econf failed"
 }
 
 src_install() {
 	emake install DESTDIR="${D}" || die "make install failed"
-
-	rm -rf \
-		"${D}"/etc/${PN}/silcd.conf \
-		"${D}"/usr/share/man \
-		"${D}"/usr/share/doc/${PF}/examples \
-		"${D}"/usr/share/silc-toolkit \
-		"${D}"/var/log/silc-toolkit \
-		"${D}"/etc/silc
 }
