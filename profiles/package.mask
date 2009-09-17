@@ -1,4 +1,0 @@
-# Fails to install critical libraries in the past two versions, upstream is
-# going to have to cut a new release to fix the issue.
-=net-im/silc-server-1.1.16
-=net-im/silc-server-1.1.17
