@@ -32,6 +32,12 @@ RDEPEND="${DEPEND}"
 
 PROVIDE="virtual/jabber-server"
 
+src_prepare() {
+	# make compatible with jabber-base
+	sed -i -e 's:\(@sysconfdir@\|etc\|log\|run\|spool\)/ejabberd:\1/jabber:gi'\
+		doc/guide.* README src/{Makefile.in,*.template,*.cfg.example}
+}
+
 src_configure() {
 	cd src/
 	econf --enable-user=jabber \
@@ -65,9 +71,6 @@ src_install() {
 	# clean up documentation directory
 	rm -Rf "${D}/usr/share/doc/ejabberd"
 
-	# remove the default ejabberdctl as we use our own
-	#rm "${D}/usr/sbin/ejabberdctl"
-
 	insinto ${JABBER_ETC}
 
 	fowners -R jabber:jabber ${JABBER_ETC}
@@ -96,12 +99,6 @@ src_install() {
 		> "${T}/ejabberd"
 	exeinto /usr/sbin
 	doexe "${T}/ejabberd" || die
-
-	# set up /usr/sbin/ejabberdctl wrapper
-	#cat "${FILESDIR}/ejabberdctl-wrapper-3.template" \
-		#| sed -e "s:\@libdir\@:$(get_libdir):g" -e "s:\@version\@:${PV}:g" \
-		#> "${T}/ejabberdctl"
-	#doexe "${T}/ejabberdctl"
 
 	dodir /var/lib/ejabberd
 	newinitd "${FILESDIR}/${PN}-2.initd" ${PN} || die
