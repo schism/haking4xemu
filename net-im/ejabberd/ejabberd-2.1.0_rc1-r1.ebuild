@@ -100,7 +100,9 @@ src_install() {
 	exeinto /usr/sbin
 	doexe "${T}/ejabberd" || die
 
-	dodir /var/lib/ejabberd
+	keepdir /var/lib/ejabberd
+	fowners jabber:jabber /var/lib/ejabberd
+	fperms	750 /var/lib/ejabberd
 	newinitd "${FILESDIR}/${PN}-2.initd" ${PN} || die
 	newconfd "${FILESDIR}/${PN}-2.confd" ${PN} || die
 
