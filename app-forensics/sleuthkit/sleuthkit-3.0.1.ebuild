@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils flag-o-matic autotools
+inherit eutils flag-o-matic
 
 SLOT=0
 
@@ -11,29 +11,24 @@ HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 
 LICENSE="GPL-2 IBM"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
-IUSE="ewf aff hfs"
+KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86"
 
 DEPEND="ewf? ( app-forensics/libewf )
 	aff? ( app-forensics/afflib )"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	dev-perl/DateManip"
 
-#src_unpack() {
-	#unpack ${A}
-	#cd "${S}"
-	## AC_FUNC_REALLOC in configure.ac that hasn't been propagated
-	#eautoreconf
-#}
+IUSE="ewf aff hfs"
 
 src_compile() {
 	use hfs && append-flags "-DTSK_USE_HFS"
-	econf	$(use_enable aff afflib) \
-			$(use_enable ewf) \
+	econf $(use_enable aff afflib) \
+		$(use_enable ewf) \
 		|| die "configure failed"
 	emake || die "make failed"
 }
 
 src_install() {
-	emake install DESTDIR="${D}"
-	dodoc docs/*.txt README.txt CHANGES.txt
+	emake install DESTDIR="${D}" || die
+	dodoc docs/*.txt README.txt CHANGES.txt TODO.txt
 }
