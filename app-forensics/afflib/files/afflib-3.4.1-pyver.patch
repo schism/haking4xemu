@@ -1,0 +1,22 @@
+diff -up afflib-3.4.1/pyaff/Makefile.am.pyver afflib-3.4.1/pyaff/Makefile.am
+--- afflib-3.4.1/pyaff/Makefile.am.pyver	2009-09-24 22:42:06.534805852 +0200
++++ afflib-3.4.1/pyaff/Makefile.am	2009-09-24 22:45:13.306557135 +0200
+@@ -9,5 +9,5 @@ pyexec_LTLIBRARIES 	= pyaff.la
+ pyaff_la_SOURCES	= pyaff.c
+ pyaff_la_LIBADD		= ../lib/libafflib.la
+ pyaff_la_CPPFLAGS 	= $(PYTHON_CPPFLAGS)
+-pyaff_la_LDFLAGS 	= -module $(PYTHON_LDFLAGS)
++pyaff_la_LDFLAGS 	= -module -avoid-version $(PYTHON_LDFLAGS)
+ endif
+diff -up afflib-3.4.1/pyaff/Makefile.in.pyver afflib-3.4.1/pyaff/Makefile.in
+--- afflib-3.4.1/pyaff/Makefile.in.pyver	2009-09-24 08:08:53.000000000 +0200
++++ afflib-3.4.1/pyaff/Makefile.in	2009-09-24 22:45:15.322807098 +0200
+@@ -226,7 +226,7 @@ EXTRA_DIST = PKG-INFO README pyaff.c set
+ @HAVE_PYTHON_TRUE@pyaff_la_SOURCES = pyaff.c
+ @HAVE_PYTHON_TRUE@pyaff_la_LIBADD = ../lib/libafflib.la
+ @HAVE_PYTHON_TRUE@pyaff_la_CPPFLAGS = $(PYTHON_CPPFLAGS)
+-@HAVE_PYTHON_TRUE@pyaff_la_LDFLAGS = -module $(PYTHON_LDFLAGS)
++@HAVE_PYTHON_TRUE@pyaff_la_LDFLAGS = -module -avoid-version $(PYTHON_LDFLAGS)
+ all: all-am
+ 
+ .SUFFIXES:
