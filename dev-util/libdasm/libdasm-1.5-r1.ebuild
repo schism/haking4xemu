@@ -1,8 +1,9 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+EAPI="2"
 
-inherit eutils multilib distutils
+inherit eutils distutils
 
 DESCRIPTION="Simple x86 disassembly library"
 HOMEPAGE="http://www.nologin.org/main.pl?action=codeView&codeId=49&"
@@ -16,9 +17,7 @@ IUSE="python"
 DEPEND="python? ( virtual/python )"
 RDEPEND=${DEPEND}
 
-src_unpack() {
-	unpack "${A}"
-	cd "${S}"
+src_prepare() {
 	sed -i -e "s:CC  *= :CC ?= :
 		s:CFLAGS  *= -Wall -O. :CFLAGS += :
 		s:PREFIX  *= :PREFIX ?= :
@@ -34,9 +33,9 @@ src_compile() {
 }
 
 src_install() {
-	dolib libdasm.a || die 'install failed'
-	dosym libdasm.so libdasm.so.1.0
-	dolib.so libdasm.so* || die 'install failed'
+	dolib.a libdasm.a || die
+	newlib.so libdasm.so libdasm.so.1.0 || die
+	dosym libdasm.so.1.0 /usr/$(get_libdir)/libdasm.so || die
 	insinto /usr/include
 	doins libdasm.h || die 'install failed'
 	dobin examples/das
