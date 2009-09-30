@@ -15,6 +15,7 @@ IUSE=""
 
 DEPEND="app-forensics/volatility-driverscan
 	app-forensics/volatility-fileobjscan
+	app-forensics/volatility-intrscan
 	app-forensics/volatility-mhl
 	app-forensics/volatility-misc
 	app-forensics/volatility-moyix
