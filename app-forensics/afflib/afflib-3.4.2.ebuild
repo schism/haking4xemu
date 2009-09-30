@@ -26,7 +26,7 @@ DEPEND="
 RDEPEND=${DEPEND}
 
 src_prepare() {
-	epatch ${FILESDIR}/${P}-{gcc43,pyver}.patch
+	epatch ${FILESDIR}/${P}-pyver.patch
 }
 
 src_configure() {
