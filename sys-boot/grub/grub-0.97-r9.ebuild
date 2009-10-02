@@ -1,13 +1,13 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-boot/grub/grub-0.97-r9.ebuild,v 1.4 2009/05/15 21:11:24 maekke Exp $
+# $Header: $
 
 # XXX: we need to review menu.lst vs grub.conf handling.  We've been converting
 #      all systems to grub.conf (and symlinking menu.lst to grub.conf), but
 #      we never updated any of the source code (it still all wants menu.lst),
 #      and there is no indication that upstream is making the transition.
 
-inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
+inherit mount-boot eutils flag-o-matic toolchain-funcs autotools linux-info
 
 PATCHVER="1.9.1" # Should match the revision ideally
 DESCRIPTION="GNU GRUB Legacy boot loader"
@@ -19,7 +19,7 @@ SRC_URI="mirror://gentoo/${P}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x86-fbsd"
+KEYWORDS="amd64 x86 ~x86-fbsd"
 IUSE="custom-cflags ncurses netboot static tpm"
 
 DEPEND="ncurses? (
@@ -27,6 +27,13 @@ DEPEND="ncurses? (
 		amd64? ( app-emulation/emul-linux-x86-baselibs )
 	)"
 PROVIDE="virtual/bootloader"
+
+pkg_setup() {
+	local arch="$(tc-arch)"
+	case ${arch} in
+		amd64) CONFIG_CHECK='~IA32_EMULATION' check_extra_config ;;
+	esac
+}
 
 src_unpack() {
 	unpack ${A}
