@@ -10,12 +10,12 @@ MOUNT=mount_ewf-20090529.py
 
 DESCRIPTION="Implementation of the EWF (SMART and EnCase) image format"
 HOMEPAGE="http://libewf.sourceforge.net"
-SRC_URI="mirror://sourceforge/libewf/${MY_P}.tar.gz
+SRC_URI="mirror://sourceforge/libewf/${MY_P}-1.tar.gz
 	python? ( mirror://sourceforge/libewf/${MOUNT} )"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug python rawio unicode v2-api"
 
 DEPEND="|| (	
