@@ -3,7 +3,7 @@
 # $Header: $
 EAPI=2
 
-inherit eutils autotools
+inherit eutils
 
 MY_P=${P/${PN}/${PN}-beta}
 MOUNT=mount_ewf-20090529.py
@@ -15,10 +15,13 @@ SRC_URI="mirror://sourceforge/libewf/${MY_P}.tar.gz
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug python rawio unicode v2-api"
 
-DEPEND="sys-libs/e2fsprogs-libs
+DEPEND="|| (	
+			>=sys-apps/util-linux-2.16
+			<=sys-libs/e2fsprogs-libs-1.41.8
+		)
 	sys-libs/zlib
 	dev-libs/openssl
 	unicode? ( dev-libs/libuna )
