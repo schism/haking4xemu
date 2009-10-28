@@ -18,7 +18,7 @@ IUSE=""
 S=${WORKDIR}/${PN}
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-no-ugly----lines.diff
+	epatch "${FILESDIR}"/${PN}-2.63-no-ugly----lines.diff
 	sed -i -e "s:sbin/functions.sh:etc/init.d/functions.sh:" \
 			-e "s: -O2 : ${CFLAGS} :" \
 			-e "s:gcc :$(tc-getCC) :" \
