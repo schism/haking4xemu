@@ -15,7 +15,7 @@ MY_P=${PN}-${MY_PV}
 
 DESCRIPTION="The Erlang Jabber Daemon"
 HOMEPAGE="http://www.ejabberd.im/"
-SRC_URI="http://www.process-one.net/downloads/ejabberd/${MY_PV}/sources/${P}.tar.gz"
+SRC_URI="http://www.process-one.net/downloads/ejabberd/${MY_PV}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
