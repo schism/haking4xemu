@@ -18,8 +18,11 @@ IUSE="nls"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
-src_configure() {
+src_prepare() {
 	eautoreconf
+}
+
+src_configure() {
 	econf $(use_enable nls) --enable-hdparm || die "econf failed"
 }
 
