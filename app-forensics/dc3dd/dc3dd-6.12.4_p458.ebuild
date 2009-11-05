@@ -11,7 +11,7 @@ DESCRIPTION="Patched version of dd with features intended for forensic acquisiti
 HOMEPAGE="http://dc3dd.sourceforge.net"
 SRC_URI="mirror://sourceforge/dc3dd/${PN}-${MY_PV}.tar.gz"
 
-LICENSE="GPL"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="nls"
