@@ -1,6 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+EAPI=2
 
 inherit eutils java-utils-2
 
@@ -17,15 +18,21 @@ DEPEND="dev-libs/openssl
 	java? ( >=virtual/jdk-1.5 )"
 RDEPEND=${DEPEND}
 
+src_prepare() {
+	epatch ${FILESDIR}/${P}-stdint.patch
+}
+
 src_compile() {
-	econf || die "econf failed"
-	emake || die "emake failed"
-	use java && emake -C plugins plugins.jar \
-		|| die "compiling java plugins failed"
+	default
+	if use java; then
+		emake -C plugins plugins.jar || die "compiling java plugins failed"
+	fi
 }
 
 src_install() {
-	emake install DESTDIR="${D}"
+	emake install DESTDIR="${D}" || die "install failed"
 	dodoc ChangeLog README TODO fiwalk_all.py
-	use java && java-pkg_dojar plugins/plugins.jar
+	if use java; then
+		java-pkg_dojar plugins/plugins.jar || die "installing java plugins failed"
+	fi
 }
