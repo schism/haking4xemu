@@ -1,9 +1,9 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI=2
 
-inherit eutils
+inherit eutils flag-o-matic
 
 MY_P=${P/${PN}/${PN}-beta}
 MOUNT=mount_ewf-20090529.py
@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug python rawio unicode v2-api"
 
-DEPEND="|| (	
+DEPEND="|| (
 			>=sys-apps/util-linux-2.16
 			<=sys-libs/e2fsprogs-libs-1.41.8
 		)
@@ -29,6 +29,7 @@ DEPEND="|| (
 RDEPEND="${DEPEND}"
 
 src_configure() {
+	append-flags -fno-strict-aliasing # avoid type-punned warnings
 	econf \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable rawio low-level-functions) \
@@ -41,5 +42,5 @@ src_configure() {
 src_install() {
 	emake install DESTDIR="${D}" || die
 	dodoc AUTHORS ChangeLog NEWS README documents/*.txt
-	use python && newsbin ${DISTDIR}/${MOUNT} mount_ewf
+	use python && newsbin ${DISTDIR}/${MOUNT} mount_ewf || die "install mount_ewf failed"
 }
