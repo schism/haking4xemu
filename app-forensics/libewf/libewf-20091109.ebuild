@@ -42,5 +42,8 @@ src_configure() {
 src_install() {
 	emake install DESTDIR="${D}" || die
 	dodoc AUTHORS ChangeLog NEWS README documents/*.txt
-	use python && newsbin ${DISTDIR}/${MOUNT} mount_ewf || die "install mount_ewf failed"
+	if use python; then
+		newsbin ${DISTDIR}/${MOUNT} mount_ewf \
+			|| die "install mount_ewf failed"
+	fi
 }
