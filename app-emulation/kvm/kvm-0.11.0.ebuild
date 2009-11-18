@@ -90,7 +90,7 @@ src_prepare() {
 src_configure() {
 	local mycc conf_opts audio_opts
 
-	conf_opts="--disable-blobs --disable-darwin-user --disable-bsd-user"
+	conf_opts="--disable-darwin-user --disable-bsd-user"
 
 	use curl || conf_opts="$conf_opts --disable-curl"
 	use gnutls || conf_opts="$conf_opts --disable-vnc-tls"
