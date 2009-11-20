@@ -5,7 +5,7 @@
 [ req ]
 # you can increase this value, but be aware that it will make things much slower
 # this should be a power of 2!
-default_bits = 1024
+default_bits = 2048
 # leave the rest of these alone!
 encrypt_key = yes
 distinguished_name = req_dn
