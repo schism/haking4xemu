@@ -39,7 +39,7 @@ RDEPEND="sys-libs/readline
 	parted? ( >=sys-apps/parted-1.8 )
 	phyp? ( net-libs/libssh2 )
 	policykit? ( >=sys-auth/policykit-0.6 )
-	qemu? || ( app-emulation/qemu-kvm >=app-emulation/qemu-0.10.0 )
+	qemu? ( || ( app-emulation/qemu-kvm >=app-emulation/qemu-0.10.0 ) )
 	sasl? ( dev-libs/cyrus-sasl )
 	selinux? ( sys-libs/libselinux )
 	virtualbox? ( || ( >=app-emulation/virtualbox-ose-2.2.0 >=app-emulation/virtualbox-bin-2.2.0 ) )
