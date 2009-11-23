@@ -3,6 +3,8 @@
 # $Header: $
 EAPI="2"
 
+inherit eutils
+
 DESCRIPTION="Bloom file manipulation tools"
 HOMEPAGE="http://www.afflib.org/"
 SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
@@ -13,6 +15,10 @@ KEYWORDS="~x86 ~amd64"
 
 DEPEND="dev-libs/openssl"
 RDEPEND=${DEPEND}
+
+src_prepare() {
+	epatch ${FILESDIR}/${P}-stdint.patch
+}
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
