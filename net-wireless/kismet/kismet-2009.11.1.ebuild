@@ -15,7 +15,8 @@ SRC_URI="http://www.kismetwireless.net/code/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc ~x86"
+
 KISMET_PLUGINS="autowep ptw spectools"
 IUSE="+client kernel_linux +pcre +pcap +suid ${KISMET_PLUGINS}"
 
@@ -50,7 +51,7 @@ src_compile() {
 
 	for plugin in ${KISMET_PLUGINS}; do
 		if use ${plugin}; then
-			emake -C plugin-${plugin} KIS_SRC_DIR="${S}" KIS_DEST_DIR="${D}/usr" \
+			emake -C plugin-${plugin} KIS_SRC_DIR="${S}" \
 				|| die "emake in plugin-${plugin} failed"
 		fi
 	done
