@@ -18,10 +18,6 @@ DEPEND="dev-libs/openssl
 	java? ( >=virtual/jdk-1.5 )"
 RDEPEND=${DEPEND}
 
-src_prepare() {
-	epatch ${FILESDIR}/${P}-stdint.patch
-}
-
 src_compile() {
 	default
 	if use java; then
