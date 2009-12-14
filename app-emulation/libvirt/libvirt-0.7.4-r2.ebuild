@@ -1,6 +1,8 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.7.4.ebuild,v 1.1 2009/11/23 01:52:33 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.7.4-r2.ebuild,v 1.1 2009/12/11 12:33:01 flameeyes Exp $
+
+BACKPORTS=1
 
 EAPI="2"
 
@@ -8,7 +10,8 @@ inherit eutils python
 
 DESCRIPTION="C toolkit to manipulate virtual machines"
 HOMEPAGE="http://www.libvirt.org/"
-SRC_URI="http://libvirt.org/sources/${P}.tar.gz"
+SRC_URI="http://libvirt.org/sources/${P}.tar.gz
+	mirror://gentoo/${P}-backports-${BACKPORTS}.tar.bz2"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -31,7 +34,6 @@ RDEPEND="sys-libs/readline
 	kvm? ( app-emulation/qemu-kvm )
 	libvirtd? ( net-misc/bridge-utils )
 	lvm? ( >=sys-fs/lvm2-2.02.48-r2 )
-	network? ( net-dns/dnsmasq net-firewall/iptables )
 	nfs? ( net-fs/nfs-utils )
 	numa? ( sys-process/numactl )
 	one? ( dev-libs/xmlrpc-c )
@@ -48,6 +50,10 @@ RDEPEND="sys-libs/readline
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	nls? ( sys-devel/gettext )"
+
+src_prepare() {
+	EPATCH_SUFFIX="patch" EPATCH_SOURCE="${S}/patches" epatch
+}
 
 src_configure() {
 	local myconf=""
@@ -140,6 +146,15 @@ pkg_postinst() {
 
 	elog "To allow normal users to connect to libvirtd you must change the"
 	elog " unix sock group and/or perms in /etc/libvirt/libvirtd.conf"
+	elog
+	elog "For the basic networking support (bridged and routed networks)"
+	elog "you don't need any extra software. For more complex network modes"
+	elog "including but not limited to NATed network, you'll need the"
+	elog "following packages":
+	elog
+	elog "	net-dns/dnsmasq"
+	elog "	net-firewall/iptables"
+	elog "	net-firewall/ebtables"
 	elog
 	ewarn "If you have a DNS server setup on your machine, you will have"
 	ewarn "to configure /etc/dnsmasq.conf to enable the following settings: "
