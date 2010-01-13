@@ -9,7 +9,7 @@ SLOT=0
 
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
-SRC_URI="http://www.sleuthkit.org/betas/${P/_beta/b}.tar.gz"
+SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 
 LICENSE="GPL-2 IBM"
 KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86"
@@ -19,9 +19,7 @@ DEPEND="ewf? ( app-forensics/libewf )
 RDEPEND="${DEPEND}
 	dev-perl/DateManip"
 
-IUSE="ewf aff hfs"
-
-S="${WORKDIR}/${P/_beta/b}"
+IUSE="ewf aff"
 
 src_configure() {
 	econf\
@@ -32,5 +30,5 @@ src_configure() {
 
 src_install() {
 	emake install DESTDIR="${D}" || die
-	dodoc docs/*.txt README.txt CHANGES.txt
+	dodoc README.txt NEWS.txt
 }
