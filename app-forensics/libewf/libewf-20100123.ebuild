@@ -9,13 +9,13 @@ MOUNT=mount_ewf-20090529.py
 
 DESCRIPTION="Implementation of the EWF (SMART and EnCase) image format"
 HOMEPAGE="http://libewf.sourceforge.net"
-SRC_URI="mirror://sourceforge/libewf/${P}.tar.gz
+SRC_URI="mirror://sourceforge/libewf/${PN}-alpha-${PV}.tar.gz
 	python? ( mirror://sourceforge/libewf/${MOUNT} )"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
-IUSE="debug python rawio unicode v2-api"
+KEYWORDS=""
+IUSE="debug python rawio unicode"
 
 DEPEND="|| (
 			>=sys-apps/util-linux-2.16
@@ -34,7 +34,6 @@ src_configure() {
 		$(use_enable rawio low-level-functions) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output) \
-		$(use_enable v2-api) \
 		$(use_enable python)
 }
 
