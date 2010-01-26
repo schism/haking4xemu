@@ -1,0 +1,28 @@
+#!/sbin/runscript
+# Copyright 1999-2010 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	use dns
+	need net
+	provide jabber-server
+}
+
+start() {
+	local edcopts
+	if [ ! -n $EJABBERD_NODE ]; then
+		edcopts="--node $EJABBERD_NODE"
+		ewarn "Please, do not define EJABBERD_NODE any more. Configure NODE at"
+		ewarn "/etc/jabber/ejabberdctl.cfg and drop EJABBERD_NODE from /etc/conf.d/ejabberd"
+	fi
+	ebegin "Starting ejabberd"
+	/usr/sbin/ejabberdctl $edcopts $EJABBERDCTL_OPT start
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ejabberd"
+	/usr/sbin/ejabberdctl stop
+	eend $?
+}

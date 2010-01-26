@@ -14,5 +14,6 @@
 	<flag name='web'>Enable web admin interface</flag>
 	<flag name="captcha">Support for CAPTCHA Forms (XEP-158)</flag>
 	<flag name="mod_proxy65">Support for SOCKS5 Bytestreams (XEP-0065)</flag>
+	<flag name="mod_statsdx">Measures several statistics, and provides a new section in ejabberd Web Admin to view them.</flag>
     </use>
 </pkgmetadata>
