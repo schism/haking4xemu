@@ -12,7 +12,7 @@ HOMEPAGE="http://libewf.sourceforge.net"
 SRC_URI="mirror://sourceforge/libewf/${PN}-alpha-${PV}.tar.gz
 	python? ( mirror://sourceforge/libewf/${MOUNT} )"
 
-LICENSE="BSD"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug python rawio unicode"

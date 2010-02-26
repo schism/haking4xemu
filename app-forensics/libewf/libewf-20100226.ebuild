@@ -12,7 +12,7 @@ HOMEPAGE="http://libewf.sourceforge.net"
 SRC_URI="mirror://sourceforge/libewf/${P}.tar.gz
 	python? ( mirror://sourceforge/libewf/${MOUNT} )"
 
-LICENSE="BSD"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
 IUSE="debug python rawio unicode v2-api"
