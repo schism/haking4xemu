@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI="2"
@@ -19,7 +19,7 @@ DEPEND="ewf? ( app-forensics/libewf )
 RDEPEND="${DEPEND}
 	dev-perl/DateManip"
 
-IUSE="ewf aff"
+IUSE="aff ewf"
 
 src_configure() {
 	econf\
