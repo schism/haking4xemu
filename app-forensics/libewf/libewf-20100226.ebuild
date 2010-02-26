@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI=2
@@ -21,10 +21,10 @@ DEPEND="|| (
 			>=sys-apps/util-linux-2.16
 			<=sys-libs/e2fsprogs-libs-1.41.8
 		)
-	sys-libs/zlib
-	dev-libs/openssl
 	unicode? ( dev-libs/libuna )
-	python? ( dev-lang/python )"
+	python? ( dev-lang/python )
+	sys-libs/zlib
+	dev-libs/openssl"
 RDEPEND="${DEPEND}"
 
 src_configure() {
