@@ -8,7 +8,7 @@ DESCRIPTION="Library and tools to access the Microsoft Internet Explorer (MSIE) 
 HOMEPAGE="http://libmsiecf.sourceforge.net/"
 SRC_URI="mirror://sourceforge/libmsiecf/${PN}-alpha-${PV}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug unicode"
