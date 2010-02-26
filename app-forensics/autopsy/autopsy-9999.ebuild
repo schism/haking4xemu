@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,13 +16,16 @@ IUSE=""
 
 # Runtime depend on grep and file deliberate
 RDEPEND=">=dev-lang/perl-5.8.0
-	>=app-forensics/sleuthkit-3.0.0
+	>=app-forensics/sleuthkit-3.1.0
 	sys-apps/grep
 	sys-apps/file"
 DEPEND=""
 
 src_compile() {
-	yes '' | ./configure 2>&1 >/dev/null
+	./configure 2>&1 >/dev/null << EOF
+n
+/tmp
+EOF
 
 	echo "#!/usr/bin/perl -wT" > autopsy
 	echo "use lib '/usr/lib/autopsy/';" >> autopsy
@@ -31,7 +34,6 @@ src_compile() {
 
 	sed -i "s:conf.pl:/etc/autopsy.pl:" $(grep -lr conf\.pl ./)
 	sed -i "s:INSTALLDIR = .*:INSTALLDIR = \'/usr/lib/autopsy\';:" conf.pl
-	sed -i "s:LOCKDIR = .*:LOCKDIR = \'/tmp\';:" conf.pl
 }
 
 src_install() {

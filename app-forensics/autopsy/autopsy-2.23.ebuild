@@ -1,6 +1,6 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-forensics/autopsy/autopsy-2.21.ebuild,v 1.1 2009/03/08 16:46:20 patrick Exp $
+# $Header: $
 
 inherit eutils
 
@@ -31,7 +31,7 @@ EOF
 	echo "use lib '/usr/lib/autopsy/lib/';" >> autopsy
 	cat base/autopsy.base >> autopsy
 
-	sed -i 's:conf.pl:/etc/autopsy.pl:' $(grep -lr conf\.pl ./)
+	sed -i "s:conf.pl:/etc/autopsy.pl:" $(grep -lr conf\.pl ./)
 	sed -i "s:INSTALLDIR = .*:INSTALLDIR = \'/usr/lib/autopsy\';:" conf.pl
 }
 
