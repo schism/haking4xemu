@@ -8,7 +8,7 @@ DESCRIPTION="Library and tooling to support the Microsoft Outlook Nickfile (NK2)
 HOMEPAGE="http://www.sourceforge.net/projects/libnk2"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="unicode debug"
