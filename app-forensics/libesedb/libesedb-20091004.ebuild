@@ -8,7 +8,7 @@ DESCRIPTION="Library and tools to access the Extensible Storage Engine (ESE) Dat
 HOMEPAGE="http://www.sourceforge.net/projects/libesedb"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="unicode debug"
