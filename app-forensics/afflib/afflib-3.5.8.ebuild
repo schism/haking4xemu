@@ -25,10 +25,6 @@ DEPEND="
 	dev-libs/openssl"
 RDEPEND=${DEPEND}
 
-src_prepare() {
-	epatch ${FILESDIR}/${PN}-3.4.2-pyver.patch
-}
-
 src_configure() {
 	econf --enable-qemu \
 		$(use_enable fuse) \
