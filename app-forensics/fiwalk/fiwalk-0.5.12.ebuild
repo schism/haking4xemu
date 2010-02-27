@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI=2
@@ -27,7 +27,7 @@ src_compile() {
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
-	dodoc ChangeLog README TODO fiwalk_all.py
+	dodoc ChangeLog README TODO plugins/*.py
 	if use java; then
 		java-pkg_dojar plugins/plugins.jar || die "installing java plugins failed"
 	fi
