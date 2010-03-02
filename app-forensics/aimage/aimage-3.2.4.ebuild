@@ -9,7 +9,7 @@ SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
 EAPI="2"
 LICENSE="BSD-4"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64 ~x64-macos"
 IUSE="ewf readline ncurses"
 
 DEPEND="ewf? ( app-forensics/libewf )

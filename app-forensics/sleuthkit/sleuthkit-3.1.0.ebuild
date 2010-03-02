@@ -12,7 +12,7 @@ HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 
 LICENSE="GPL-2 IBM"
-KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86"
+KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x64-macos"
 
 DEPEND="ewf? ( app-forensics/libewf )
 	aff? ( app-forensics/afflib )"

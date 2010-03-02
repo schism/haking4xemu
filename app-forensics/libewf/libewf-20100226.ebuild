@@ -14,12 +14,13 @@ SRC_URI="mirror://sourceforge/libewf/${P}.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
+KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86 ~x64-macos"
 IUSE="debug python rawio unicode v2-api"
 
 DEPEND="|| (
 			>=sys-apps/util-linux-2.16
 			<=sys-libs/e2fsprogs-libs-1.41.8
+			sys-darwin/libsystem
 		)
 	unicode? ( dev-libs/libuna )
 	python? ( dev-lang/python )
