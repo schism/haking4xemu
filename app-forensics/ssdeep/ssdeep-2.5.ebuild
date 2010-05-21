@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI="2"
@@ -9,7 +9,7 @@ SRC_URI="mirror://sourceforge/ssdeep/${P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86 ~x86-macos ~x64-macos"
 IUSE=""
 
 DEPEND=""
