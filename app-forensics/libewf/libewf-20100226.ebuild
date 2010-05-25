@@ -22,10 +22,10 @@ DEPEND="|| (
 			<=sys-libs/e2fsprogs-libs-1.41.8
 			sys-darwin/libsystem
 		)
-	unicode? ( dev-libs/libuna )
-	python? ( dev-lang/python )
 	sys-libs/zlib
-	dev-libs/openssl"
+	dev-libs/openssl
+	unicode? ( dev-libs/libuna )
+	python? ( dev-lang/python )"
 RDEPEND="${DEPEND}"
 
 src_configure() {

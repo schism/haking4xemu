@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI=2
@@ -14,17 +14,18 @@ SRC_URI="mirror://sourceforge/libewf/${PN}-alpha-${PV}.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS=""
-IUSE="debug python rawio unicode"
+KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86 ~x64-macos ~x86-macos"
+IUSE="debug python rawio unicode +v1-api"
 
 DEPEND="|| (
 			>=sys-apps/util-linux-2.16
 			<=sys-libs/e2fsprogs-libs-1.41.8
+			sys-darwin/libsystem
 		)
-	sys-libs/zlib
-	dev-libs/openssl
 	unicode? ( dev-libs/libuna )
-	python? ( dev-lang/python )"
+	python? ( dev-lang/python )
+	sys-libs/zlib
+	dev-libs/openssl"
 RDEPEND="${DEPEND}"
 
 src_configure() {
@@ -34,6 +35,7 @@ src_configure() {
 		$(use_enable rawio low-level-functions) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output) \
+		$(use_enable v1-api) \
 		$(use_enable python)
 }
 
