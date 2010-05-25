@@ -11,7 +11,7 @@ SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
 
 LICENSE="BSD-4"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos"
+KEYWORDS="~x86 ~amd64 ~x86-macos ~x64-macos"
 IUSE="ewf fuse python s3 threads"
 
 DEPEND="
