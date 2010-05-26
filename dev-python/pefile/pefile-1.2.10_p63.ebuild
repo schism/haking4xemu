@@ -13,7 +13,7 @@ SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
 
 DEPEND=""

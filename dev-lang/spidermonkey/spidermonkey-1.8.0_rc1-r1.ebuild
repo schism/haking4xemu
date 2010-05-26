@@ -13,7 +13,7 @@ SRC_URI="http://ftp.mozilla.org/pub/mozilla.org/js/${MY_P}.tar.gz"
 
 LICENSE="NPL-1.1"
 SLOT="0"
-KEYWORDS="alpha amd64 hppa ppc ppc64 sparc x86 ~x86-fbsd ~x64-macos"
+KEYWORDS="alpha amd64 hppa ppc ppc64 sparc x86 ~x86-fbsd ~x64-macos ~x86-macos"
 IUSE="threadsafe nls"
 
 S="${WORKDIR}/js/src"

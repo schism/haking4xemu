@@ -9,7 +9,7 @@ HOMEPAGE="http://ftimes.sourceforge.net/FTimes/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tgz"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86 ~x64-macos ~x86-macos"
 IUSE="pcre ssl static"
 
 DEPEND=" sys-libs/zlib

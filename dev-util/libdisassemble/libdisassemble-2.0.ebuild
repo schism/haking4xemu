@@ -10,7 +10,7 @@ SRC_URI="${HOMEPAGE}/downloads/${PN}${PV}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 S="${WORKDIR}/${PN}"
 
 src_compile() {

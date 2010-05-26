@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/libmsiecf/${PN}-alpha-${PV}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~x64-macos"
+KEYWORDS="~amd64 ~x86 ~x64-macos ~x86-macos"
 IUSE="debug unicode"
 
 DEPEND="

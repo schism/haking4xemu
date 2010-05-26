@@ -10,7 +10,7 @@ SRC_URI="http://projects.sentinelchicken.org/data/downloads/${P}.tar.gz"
 
 LICENSE="GPL2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos"
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.3"

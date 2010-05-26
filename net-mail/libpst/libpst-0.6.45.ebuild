@@ -12,7 +12,7 @@ SRC_URI="http://www.five-ten-sg.com/${PN}/packages/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ppc64 ~x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~ppc64 ~x86 ~x64-macos ~x86-macos"
 IUSE="debug dii python"
 
 RDEPEND="dii? ( media-gfx/imagemagick[png] )"

@@ -11,7 +11,7 @@ SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x86-macos ~amd64-macos"
+KEYWORDS="~x86 ~amd64 ~x86-macos ~x64-macos"
 
 DEPEND="dev-libs/openssl"
 RDEPEND=${DEPEND}
