@@ -28,6 +28,10 @@ DEPEND="|| (
 	python? ( dev-lang/python )"
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	epatch ${FILESDIR}/${P}-liberror.patch
+}
+
 src_configure() {
 	append-flags -fno-strict-aliasing # avoid type-punned warnings
 	econf \
