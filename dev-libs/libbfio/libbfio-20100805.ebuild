@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos"
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="unicode"
 
 DEPEND="dev-libs/libuna"
