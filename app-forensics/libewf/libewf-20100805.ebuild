@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/libewf/${PN}-alpha-${PV}.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86 ~x64-macos ~x86-macos"
+KEYWORDS=""
 IUSE="debug python rawio unicode +v1-api"
 
 DEPEND="|| (
@@ -45,5 +45,14 @@ src_install() {
 	if use python; then
 		newsbin ${DISTDIR}/${MOUNT} mount_ewf \
 			|| die "install mount_ewf failed"
+	fi
+}
+
+pkg_postinst() {
+	if use v1-api;then
+		ewarn "You have installed a v2-api version of libewf with v1-api"
+		ewarn "compatibility enabled.  Most applications using libewf are"
+		ewarn "still broken in this mode.  Use libewf-20100226 if any EWF"
+		ewarn "applications other than libewf are important"
 	fi
 }
