@@ -14,8 +14,8 @@ SRC_URI="mirror://sourceforge/libewf/${P}.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86 ~x64-macos"
-IUSE="debug python rawio unicode v2-api"
+KEYWORDS="amd64 arm hppa ppc s390 sparc x86 x64-macos x86-macos"
+IUSE="debug python rawio unicode"
 
 DEPEND="|| (
 			>=sys-apps/util-linux-2.16
@@ -35,8 +35,8 @@ src_configure() {
 		$(use_enable rawio low-level-functions) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output) \
-		$(use_enable v2-api) \
-		$(use_enable python)
+		$(use_enable python) \
+		--disable-v2-api
 }
 
 src_install() {
