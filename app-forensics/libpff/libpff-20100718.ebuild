@@ -10,10 +10,11 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos"
-IUSE="debug unicode"
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
+IUSE="debug python unicode"
 
 DEPEND="unicode? ( dev-libs/libuna )
+		python? ( dev-lang/python )
 		dev-libs/libbfio"
 RDEPEND=${DEPEND}
 
@@ -22,6 +23,7 @@ src_configure() {
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug debug-output) \
 		$(use_enable debug verbose-output) \
+		$(use_enable python) \
 		|| die "configure failed"
 }
 
