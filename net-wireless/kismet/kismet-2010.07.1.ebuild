@@ -17,7 +17,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86 ~x64-macos ~x86-macos"
 
-KISMET_PLUGINS="autowep ptw spectools"
+KISMET_PLUGINS="autowep btscan ptw spectools"
 IUSE="+client kernel_linux +pcre +pcap +suid ${KISMET_PLUGINS}"
 
 RDEPEND="pcap? ( net-libs/libpcap )
@@ -27,11 +27,12 @@ RDEPEND="pcap? ( net-libs/libpcap )
 		sys-libs/libcap
 	)
 	pcre? ( dev-libs/libpcre )
+	btscan? ( net-wireless/bluez )
 	ptw? ( dev-libs/openssl )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
-S="${WORKDIR}/${MY_P}"
+S=${WORKDIR}/${MY_P}
 
 src_prepare() {
 	sed -i -e 's:# *logprefix=.*:logprefix=/tmp:' conf/kismet.conf.in \
@@ -77,7 +78,6 @@ src_install() {
 
 	if use suid; then
 		dobin kismet_capture || die
-		fperms 4550 /usr/bin/kismet_capture || die
 	fi
 }
 
@@ -85,6 +85,7 @@ pkg_preinst() {
 	if use suid; then
 		enewgroup kismet
 		fowners root:kismet /usr/bin/kismet_capture
+		fperms 4550 /usr/bin/kismet_capture || die
 		elog "Kismet has been installed with a setuid-root helper binary"
 		elog "to enable minimal-root operation.  Users need to be part of"
 		elog "the 'kismet' group to perform captures from physical devices."
