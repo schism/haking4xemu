@@ -36,8 +36,5 @@ src_configure() {
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
-	#use s3 || {
-		#rm -f "${D}/usr/bin/s3"
-	#}
 	dodoc BUGLIST.txt README ChangeLog AUTHORS README_*.txt
 }
