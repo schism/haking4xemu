@@ -29,8 +29,7 @@ src_compile() {
 src_install() {
 	dobin bin/grokevt*
 	doman doc/man/man1/* doc/man/man7/*
-	python_version
-	insinto /usr/$(get_libdir)/python${PYVER}/site-packages
+	insinto $(python_get_sitedir)
 	doins lib/grokevt.py
 	mkdir -p ${D}/etc/grokevt/systems/
 	cp -Rf etc/systems/example ${D}/etc/grokevt/systems/
