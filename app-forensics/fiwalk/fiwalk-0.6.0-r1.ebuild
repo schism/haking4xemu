@@ -15,6 +15,7 @@ KEYWORDS="~x86 ~amd64 ~x86-macos ~x64-macos"
 IUSE='java'
 
 DEPEND="dev-libs/openssl
+	>=app-forensics/sleuthkit-3.0
 	java? ( >=virtual/jdk-1.5 )"
 RDEPEND=${DEPEND}
 
