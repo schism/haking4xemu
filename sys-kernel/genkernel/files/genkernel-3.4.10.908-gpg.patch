@@ -1,8 +1,8 @@
 diff --git a/defaults/initrd.scripts b/defaults/initrd.scripts
-index 4c233bb..8e351f7 100755
+index f14333a..93daa5a 100755
 --- a/defaults/initrd.scripts
 +++ b/defaults/initrd.scripts
-@@ -651,6 +651,7 @@ openLUKS() {
+@@ -742,6 +742,7 @@ openLUKS() {
  	[ ! -e /sbin/cryptsetup ] && bad_msg "The ramdisk does not support LUKS" && exit 1
  	while [ 1 ]
  	do
@@ -10,12 +10,12 @@ index 4c233bb..8e351f7 100755
  		# if crypt_silent=1 and some error occurs, enter shell quietly
  		if [ \( ${CRYPT_SILENT} -eq 1 \) -a \( \( \( ${DEV_ERROR} -eq 1 \) -o \( ${KEY_ERROR} -eq 1 \) \) -o \( ${KEYDEV_ERROR} -eq 1 \) \) ]
  		then
-@@ -735,10 +736,17 @@ openLUKS() {
+@@ -826,10 +827,17 @@ openLUKS() {
  					fi
  					# At this point a candidate key exists (either mounted before or not)
  					good_msg "${LUKS_KEY} on device ${LUKS_KEYDEV} found" ${CRYPT_SILENT}
 -					cryptsetup_options="-d ${mntkey}${LUKS_KEY}"
-+					if [ $(echo ${LUKS_KEY} | grep -o '.gpg$') == ".gpg" ] && [ -e /sbin/gpg ] ; then
++					if [ $(echo ${LUKS_KEY} | grep -o '.gpg$') = ".gpg" ] && [ -e /sbin/gpg ] ; then
 +						[ -e /dev/tty ] && mv /dev/tty /dev/tty.org
 +						mknod /dev/tty c 5 1
 +						cryptsetup_options="-d -"
@@ -31,10 +31,10 @@ index 4c233bb..8e351f7 100755
  				then
  					good_msg "LUKS device ${LUKS_DEVICE} opened" ${CRYPT_SILENT}
 diff --git a/gen_cmdline.sh b/gen_cmdline.sh
-index 20380ac..c838f15 100755
+index 3dcb65d..1bf5de3 100755
 --- a/gen_cmdline.sh
 +++ b/gen_cmdline.sh
-@@ -93,6 +93,7 @@ longusage() {
+@@ -97,6 +97,7 @@ longusage() {
    echo "				ramdisk"
    echo "	--luks			Include LUKS support"
    echo "				--> 'emerge cryptsetup-luks' with USE=-dynamic"
@@ -42,7 +42,7 @@ index 20380ac..c838f15 100755
    echo "	--no-busybox    Do not include busybox in the initramfs."
    echo "	--unionfs       Include support for unionfs"
    echo "	--netboot       Create a self-contained env in the initramfs"
-@@ -515,6 +516,10 @@ parse_cmdline() {
+@@ -524,6 +525,10 @@ parse_cmdline() {
  			CMD_LUKS=1
  			print_info 2 "CMD_LUKS: ${CMD_LUKS}"
  			;;
@@ -54,14 +54,13 @@ index 20380ac..c838f15 100755
  			CMD_FIRMWARE=1
  			print_info 2 "CMD_FIRMWARE: ${CMD_FIRMWARE}"
 diff --git a/gen_compile.sh b/gen_compile.sh
-index d87d2f4..f0ce245 100755
+index e58c101..5dd218d 100755
 --- a/gen_compile.sh
 +++ b/gen_compile.sh
-@@ -620,3 +620,45 @@ compile_unionfs_fuse() {
- 		rm -rf "${UNIONFS_FUSE_DIR}" > /dev/null
+@@ -665,3 +665,44 @@ compile_iscsi() {
  	fi
  }
-+
+ 
 +compile_gpg() {
 +	if [ ! -f "${GPG_BINCACHE}" ]
 +	then
@@ -74,8 +73,8 @@ index d87d2f4..f0ce245 100755
 +			gen_die "gnupg directory ${GPG_DIR} invalid"
 +		cd "${GPG_DIR}"
 +		print_info 1 'gnupg: >> Configuring...'
-+		# this has to be so long because --enable-minimal fails without an
-+		# autoreconf thanks to autoconf-2.61
++		# --enable-minimal works, but it doesn't reduce the command length much.
++		# Given its history and the precision this needs, explicit is cleaner.
 +		LDFLAGS='-static' CFLAGS='-Os' ./configure --prefix=/ \
 +			--enable-static-rnd=linux --disable-dev-random --disable-asm \
 +			--disable-selinux-support --disable-gnupg-iconv --disable-card-support \
@@ -104,10 +103,10 @@ index d87d2f4..f0ce245 100755
 +	fi
 +}
 diff --git a/gen_determineargs.sh b/gen_determineargs.sh
-index ed84798..4746ef9 100755
+index d911f07..d34e5bc 100755
 --- a/gen_determineargs.sh
 +++ b/gen_determineargs.sh
-@@ -109,6 +109,7 @@ determine_real_args() {
+@@ -110,6 +110,7 @@ determine_real_args() {
  	set_config_with_override 2 REAL_ROOT			CMD_REAL_ROOT
  	set_config_with_override 1 DISKLABEL            CMD_DISKLABEL
  	set_config_with_override 1 LUKS                 CMD_LUKS
@@ -115,7 +114,7 @@ index ed84798..4746ef9 100755
  	set_config_with_override 1 MDADM                CMD_MDADM
  	set_config_with_override 1 MULTIPATH            CMD_MULTIPATH
  	set_config_with_override 1 FIRMWARE             CMD_FIRMWARE
-@@ -131,6 +132,7 @@ determine_real_args() {
+@@ -133,6 +134,7 @@ determine_real_args() {
  	BLKID_BINCACHE=`cache_replace "${BLKID_BINCACHE}"`
  	FUSE_BINCACHE=`cache_replace "${FUSE_BINCACHE}"`
  	UNIONFS_FUSE_BINCACHE=`cache_replace "${UNIONFS_FUSE_BINCACHE}"`
@@ -123,7 +122,7 @@ index ed84798..4746ef9 100755
    
  	DEFAULT_KERNEL_CONFIG=`arch_replace "${DEFAULT_KERNEL_CONFIG}"`
  	BUSYBOX_CONFIG=`arch_replace "${BUSYBOX_CONFIG}"`
-@@ -141,6 +143,7 @@ determine_real_args() {
+@@ -144,6 +146,7 @@ determine_real_args() {
  	BLKID_BINCACHE=`arch_replace "${BLKID_BINCACHE}"`
  	FUSE_BINCACHE=`arch_replace "${FUSE_BINCACHE}"`
  	UNIONFS_FUSE_BINCACHE=`arch_replace "${UNIONFS_FUSE_BINCACHE}"`
@@ -132,23 +131,23 @@ index ed84798..4746ef9 100755
  	if [ -n "${CMD_BOOTLOADER}" ]
  	then
 diff --git a/gen_funcs.sh b/gen_funcs.sh
-index 07a7f5f..ead4f88 100755
+index cfb9d6b..6af595e 100755
 --- a/gen_funcs.sh
 +++ b/gen_funcs.sh
-@@ -500,7 +500,7 @@ set_config_with_override() {
+@@ -498,7 +498,7 @@ set_config_with_override() {
  }
  
  check_distfiles() {
--	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR
-+	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR $GPG_SRCTAR
+-	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR $ISCSI_SRCTAR
++	for i in $BUSYBOX_SRCTAR $DEVICE_MAPPER_SRCTAR $MULTIPATH_SRCTAR $LVM_SRCTAR $DMRAID_SRCTAR $E2FSPROGS_SRCTAR $ISCSI_SRCTAR $GPG_SRCTAR
  	do
  		if [ ! -f "${i}" ]
  		then
 diff --git a/gen_initramfs.sh b/gen_initramfs.sh
-index 2ad0deb..9a78863 100755
+index f420a2d..65d849e 100755
 --- a/gen_initramfs.sh
 +++ b/gen_initramfs.sh
-@@ -401,6 +401,25 @@ append_firmware() {
+@@ -451,6 +451,25 @@ append_firmware() {
  	rm -r "${TEMP}/initramfs-firmware-temp/"
  }
  
@@ -174,19 +173,19 @@ index 2ad0deb..9a78863 100755
  print_list()
  {
  	local x
-@@ -588,6 +607,7 @@ create_initramfs() {
+@@ -641,6 +660,7 @@ create_initramfs() {
  	append_data 'mdadm' "${MDADM}"
  	append_data 'luks' "${LUKS}"
  	append_data 'multipath' "${MULTIPATH}"
 +	append_data 'gpg' "${GPG}"
  
- 	if [ "${NORAMDISKMODULES}" -eq '0' ]
+ 	if [ "${NORAMDISKMODULES}" = '0' ]
  	then
 diff --git a/genkernel.conf b/genkernel.conf
-index 1995b88..ffef87c 100644
+index 66e22b4..e492936 100644
 --- a/genkernel.conf
 +++ b/genkernel.conf
-@@ -178,3 +178,8 @@ UNIONFS_FUSE_VER="VERSION_UNIONFS_FUSE"
+@@ -190,3 +190,8 @@ UNIONFS_FUSE_VER="VERSION_UNIONFS_FUSE"
  UNIONFS_FUSE_DIR="unionfs-fuse-${UNIONFS_FUSE_VER}"
  UNIONFS_FUSE_SRCTAR="${DISTDIR}/unionfs-fuse-${UNIONFS_FUSE_VER}.tar.bz2"
  UNIONFS_FUSE_BINCACHE="%%CACHE%%/unionfs-fuse-${UNIONFS_FUSE_VER}-%%ARCH%%.bz2"

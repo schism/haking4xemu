@@ -1,19 +1,20 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-kernel/genkernel/genkernel-3.4.10.906.ebuild,v 1.1 2009/08/05 13:27:24 agaffney Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-kernel/genkernel/genkernel-3.4.10.908.ebuild,v 1.3 2011/01/07 16:20:57 sping Exp $
 
-# genkernel-9999        -> latest SVN
-# genkernel-9999.REV    -> use SVN REV
+# genkernel-9999        -> latest Git master
+# genkernel-99999       -> latest Git experimental
 # genkernel-VERSION     -> normal genkernel release
 
 VERSION_BUSYBOX='1.7.4'
 VERSION_DMAP='1.02.22'
 VERSION_DMRAID='1.0.0.rc14'
 VERSION_E2FSPROGS='1.40.9'
-VERSION_LVM='2.02.28'
 VERSION_FUSE='2.7.4'
+VERSION_ISCSI='2.0-871'
+VERSION_LVM='2.02.28'
 VERSION_UNIONFS_FUSE='0.22'
-VERSION_GPG='1.4.10'
+VERSION_GPG='1.4.11'
 
 MY_HOME="http://wolf31o2.org"
 RH_HOME="ftp://sources.redhat.com/pub"
@@ -27,6 +28,7 @@ COMMON_URI="${DM_HOME}/dmraid-${VERSION_DMRAID}.tar.bz2
 		${RH_HOME}/dm/device-mapper.${VERSION_DMAP}.tgz
 		${RH_HOME}/dm/old/device-mapper.${VERSION_DMAP}.tgz
 		${BB_HOME}/busybox-${VERSION_BUSYBOX}.tar.bz2
+		http://www.open-iscsi.org/bits/open-iscsi-${VERSION_ISCSI}.tar.gz
 		mirror://sourceforge/e2fsprogs/e2fsprogs-${VERSION_E2FSPROGS}.tar.gz
 		mirror://sourceforge/fuse/fuse-${VERSION_FUSE}.tar.gz
 		http://podgorny.cz/unionfs-fuse/releases/unionfs-fuse-${VERSION_UNIONFS_FUSE}.tar.bz2
@@ -34,16 +36,20 @@ COMMON_URI="${DM_HOME}/dmraid-${VERSION_DMRAID}.tar.bz2
 
 if [[ ${PV} == 9999* ]]
 then
-	[[ ${PV} == 9999.* ]] && ESVN_UPDATE_CMD="svn up -r ${PV/9999./}"
-	EGIT_REPO_URI="git://git.wolf31o2.org/projs/genkernel.git"
+	EGIT_REPO_URI="git://git.overlays.gentoo.org/proj/genkernel.git"
+	[[ ${PV} == 99999* ]] && EGIT_BRANCH=experimental
 	inherit git bash-completion eutils
-	S="${WORKDIR}"
+	S="${WORKDIR}/${PN}"
 	SRC_URI="${COMMON_URI}"
+	KEYWORDS=""
 else
 	inherit bash-completion eutils
 	SRC_URI="mirror://gentoo/${P}.tar.bz2
 		${MY_HOME}/sources/genkernel/${P}.tar.bz2
 		${COMMON_URI}"
+	# Please don't touch individual KEYWORDS.  Since this is maintained/tested by
+	# Release Engineering, it's easier for us to deal with all arches at once.
+	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
 fi
 
 DESCRIPTION="Gentoo automatic kernel building scripts"
@@ -52,16 +58,15 @@ HOMEPAGE="http://www.gentoo.org"
 LICENSE="GPL-2"
 SLOT="0"
 RESTRICT=""
-# Please don't touch individual KEYWORDS.  Since this is maintained/tested by
-# Release Engineering, it's easier for us to deal with all arches at once.
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
-#KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 s390 sparc x86"
-#KEYWORDS=""
 IUSE="ibm selinux"
 
 DEPEND="sys-fs/e2fsprogs
 	selinux? ( sys-libs/libselinux )"
 RDEPEND="${DEPEND} app-arch/cpio"
+
+if [[ ${PV} == 9999* ]]; then
+	DEPEND="${DEPEND} app-text/asciidoc"
+fi
 
 src_unpack() {
 	if [[ ${PV} == 9999* ]] ; then
@@ -76,12 +81,14 @@ src_unpack() {
 
 src_install() {
 	# This block updates genkernel.conf
-	sed -e "s:VERSION_DMAP:$VERSION_DMAP:" \
+	sed \
+		-e "s:VERSION_BUSYBOX:$VERSION_BUSYBOX:" \
+		-e "s:VERSION_DMAP:$VERSION_DMAP:" \
 		-e "s:VERSION_DMRAID:$VERSION_DMRAID:" \
 		-e "s:VERSION_E2FSPROGS:$VERSION_E2FSPROGS:" \
-		-e "s:VERSION_LVM:$VERSION_LVM:" \
-		-e "s:VERSION_BUSYBOX:$VERSION_BUSYBOX:" \
 		-e "s:VERSION_FUSE:$VERSION_FUSE:" \
+		-e "s:VERSION_ISCSI:$VERSION_ISCSI:" \
+		-e "s:VERSION_LVM:$VERSION_LVM:" \
 		-e "s:VERSION_UNIONFS_FUSE:$VERSION_UNIONFS_FUSE:" \
 		-e "s:VERSION_GPG:$VERSION_GPG:" \
 		"${S}"/genkernel.conf > "${T}"/genkernel.conf \
@@ -112,6 +119,7 @@ src_install() {
 		"${DISTDIR}"/busybox-${VERSION_BUSYBOX}.tar.bz2 \
 		"${DISTDIR}"/fuse-${VERSION_FUSE}.tar.gz \
 		"${DISTDIR}"/unionfs-fuse-${VERSION_UNIONFS_FUSE}.tar.bz2 \
+		"${DISTDIR}"/open-iscsi-${VERSION_ISCSI}.tar.gz \
 		"${DISTDIR}"/gnupg-${VERSION_GPG}.tar.bz2 \
 		"${D}"/var/cache/genkernel/src || die "Copying distfiles..."
 
