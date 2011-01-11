@@ -1,3 +1,0 @@
-# Upstream has declared this is withdrawn from support.  Still usable, but
-# recommends using guymager.
-app-forensics/aimage
