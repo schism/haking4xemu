@@ -11,7 +11,14 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE=""
+IUSE="nls"
+DEPEND="virtual/libintl
+	virtual/libiconv"
+RDEPEND=${DEPEND}
+
+src_configure() {
+	econf $(use_enable nls)
+}
 
 src_install() {
 	emake install DESTDIR="${D}" || die "install failed"
