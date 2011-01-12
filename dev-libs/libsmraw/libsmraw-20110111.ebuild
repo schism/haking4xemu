@@ -4,7 +4,7 @@
 EAPI="2"
 
 MY_P=${P/${PN}/${PN}-alpha}
-DESCRIPTION="Library that provides RAW file abstraction"
+DESCRIPTION="Library to support the storage media (SM) (split) RAW format"
 HOMEPAGE="http://www.sourceforge.net/projects/libsmio"
 SRC_URI="mirror://sourceforge/libsmio/${MY_P}.tar.gz"
 
