@@ -3,7 +3,7 @@
 # $Header: $
 EAPI="2"
 
-inherit eutils flag-o-matic
+inherit eutils flag-o-matic autotools
 
 SLOT=0
 
@@ -15,16 +15,23 @@ LICENSE="GPL-2 IBM"
 KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
 
 DEPEND="ewf? ( app-forensics/libewf )
+	qcow? ( dev-libs/libqcow )
 	aff? ( app-forensics/afflib )"
 RDEPEND="${DEPEND}
 	dev-perl/DateManip"
 
-IUSE="aff ewf"
+IUSE="aff ewf qcow"
+
+src_prepare() {
+	epatch ${FILESDIR}/${P}-qcow.patch
+	eautoreconf
+}
 
 src_configure() {
 	econf\
 		$(use_with aff afflib) \
 		$(use_with ewf libewf) \
+		$(use_with qcow libqcow) \
 	|| die "configure failed"
 }
 

@@ -1,0 +1,506 @@
+--- sleuthkit-3.2.1.orig/tsk3/img/qcow.c	1970-01-01 01:00:00.000000000 +0100
++++ sleuthkit-3.2.1/tsk3/img/qcow.c	2011-03-04 16:29:51.943061328 +0100
+@@ -0,0 +1,333 @@
++/*
++ * The Sleuth Kit - Add on for QEMU Copy-On-Write (QCOW) image support
++ *
++ * Copyright (c) 2011 Joachim Metz <jbmetz@users.sourceforge.net>
++ *
++ * qcow
++ *
++ * This software is distributed under the Common Public License 1.0
++ */
++
++/** \file qcow.c
++ * Internal code for TSK to interface with libqcow.
++ */
++
++#include "tsk_img_i.h"
++
++#if HAVE_LIBQCOW
++
++#include "qcow.h"
++
++#define TSK_QCOW_ERROR_STRING_SIZE	512
++
++static \
++ssize_t qcow_image_read(
++         TSK_IMG_INFO *img_info,
++         TSK_OFF_T offset,
++         char *buffer,
++         size_t size )
++{
++	char error_string[ TSK_QCOW_ERROR_STRING_SIZE ];
++
++	IMG_QCOW_INFO *qcow_info    = (IMG_QCOW_INFO *) img_info;
++	libqcow_error_t *qcow_error = NULL;
++	ssize_t read_count          = 0;
++
++	if( tsk_verbose != 0 )
++	{
++		tsk_fprintf(
++		 stderr,
++		 "qcow_read: byte offset: %" PRIuOFF " len: %" PRIuSIZE "\n",
++		 offset,
++		 size );
++	}
++	if( offset > img_info->size )
++	{
++		tsk_error_reset();
++
++		tsk_errno = TSK_ERR_IMG_READ_OFF;
++
++		snprintf(
++		 tsk_errstr,
++		 TSK_ERRSTR_L,
++		 "split_read - %" PRIuOFF,
++		 offset );
++
++		return( -1 );
++	}
++	read_count = libqcow_file_read_random(
++	              qcow_info->file,
++	              buffer,
++	              size,
++	              offset,
++	              &qcow_error );
++
++	if( read_count < 0 )
++	{
++		tsk_error_reset();
++
++		tsk_errno = TSK_ERR_IMG_READ;
++
++		if( libqcow_error_backtrace_sprint(
++		     qcow_error,
++		     error_string,
++		     TSK_QCOW_ERROR_STRING_SIZE ) == -1 )
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_read - offset: %" PRIuOFF " - len: %" PRIuSIZE " - %s",
++			 offset,
++			 size,
++			 strerror( errno ) );
++		}
++		else
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_read - offset: %" PRIuOFF " - len: %" PRIuSIZE "\n%s",
++			 offset,
++			 size,
++			 error_string );
++		}
++                libqcow_error_free(
++                 &qcow_error );
++
++		return( -1 );
++	}
++	return( read_count );
++}
++
++static \
++void qcow_image_imgstat(
++      TSK_IMG_INFO *img_info,
++      FILE * hFile )
++{
++	tsk_fprintf(
++	 hFile,
++	 "IMAGE FILE INFORMATION\n"
++	 "--------------------------------------------\n"
++	 "Image Type:\t\tqcow\n"
++	 "\nSize of data in bytes:\t%" PRIuOFF "\n",
++	 img_info->size );
++
++	return;
++}
++
++static \
++void qcow_image_close(
++      TSK_IMG_INFO *img_info )
++{
++	IMG_QCOW_INFO *qcow_info = (IMG_QCOW_INFO *) img_info;
++
++	libqcow_file_close(
++	 qcow_info->file,
++	 NULL );
++	libqcow_file_free(
++	 &( qcow_info->file ),
++	 NULL );
++	free(
++	 img_info );
++}
++
++TSK_IMG_INFO *qcow_open(
++               int num_img,
++               const TSK_TCHAR * const images[],
++               unsigned int a_ssize )
++{
++	char error_string[ TSK_QCOW_ERROR_STRING_SIZE ];
++
++	IMG_QCOW_INFO *qcow_info    = NULL;
++	libqcow_error_t *qcow_error = NULL;
++	TSK_IMG_INFO *img_info      = NULL;
++
++	qcow_info = (IMG_QCOW_INFO *) tsk_malloc(
++	                               sizeof( IMG_QCOW_INFO ) );
++
++	if( qcow_info == NULL )
++	{
++		return NULL;
++	}
++	img_info = (TSK_IMG_INFO *) qcow_info;
++
++	/* Check the file signature before we call the library open
++	 */
++#if defined( TSK_WIN32 )
++	if( libqcow_check_file_signature_wide(
++	     images[ 0 ],
++	     &qcow_error ) != 1 )
++#else
++	if( libqcow_check_file_signature(
++	     images[ 0 ],
++	     &qcow_error ) != 1 )
++#endif
++	{
++		tsk_error_reset();
++
++		tsk_errno = TSK_ERR_IMG_MAGIC;
++
++		if( libqcow_error_backtrace_sprint(
++		     qcow_error,
++		     error_string,
++		     TSK_QCOW_ERROR_STRING_SIZE ) == -1 )
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open: Not an QCOW file" );
++		}
++		else
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open: Not an QCOW file\n%s",
++			 error_string );
++		}
++                libqcow_error_free(
++                 &qcow_error );
++
++		free(
++		 qcow_info );
++
++		if(tsk_verbose != 0 )
++		{
++			tsk_fprintf(
++			 stderr,
++			 "Not an QCOW file\n" );
++		}
++		return( NULL );
++	}
++	if( libqcow_file_initialize(
++	     &( qcow_info->file ),
++	     &qcow_error ) != 1 )
++	{
++        	tsk_error_reset();
++
++	        tsk_errno = TSK_ERR_IMG_OPEN;
++
++		if( libqcow_error_backtrace_sprint(
++		     qcow_error,
++		     error_string,
++		     TSK_QCOW_ERROR_STRING_SIZE ) == -1 )
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open file: %" PRIttocTSK ": Error opening",
++			 images[ 0 ] );
++		}
++		else
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open file: %" PRIttocTSK ": Error opening\n%s",
++			 images[ 0 ],
++			 error_string );
++		}
++		free(
++		 qcow_info);
++
++		if( tsk_verbose != 0 )
++		{
++			tsk_fprintf(
++			 stderr,
++			 "Unable to create QCOW file\n" );
++		}
++		return( NULL );
++	}
++#if defined( TSK_WIN32 )
++	if( libqcow_file_open_wide(
++	     qcow_info->file,
++	     images[ 0 ],
++	     LIBQCOW_OPEN_READ,
++	     &qcow_error ) != 1 )
++#else
++	if( libqcow_file_open(
++	     qcow_info->file,
++	     images[ 0 ],
++	     LIBQCOW_OPEN_READ,
++	     &qcow_error ) != 1 )
++#endif
++	{
++        	tsk_error_reset();
++
++	        tsk_errno = TSK_ERR_IMG_OPEN;
++
++	        snprintf(
++		 tsk_errstr,
++		 TSK_ERRSTR_L,
++		 "qcow_open file: %" PRIttocTSK ": Error opening",
++		 images[ 0 ] );
++
++	        free(
++		 qcow_info );
++
++		if( tsk_verbose != 0 )
++		{
++			tsk_fprintf(
++			 stderr,
++			 "Error opening QCOW file\n" );
++		}
++		return( NULL );
++	}
++	if( libqcow_file_get_media_size(
++	     qcow_info->file,
++	     (size64_t *) &( img_info->size ),
++	     &qcow_error ) != 1 )
++	{
++		tsk_error_reset();
++
++		tsk_errno = TSK_ERR_IMG_OPEN;
++
++		if( libqcow_error_backtrace_sprint(
++		     qcow_error,
++		     error_string,
++		     TSK_QCOW_ERROR_STRING_SIZE ) == -1 )
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open file: %" PRIttocTSK ": Error getting size of image",
++			 images[ 0 ] );
++		}
++		else
++		{
++			snprintf(
++			 tsk_errstr,
++			 TSK_ERRSTR_L,
++			 "qcow_open file: %" PRIttocTSK ": Error getting size of image\n%s",
++			 images[ 0 ],
++			 error_string );
++		}
++		free(
++		 qcow_info );
++
++		if( tsk_verbose != 0 )
++		{
++			tsk_fprintf(
++			 stderr,
++			 "Error getting size of QCOW file\n" );
++		}
++		return( NULL );
++	}
++	if( a_ssize != 0 )
++	{
++		img_info->sector_size = a_ssize;
++	}
++	else
++	{
++		img_info->sector_size = 512;
++	}
++	img_info->itype   = TSK_IMG_TYPE_QCOW_QCOW;
++	img_info->read    = &qcow_image_read;
++	img_info->close   = &qcow_image_close;
++	img_info->imgstat = &qcow_image_imgstat;
++
++	return( img_info );
++}
++
++#endif /* HAVE_LIBQCOW */
++
+--- sleuthkit-3.2.1.orig/tsk3/img/qcow.h	1970-01-01 01:00:00.000000000 +0100
++++ sleuthkit-3.2.1/tsk3/img/qcow.h	2011-03-04 16:29:51.944184392 +0100
+@@ -0,0 +1,48 @@
++/*
++ * The Sleuth Kit - Add on for QEMU Copy-On-Write (QCOW) image support
++ *
++ * Copyright (c) 2011 Joachim Metz <jbmetz@users.sourceforge.net>
++ *
++ * This software is distributed under the Common Public License 1.0
++ */
++
++/* 
++ * Header files for QCOW-specific data structures and functions. 
++ */
++
++#if !defined( _TSK_IMG_QCOW_H )
++#define _TSK_IMG_QCOW_H
++
++#if defined( TSK_WIN32 )
++#include <config_msc.h>
++#endif
++
++#if HAVE_LIBQCOW
++
++#include <libqcow.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++extern \
++TSK_IMG_INFO *qcow_open(
++               int,
++               const TSK_TCHAR * const images[],
++               unsigned int a_ssize );
++
++typedef struct
++{
++	TSK_IMG_INFO img_info;
++
++	libqcow_file_t *file;
++
++} IMG_QCOW_INFO;
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif /* HAVE_LIBQCOW */
++
++#endif
+--- sleuthkit-3.2.1.orig/tsk3/img/img_types.c	2011-03-04 16:26:25.774059510 +0100
++++ sleuthkit-3.2.1/tsk3/img/img_types.c	2011-03-04 16:29:51.946186198 +0100
+@@ -40,6 +40,9 @@
+ #if HAVE_LIBEWF
+     {"ewf", TSK_IMG_TYPE_EWF_EWF, "Expert Witness format (encase)"},
+ #endif
++#if HAVE_LIBQCOW
++    {"qcow", TSK_IMG_TYPE_QCOW_QCOW, "QEMU Copy-On-Write"},
++#endif
+     {"split", TSK_IMG_TYPE_RAW_SPLIT, "Split raw files"},
+     {0},
+ };
+--- sleuthkit-3.2.1.orig/tsk3/img/img_open.c	2011-03-04 16:26:25.775059461 +0100
++++ sleuthkit-3.2.1/tsk3/img/img_open.c	2011-03-04 16:29:52.020062240 +0100
+@@ -28,6 +28,10 @@
+ #include "ewf.h"
+ #endif
+ 
++#if HAVE_LIBQCOW
++#include "qcow.h"
++#endif
++
+ 
+ 
+ /**
+@@ -113,7 +117,7 @@
+      */
+     if (type == TSK_IMG_TYPE_DETECT) {
+         TSK_IMG_INFO *img_set = NULL;
+-#if HAVE_LIBAFFLIB || HAVE_LIBEWF
++#if HAVE_LIBAFFLIB || HAVE_LIBEWF || HAVE_LIBQCOW
+         char *set = NULL;
+ #endif
+         struct STAT_STR stat_buf;
+@@ -162,6 +166,26 @@
+             tsk_error_reset();
+         }
+ #endif
++
++#if HAVE_LIBQCOW
++        if ((img_info = qcow_open(num_img, images, a_ssize)) != NULL) {
++            if (set == NULL) {
++                set = "QCOW";
++                img_set = img_info;
++            }
++            else {
++                img_set->close(img_set);
++                img_info->close(img_info);
++                tsk_error_reset();
++                tsk_errno = TSK_ERR_IMG_UNKTYPE;
++                snprintf(tsk_errstr, TSK_ERRSTR_L, "QCOW or %s", set);
++                return NULL;
++            }
++        }
++        else {
++            tsk_error_reset();
++        }
++#endif
+         // if any of the non-raw formats were detected, then use it. 
+         if (img_set != NULL)
+             return img_set;
+--- sleuthkit-3.2.1.orig/tsk3/img/Makefile.am	2011-03-04 16:26:25.775059461 +0100
++++ sleuthkit-3.2.1/tsk3/img/Makefile.am	2011-03-04 16:29:51.976060367 +0100
+@@ -3,7 +3,7 @@
+ 
+ noinst_LTLIBRARIES = libtskimg.la
+ libtskimg_la_SOURCES = img_open.c img_types.c raw.c raw.h \
+-    split.c split.h aff.c aff.h ewf.c ewf.h tsk_img_i.h img_io.c
++    split.c split.h aff.c aff.h ewf.c ewf.h qcow.c qcow.h tsk_img_i.h img_io.c
+ 
+ indent:
+ 	indent *.c *.h
+--- sleuthkit-3.2.1.orig/configure.ac	2011-03-04 16:26:25.807059593 +0100
++++ sleuthkit-3.2.1/configure.ac	2011-03-04 16:29:52.067097486 +0100
+@@ -129,6 +129,33 @@
+ AC_SEARCH_LIBS(pthread_create, pthread)
+ AC_SEARCH_LIBS(dlopen, dl)
+ 
++
++# Check if we should link libqcow.  
++AC_ARG_WITH([libqcow],
++    [AS_HELP_STRING([--without-libqcow],[Do not use libqcow even if it is installed])]
++    [AS_HELP_STRING([--with-libqcow=dir],[Specify that libqcow is installed in directory 'dir'])],
++    # If --with-libqcow or --without-libqcow is given
++    [],
++    # if nothing was specified, default to a test
++    [with_libqcow=yes])
++
++# check for the lib if they did not specify no
++AS_IF([test "x$with_libqcow" != "xno"],
++    # Test the dir if they specified something beyond yes/no
++    [AS_IF([test "x$with_libqcow" != "xyes"],
++        [AS_IF([test -d ${with_libqcow}/include],
++            [CFLAGS="$CFLAGS -I${with_libqcow}/include"
++                LDFLAGS="$LDFLAGS -L${with_libqcow}/lib"],
++            # Dir given was not correct
++            [AC_MSG_FAILURE([libqcow directory not found at ${with_libqcow}])])
++        ]
++    )]
++    # Check for the header file first to make sure they have the dev install
++    [AC_CHECK_HEADERS([libqcow.h], 
++      [AC_CHECK_LIB([qcow], [libqcow_file_open])]
++    )]
++)
++
+ AC_CONFIG_COMMANDS([tsk3/tsk_incs.h],
+         [
+           echo "#ifndef _TSK_INCS_H" > tsk3/tsk_incs.h
+--- sleuthkit-3.2.1.orig/tsk3/img/tsk_img.h	2011-03-04 16:26:25.774059510 +0100
++++ sleuthkit-3.2.1/tsk3/img/tsk_img.h	2011-03-04 16:43:20.636187221 +0100
+@@ -66,6 +66,8 @@
+ 
+         TSK_IMG_TYPE_EWF_EWF = 0x0040,  ///< EWF version
+ 
++        TSK_IMG_TYPE_QCOW_QCOW = 0x0050,  ///< QCOW version
++
+         TSK_IMG_TYPE_UNSUPP = 0xffff,   ///< Unsupported disk image type
+     } TSK_IMG_TYPE_ENUM;
+ 
