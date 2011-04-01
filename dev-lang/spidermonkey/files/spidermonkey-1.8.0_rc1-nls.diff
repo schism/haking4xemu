@@ -1,0 +1,13 @@
+--- src.orig/Makefile.ref	2009-07-08 16:54:00.490182424 -0700
++++ src/Makefile.ref	2009-07-08 16:56:37.903182529 -0700
+@@ -79,6 +79,10 @@
+ DEFINES += -DJS_HAS_FILE_OBJECT
+ endif
+ 
++ifdef JS_NLS
++DEFINES += -DJS_C_STRINGS_ARE_UTF8
++endif
++
+ #
+ # XCFLAGS may be set in the environment or on the gmake command line
+ #
