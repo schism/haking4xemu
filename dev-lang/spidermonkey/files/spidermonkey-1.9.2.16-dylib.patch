@@ -1,3 +1,15 @@
+diff -Naur a/config/rules.mk b/config/rules.mk
+--- a/config/rules.mk	2011-03-19 14:31:37.000000000 -0600
++++ b/config/rules.mk	2011-04-01 14:03:58.936681602 -0600
+@@ -574,7 +574,7 @@
+ ifdef IS_COMPONENT
+ EXTRA_DSO_LDOPTS	+= -bundle
+ else
+-EXTRA_DSO_LDOPTS	+= -dynamiclib -install_name @executable_path/$(SHARED_LIBRARY) -compatibility_version 1 -current_version 1 -single_module
++EXTRA_DSO_LDOPTS	+= -dynamiclib -install_name $(libdir)/$(SHARED_LIBRARY) -compatibility_version 1 -current_version 1 -single_module
+ endif
+ endif
+ endif
 diff -Naur a/js/src/config/config.mk b/js/src/config/config.mk
 --- a/js/src/config/config.mk	2011-03-19 14:31:49.000000000 -0600
 +++ b/js/src/config/config.mk	2011-04-01 13:54:43.378786782 -0600
