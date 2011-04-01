@@ -33,6 +33,7 @@ pkg_setup(){
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-1.9.2.13-as-needed.patch"
+	epatch "${FILESDIR}/${P}-dylib.patch"
 
 	epatch_user
 }

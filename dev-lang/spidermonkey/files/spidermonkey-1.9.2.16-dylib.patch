@@ -1,0 +1,12 @@
+diff -Naur a/js/src/config/config.mk b/js/src/config/config.mk
+--- a/js/src/config/config.mk	2011-03-19 14:31:49.000000000 -0600
++++ b/js/src/config/config.mk	2011-04-01 13:54:43.378786782 -0600
+@@ -727,7 +727,7 @@
+ # Tell the linker where NSS is, if we're building crypto
+ ifeq ($(OS_ARCH),Darwin)
+ ifeq (,$(findstring crypto,$(MOZ_META_COMPONENTS)))
+-MOZ_COMPONENTLIB_EXTRA_LIBS = $(foreach library, $(patsubst -l%, $(LIB_PREFIX)%$(DLL_SUFFIX), $(filter -l%, $(NSS_LIBS))), -dylib_file @executable_path/$(library):$(DIST)/bin/$(library))
++MOZ_COMPONENTLIB_EXTRA_LIBS = $(foreach library, $(patsubst -l%, $(LIB_PREFIX)%$(DLL_SUFFIX), $(filter -l%, $(NSS_LIBS))), -dylib_file $(libdir)/$(library):$(DIST)/bin/$(library))
+ endif
+ endif
+ endif
