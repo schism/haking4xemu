@@ -13,7 +13,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="nls"
-DEPEND="virtual/libintl
+DEPEND="nls? ( virtual/libintl )
 	virtual/libiconv"
 
 src_configure() {
