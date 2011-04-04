@@ -1,7 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library providing device abstraction"
@@ -11,18 +12,15 @@ SRC_URI="mirror://sourceforge/libsmio/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="unicode debug"
+IUSE="debug nls unicode"
 
-DEPEND="dev-libs/libuna"
+DEPEND="dev-libs/libuna
+	nls? ( virtual/libintl )"
 
 src_configure() {
-	econf	$(use_enable unicode wide-character-type) \
-			$(use_enable debug verbose-output) \
-			$(use_enable debug debug-output)
-
-}
-
-src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc AUTHORS ChangeLog NEWS README
+	econf --disable-rpath \
+		$(use_enable nls) \
+		$(use_enable unicode wide-character-type) \
+		$(use_enable debug verbose-output) \
+		$(use_enable debug debug-output)
 }
