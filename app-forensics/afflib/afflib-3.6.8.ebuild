@@ -1,6 +1,7 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
 EAPI="4"
 
 inherit eutils
@@ -31,9 +32,4 @@ src_configure() {
 		$(use_enable python) \
 		$(use_enable s3) \
 		$(use_enable threads threading)
-}
-
-src_install() {
-	emake DESTDIR="${D}" install
-	nonfatal dodoc BUGLIST.txt README ChangeLog AUTHORS README_*.txt
 }

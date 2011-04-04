@@ -4,7 +4,7 @@
 
 EAPI="4"
 
-inherit autotools java-utils-2
+inherit autotools java-pkg-2
 DESCRIPTION="Bloom file manipulation tools"
 HOMEPAGE="http://www.afflib.org/"
 SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
@@ -28,7 +28,7 @@ src_prepare() {
 }
 
 src_install() {
-	default_src_install
+	default
 	if use java; then
 		java-pkg_dojar java/frag_find.jar
 	fi

@@ -37,7 +37,7 @@ src_install() {
 	rm ${D}/usr/bin/test_arff
 
 	if use plugins; then
-		sed -i -e 's:\.\./plugins/:/usr/libexec/fiwalk/:g' plugins/ficonfig.txt
+		sed -i -e "s:\.\./plugins/:${EROOT}/usr/libexec/fiwalk/:g" plugins/ficonfig.txt
 		insinto /etc
 		doins plugins/ficonfig.txt
 	fi
