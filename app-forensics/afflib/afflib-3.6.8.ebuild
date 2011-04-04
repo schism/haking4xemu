@@ -34,6 +34,6 @@ src_configure() {
 }
 
 src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc BUGLIST.txt README ChangeLog AUTHORS README_*.txt
+	emake DESTDIR="${D}" install
+	nonfatal dodoc BUGLIST.txt README ChangeLog AUTHORS README_*.txt
 }
