@@ -1,7 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tools to access the PFF (Personal Folder File) format, used in PST and OST"
@@ -11,25 +12,18 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="debug python unicode"
+IUSE="debug nls python unicode"
 
-DEPEND="unicode? ( dev-libs/libuna )
+DEPEND="nls? ( virtual/libintl )
+		unicode? ( dev-libs/libuna )
 		python? ( dev-lang/python )
 		dev-libs/libbfio"
-RDEPEND=${DEPEND}
 
 src_configure() {
-	econf \
+	econf --disable-rpath \
+		$(use_enable nls) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug debug-output) \
 		$(use_enable debug verbose-output) \
-		$(use_enable python) \
-		|| die "configure failed"
-}
-
-src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc ChangeLog AUTHORS README
-	einfo "Further documentation on PFF and related formats are available at:"
-	einfo "http://sourceforge.net/project/showfiles.php?group_id=237636&package_id=295724"
+		$(use_enable python)
 }
