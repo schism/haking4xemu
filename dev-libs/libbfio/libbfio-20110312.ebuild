@@ -1,7 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library that provides basic file input/output abstraction"
@@ -17,9 +18,4 @@ DEPEND="dev-libs/libuna"
 
 src_configure() {
 	econf $(use_enable unicode wide-character-type)
-}
-
-src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc AUTHORS ChangeLog NEWS README
 }
