@@ -17,5 +17,5 @@ IUSE="unicode"
 DEPEND="dev-libs/libuna"
 
 src_configure() {
-	econf $(use_enable unicode wide-character-type)
+	econf --disable-rpath $(use_enable unicode wide-character-type)
 }
