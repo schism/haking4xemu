@@ -1,7 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library to support Unicode and ASCII (byte string) conversions"
@@ -14,13 +15,7 @@ KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="nls"
 DEPEND="virtual/libintl
 	virtual/libiconv"
-RDEPEND=${DEPEND}
 
 src_configure() {
-	econf $(use_enable nls)
-}
-
-src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc AUTHORS ChangeLog NEWS README
+	econf --disable-rpath $(use_enable nls)
 }
