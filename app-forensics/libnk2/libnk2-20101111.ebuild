@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="LGPL"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="unicode debug"
+IUSE="debug nls unicode"
 
 DEPEND="nls? ( virtual/libintl )
 	dev-libs/libuna
