@@ -1,7 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI=2
+
+EAPI="4"
 
 inherit eutils flag-o-matic
 
@@ -44,8 +45,8 @@ src_configure() {
 }
 
 src_install() {
-	emake install DESTDIR="${D}" || die
-	dodoc AUTHORS ChangeLog NEWS README documents/*.txt
+	default
+	dodoc documents/*.txt
 	if use python; then
 		newsbin ${DISTDIR}/${MOUNT} mount_ewf \
 			|| die "install mount_ewf failed"

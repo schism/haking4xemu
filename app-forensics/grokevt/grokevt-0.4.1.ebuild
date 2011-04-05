@@ -1,6 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="3"
 
 inherit eutils python
 
@@ -13,11 +15,11 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
 
-DEPEND=">=dev-lang/python-2.3"
-RDEPEND="${DEPEND} app-forensics/reglookup"
+DEPEND="dev-lang/python
+	app-forensics/reglookup"
 
 src_unpack() {
-	unpack "${A}"
+	default
 	cd "${S}/lib"
 	echo "PATH_CONFIG='/etc/grokevt'" >> grokevt.py
 }

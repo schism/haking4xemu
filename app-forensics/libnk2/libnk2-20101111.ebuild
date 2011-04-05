@@ -1,7 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tooling to support the Microsoft Outlook Nickfile (NK2) format"
@@ -13,16 +14,14 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="unicode debug"
 
-DEPEND="dev-libs/libuna
+DEPEND="nls? ( virtual/libintl )
+	dev-libs/libuna
 	dev-libs/libbfio"
 
 src_configure() {
-	econf $(use_enable unicode wide-character-type) \
+	econf --disable-rpath \
+		$(use_enable nls) \
+		$(use_enable unicode wide-character-type) \
 		$(use_enable debug debug-output) \
-		$(use_enable debug verbose-output) || die "econf failed"
-}
-
-src_install() {
-	emake install DESTDIR="${D}" || die "install failed"
-	dodoc AUTHORS ChangeLog NEWS README
+		$(use_enable debug verbose-output)
 }
