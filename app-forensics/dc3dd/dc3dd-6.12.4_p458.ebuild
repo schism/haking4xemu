@@ -23,10 +23,5 @@ src_prepare() {
 }
 
 src_configure() {
-	econf $(use_enable nls) --enable-hdparm || die "econf failed"
-}
-
-src_install() {
-	emake DESTDIR="${D}" install || die "install failed"
-	dodoc README ChangeLog
+	econf $(use_enable nls) --enable-hdparm
 }
