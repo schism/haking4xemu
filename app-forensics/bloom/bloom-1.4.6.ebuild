@@ -18,15 +18,6 @@ DEPEND="dev-libs/openssl
 	app-forensics/afflib
 	java? ( >=virtual/jdk-1.5 )"
 
-src_prepare() {
-	# bad form, but this is an experimental overlay and upstream's notified
-	if ! use java; then
-		sed -i -e 's/^\(SUBDIRS = src doc\) java/\1/' Makefile.am
-	fi
-	sed -i -e 's/\(bin_PROGRAMS.*\) disk_bloom/\1/' src/Makefile.am
-	eautoreconf
-}
-
 src_install() {
 	default
 	if use java; then
