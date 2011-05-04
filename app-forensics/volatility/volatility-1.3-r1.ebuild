@@ -1,8 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-EAPI="2"
+EAPI="3"
 
 inherit eutils distutils
 
@@ -17,8 +16,6 @@ LICENSE="GPL"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
-
-NEED_PYTHON="2.5"
 
 S="${WORKDIR}/${MY_P}"
 

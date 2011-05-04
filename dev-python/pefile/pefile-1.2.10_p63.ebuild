@@ -1,8 +1,7 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-EAPI="2"
+EAPI="3"
 
 inherit distutils
 
@@ -17,6 +16,5 @@ KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"

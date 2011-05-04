@@ -1,8 +1,7 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-EAPI="2"
+EAPI="3"
 
 inherit eutils subversion distutils
 
@@ -14,8 +13,6 @@ LICENSE="GPL"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
-
-NEED_PYTHON="2.5"
 
 src_unpack() {
 	subversion_src_unpack
