@@ -1,12 +1,12 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/spidermonkey/spidermonkey-1.9.2.15.ebuild,v 1.6 2011/03/31 16:58:02 xarthisius Exp $
+# $Header: $
 
 EAPI="2"
 inherit eutils toolchain-funcs multilib python
 
 MY_PV="${PV}"
-MY_PV="${MY_PV/1.9.2/3.6}"
+MY_PV="${MY_PV/2.0/4.0}"
 DESCRIPTION="Stand-alone JavaScript C library"
 HOMEPAGE="http://www.mozilla.org/js/spidermonkey/"
 REL_URI="http://releases.mozilla.org/pub/mozilla.org/firefox/releases"
@@ -14,10 +14,10 @@ SRC_URI="${REL_URI}/${MY_PV}/source/firefox-${MY_PV}.source.tar.bz2"
 
 LICENSE="NPL-1.1"
 SLOT="0"
-KEYWORDS="alpha amd64 ~arm ppc ppc64 ~sparc ~x86 ~x86-fbsd ~x86-macos ~x64-macos"
-IUSE="threadsafe"
+KEYWORDS="~alpha ~amd64 ~arm ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-macos ~x64-macos"
+IUSE="test threadsafe"
 
-S="${WORKDIR}/mozilla-1.9.2"
+S="${WORKDIR}/mozilla-2.0"
 BUILDDIR="${S}/js/src"
 
 RDEPEND="threadsafe? ( >=dev-libs/nspr-4.8.6 )"
@@ -32,7 +32,6 @@ pkg_setup(){
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-1.9.2.13-as-needed.patch"
 	epatch "${FILESDIR}/${P}-dylib.patch"
 
 	epatch_user
@@ -40,13 +39,16 @@ src_prepare() {
 
 src_configure() {
 	cd ${BUILDDIR}
+
 	local myconf
+
 	if use threadsafe ; then
 		myconf="${myconf} --with-system-nspr \
 			--enable-threadsafe"
 	fi
 	# Disable no-print-directory
 	MAKEOPTS=${MAKEOPTS/--no-print-directory/}
+
 	CC="$(tc-getCC)" CXX="$(tc-getCXX)" LD="$(tc-getLD)" PYTHON="$(PYTHON)" econf \
 		${myconf}
 }
@@ -54,6 +56,12 @@ src_configure() {
 src_compile() {
 	cd ${BUILDDIR}
 	emake || die "emake failed";
+}
+
+src_test() {
+	# failure in check-date-format-tofte.js is https://bugzil.la/600522
+	cd ${BUILDDIR}
+	emake check
 }
 
 src_install() {
