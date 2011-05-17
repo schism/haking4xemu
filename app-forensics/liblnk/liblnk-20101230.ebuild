@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/liblnk/${PN}-alpha-${PV}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~x64-macos ~x86-macos"
-IUSE="debug unicode"
+IUSE="debug nls unicode"
 
 DEPEND="nls? ( virtual/libintl )
 	dev-libs/libbfio
