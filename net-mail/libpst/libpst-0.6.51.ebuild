@@ -1,10 +1,10 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
-inherit eutils toolchain-funcs
+inherit eutils
 
 DESCRIPTION="Tools and library for reading Outlook files (.pst format)"
 HOMEPAGE="http://www.five-ten-sg.com/libpst/"
@@ -27,13 +27,4 @@ src_configure() {
 		$(use_enable dii) \
 		$(use_enable python) \
 		--enable-libpst-shared
-}
-
-src_compile() {
-	emake CC=$(tc-getCC) || die "emake failed"
-}
-
-src_install() {
-	emake DESTDIR="${D}" install || die "make install failed"
-	dodoc AUTHORS ChangeLog NEWS TODO || die "dodoc failed"
 }
