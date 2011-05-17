@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
-
+EAPI="4"
 inherit base eutils
 
-DESCRIPTION="Advanced command line hexadecimail editor and more"
+DESCRIPTION="Advanced command line hexadecimal editor and more"
 HOMEPAGE="http://www.radare.org"
 SRC_URI="http://www.radare.org/get/radare-${PV}.tar.gz"
 
@@ -20,15 +19,13 @@ RDEPEND="
 	dev-lang/perl
 	gui? (
 		x11-libs/gtk+:2
-		x11-libs/vte )
+		x11-libs/vte:0 )
 	lua? ( dev-lang/lua )
-	readline? ( sys-libs/readline )
 	ewf? ( app-forensics/libewf )
-"
+	readline? ( sys-libs/readline )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
-	gui? ( >=dev-lang/vala-0.5:0 )
-"
+	gui? ( >=dev-lang/vala-0.5:0.10 )"
 
 src_prepare() {
 	base_src_prepare
@@ -40,16 +37,8 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --without-usb-sniffer \
-		$(use_with ewf) \
+	VALAC=$(type -P valac-0.10) econf \
 		$(use_with readline) \
+		$(use_with ewf) \
 		$(use_with gui)
-}
-
-#src_compile() {
-	#emake -j1 || die "compile failed"
-#}
-
-src_install() {
-	emake DESTDIR="${ED}" install || die "install failed"
 }
