@@ -6,40 +6,42 @@ EAPI="4"
 
 inherit eutils flag-o-matic
 
-MOUNT=mount_ewf-20090529.py
+MOUNT=mount_ewf-20110626.py
 
-MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Implementation of the EWF (SMART and EnCase) image format"
 HOMEPAGE="http://libewf.sourceforge.net"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz
-	python? ( mirror://sourceforge/${PN}/${MOUNT} )"
+SRC_URI="mirror://sourceforge/libewf/${P}.tar.gz
+	python? ( mirror://sourceforge/libewf/${MOUNT} )"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS=""
-IUSE="debug python rawio unicode uuid"
+KEYWORDS="amd64 arm hppa ppc s390 sparc x86 x64-macos x86-macos"
+IUSE="debug python rawio unicode"
 
-DEPEND="uuid? ( || (
+DEPEND="|| (
 			>=sys-apps/util-linux-2.16
 			<=sys-libs/e2fsprogs-libs-1.41.8
 			sys-darwin/libsystem
-		) )
+		)
 	sys-libs/zlib
 	dev-libs/openssl
 	unicode? ( dev-libs/libuna )
 	python? ( dev-lang/python )"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	python? ( dev-python/fuse-python )"
+
+src_prepare() {
+	epatch ${FILESDIR}/${P}-liberror.patch
+}
 
 src_configure() {
 	append-flags -fno-strict-aliasing # avoid type-punned warnings
 	econf \
-		$(use_enable uuid guid) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable rawio low-level-functions) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output) \
-		$(use_enable python) \
-		--enable-v1-api
+		$(use_enable python)
 }
 
 src_install() {
