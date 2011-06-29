@@ -19,8 +19,7 @@ DEPEND="nls? ( virtual/libintl )
 	dev-libs/libbfio"
 
 src_configure() {
-	econf --disable-rpath \
-		$(use_enable nls) \
+	econf $(use_enable nls) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output)
