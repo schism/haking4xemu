@@ -16,7 +16,7 @@ KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
 
 RDEPEND="sys-libs/talloc
-	virtual/iconv"
+	virtual/libiconv"
 
 S="${WORKDIR}/${PN}-src-${PV}"
 DISTUTILS_SETUP_FILES=pyregfi-distutils.py
