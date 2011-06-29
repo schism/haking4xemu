@@ -21,7 +21,7 @@ DEPEND="ewf? ( app-forensics/libewf )
 IUSE="aff ewf qcow"
 
 src_prepare() {
-	epatch ${FILESDIR}/${PN}-3.2.1-qcow.patch
+	epatch ${FILESDIR}/${P}-qcow.patch
 	eautoreconf
 }
 
