@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 
 DESCRIPTION="Meta-package for all the Volatility plugins"
 HOMEPAGE="http://github.org/schism/haking4xemu"
