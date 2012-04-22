@@ -11,14 +11,23 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="unicode debug"
+IUSE="debug fuse nls unicode"
 
 DEPEND="dev-libs/libuna
-	dev-libs/libbfio"
+	dev-libs/libbfio
+	nls? (
+		virtual/libiconv
+		virtual/libintl )
+	fuse? ( sys-fs/fuse )"
 
 src_configure() {
-	econf	$(use_enable unicode wide-character-type) \
+	econf --disable-rpath \
+			$(use_enable nls) \
+			$(use_enable unicode wide-character-type) \
+			$(use_with nls libiconv-prefix) \
+			$(use_with nls libintl-prefix) \
 			$(use_enable debug verbose-output) \
+			$(use_with fuse libfuse) \
 			$(use_enable debug debug-output)
 
 }
