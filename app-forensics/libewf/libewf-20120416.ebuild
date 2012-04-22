@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}2/${P}/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
 IUSE="debug fuse python nls rawio unicode uuid"
 
 DEPEND="uuid? ( || (
