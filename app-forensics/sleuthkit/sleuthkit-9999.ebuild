@@ -4,13 +4,13 @@
 
 EAPI="4"
 
-inherit autotools subversion
+inherit autotools git
 
 SLOT=0
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI=""
-ESVN_REPO_URI="http://svn.sleuthkit.org/repos/${PN}/trunk"
+EGIT_REPO_URI="git://github.com/sleuthkit/sleuthkit"
 
 LICENSE="GPL-2 IBM"
 KEYWORDS=""
