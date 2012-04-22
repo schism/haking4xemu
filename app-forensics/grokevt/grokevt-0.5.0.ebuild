@@ -14,23 +14,25 @@ LICENSE="GPL2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE=""
+DISTUTILS_SETUP_FILES="grokevt-distutils.py"
 
 DEPEND="dev-lang/python
 	app-forensics/reglookup"
 
 src_prepare() {
-	ln -s grokevt-distutils.py setup.py
-	sed -i -e 's/\(if .*grokevt-distutils.py install;\)/#\1/' Makefile
+	echo "PATH_CONFIG='/etc/grokevt'" >> lib/grokevt.py
 }
 
 src_compile() {
-	emake ETC_PREFIX="${EPREFIX}/etc"
+	einfo "Nothing to compile"
 }
 
 src_install() {
-	emake PREFIX="${ED}/usr" \
-		ETC_PREFIX="${ED}/etc" \
-		DOC_PREFIX="${ED}/usr/share/doc/${P}" \
-		MAN_PREFIX="${ED}/usr/share/man" install
+	# upstream's Makefile makes too many assumptions
+	dobin bin/grokevt-* || die 
+	insinto /etc/grokevt
+	doins -r etc/systems || die
+	doman doc/man/man*/*.gz || die
+	dodoc doc/devel/*.txt || die
 	distutils_src_install
 }
