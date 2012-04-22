@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 LICENSE="GPL-2 IBM"
 KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
 
-DEPEND="ewf? ( app-forensics/libewf )
+DEPEND="ewf? ( >=app-forensics/libewf-20110610 )
 	qcow? ( dev-libs/libqcow )
 	aff? ( app-forensics/afflib )
 	dev-perl/DateManip"
@@ -22,6 +22,7 @@ IUSE="aff ewf qcow"
 
 src_prepare() {
 	epatch ${FILESDIR}/${P}-qcow.patch
+	epatch ${FILESDIR}/${P}-libewf.patch
 	eautoreconf
 }
 
