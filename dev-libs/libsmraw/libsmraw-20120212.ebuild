@@ -12,14 +12,21 @@ SRC_URI="mirror://sourceforge/libsmio/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="debug nls unicode"
+IUSE="debug fuse nls unicode"
 
-DEPEND="nls? ( virtual/libintl )
+DEPEND="nls? (
+			virtual/libintl
+			virtual/libiconv
+		)
 	dev-libs/libuna
 	dev-libs/libbfio"
 
 src_configure() {
-	econf $(use_enable nls) \
+	econf --disable-rpath \
+		$(use_enable nls) \
+		$(use_with nls libiconv-prefix) \
+		$(use_with nls libintl-prefix) \
+		$(use_with fuse libfuse) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output)
