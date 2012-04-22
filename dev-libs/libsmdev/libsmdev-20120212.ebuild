@@ -15,10 +15,16 @@ KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="debug nls unicode"
 
 DEPEND="dev-libs/libuna
-	nls? ( virtual/libintl )"
+	nls? (
+		virtual/libintl
+		virtual/libiconv
+	)"
 
 src_configure() {
-	econf $(use_enable nls) \
+	econf --disable-rpath \
+		$(use_enable nls) \
+		$(use_with nls libiconv-prefix) \
+		$(use_with nls libintl-prefix) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug verbose-output) \
 		$(use_enable debug debug-output)
