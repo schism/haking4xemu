@@ -12,14 +12,15 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="unicode"
-DEPEND="unicode? (
+IUSE="nls unicode"
+DEPEND="nls? (
 			virtual/libintl
 			virtual/libiconv )"
 
 src_configure() {
 	econf --disable-rpath \
-		$(use_enable unicode wide-character-type) \
+		$(use_enable nls) \
 		$(use_with unicode libiconv-prefix) \
-		$(use_with unicode libintl-prefix)
+		$(use_with unicode libintl-prefix) \
+		$(use_enable unicode wide-character-type)
 }
