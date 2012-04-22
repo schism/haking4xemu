@@ -27,10 +27,13 @@ DEPEND="uuid? ( || (
 		virtual/libintl
 		virtual/libiconv
 	)
-	unicode? ( dev-libs/libuna )
+	dev-libs/libuna
+	dev-libs/libbfio
+	dev-libs/libodraw
+	dev-libs/libsmdev
+	dev-libs/libsmraw
 	python? ( dev-lang/python )"
-RDEPEND="${DEPEND}
-	python? ( dev-python/fuse-python )"
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	append-flags -fno-strict-aliasing # avoid type-punned warnings
