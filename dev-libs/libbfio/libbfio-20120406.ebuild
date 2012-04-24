@@ -17,10 +17,11 @@ IUSE="nls unicode"
 DEPEND="nls? (
 			virtual/libiconv
 			virtual/libintl )
-	dev-libs/libuna"
+			"
+	#dev-libs/libuna"
 
 src_configure() {
-	econf --disable-rpath \
+	econf --disable-rpath --without-libuna \
 		$(use_enable nls) \
 		$(use_with nls libiconv-prefix) \
 		$(use_with nls libintl-prefix) \
