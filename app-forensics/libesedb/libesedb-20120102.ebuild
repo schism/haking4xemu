@@ -20,7 +20,7 @@ DEPEND="unicode? (
 	dev-libs/libuna
 	dev-libs/libbfio
 	dev-libs/libfguid
-	dev-libs/lifdatetime"
+	dev-libs/libfdatetime"
 
 src_configure() {
 	econf --disable-rpath \
