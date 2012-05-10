@@ -7,7 +7,6 @@ EAPI="4"
 DESCRIPTION="Library and tools to access the Windows Shortcut File (LNK) Format"
 HOMEPAGE="http://liblnk.sourceforge.net/"
 SRC_URI="mirror://sourceforge/liblnk/${PN}-alpha/${PN}-alpha-${PV}.tar.gz"
-#                              liblnk/liblnk-alpha/liblnk-alpha-20120507/liblnk-alpha-20120507.tar.gz
 
 LICENSE="LGPL-3"
 SLOT="0"
