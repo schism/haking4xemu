@@ -7,7 +7,7 @@ EAPI="4"
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library to support Unicode and ASCII (byte string) conversions"
 HOMEPAGE="http://www.sourceforge.net/projects/libuna"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -23,4 +23,9 @@ src_configure() {
 		$(use_with unicode libiconv-prefix) \
 		$(use_with unicode libintl-prefix) \
 		$(use_enable unicode wide-character-type)
+}
+
+src_install() {
+	default
+	find ${D} -type f -name libuna.pc -delete
 }
