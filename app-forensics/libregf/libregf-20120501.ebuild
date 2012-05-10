@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/libregf/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="debug fuse nls python unicode"
 
 DEPEND="nls? (
