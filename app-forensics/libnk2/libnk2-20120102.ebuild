@@ -7,7 +7,7 @@ EAPI="4"
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tooling to support the Microsoft Outlook Nickfile (NK2) format"
 HOMEPAGE="http://www.sourceforge.net/projects/libnk2"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
 
 LICENSE="LGPL"
 SLOT="0"
