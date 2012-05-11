@@ -4,9 +4,10 @@
 
 EAPI="4"
 
+MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tools to access the Windows Shortcut File (LNK) Format"
 HOMEPAGE="http://liblnk.sourceforge.net/"
-SRC_URI="mirror://sourceforge/liblnk/${PN}-alpha/${PN}-alpha-${PV}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
