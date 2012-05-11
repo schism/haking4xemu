@@ -6,7 +6,7 @@ EAPI="2"
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library for storage media i/o abstraction"
 HOMEPAGE="http://www.sourceforge.net/projects/libsmio"
-SRC_URI="mirror://sourceforge/libsmio/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/ibsmio-alpha-${PV}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
