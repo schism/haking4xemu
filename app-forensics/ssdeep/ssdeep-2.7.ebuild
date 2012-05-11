@@ -6,7 +6,7 @@ EAPI="4"
 
 DESCRIPTION="Tool that performs fuzzy hash analysis of similar (but not identical) files"
 HOMEPAGE="http://ssdeep.sourceforge.net/"
-SRC_URI="mirror://sourceforge/ssdeep/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/ssdeep/${P}/${P}.tar.gz"
 
 LICENSE="GPL"
 SLOT="0"
