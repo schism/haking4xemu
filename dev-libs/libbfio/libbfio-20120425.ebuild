@@ -7,7 +7,7 @@ EAPI="4"
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library that provides basic file input/output abstraction"
 HOMEPAGE="http://www.sourceforge.net/projects/libbfio"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
