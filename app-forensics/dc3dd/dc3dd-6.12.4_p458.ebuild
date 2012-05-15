@@ -1,10 +1,9 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+EAPI="4"
 
 inherit autotools
-
-EAPI="4"
 
 MY_PV=${PV/_p/-r}
 DESCRIPTION="Patched version of dd with features intended for forensic acquisition of data"
