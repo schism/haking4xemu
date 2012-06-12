@@ -8,7 +8,7 @@ inherit eutils
 
 DESCRIPTION="Library that implements the AFF image standard"
 HOMEPAGE="http://www.afflib.org/"
-SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
+SRC_URI="mirror://github/simsong/AFFLIBv3/${P}.tar.gz"
 
 LICENSE="BSD-4"
 SLOT="0"
