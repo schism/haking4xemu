@@ -6,8 +6,8 @@ EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library to support optical disc (split) RAW formats"
-HOMEPAGE="http://www.sourceforge.net/projects/libsmio"
-SRC_URI="mirror://sourceforge/libsmio/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
+HOMEPAGE="https://code.google.com/p/libsmlibs/"
+SRC_URI="https://libsmlibs.googlecode.com/files/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
