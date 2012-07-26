@@ -6,8 +6,8 @@ EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library to support Unicode and ASCII (byte string) conversions"
-HOMEPAGE="http://www.sourceforge.net/projects/libuna"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
+HOMEPAGE="https://code.google.com/p/libuna/"
+SRC_URI="https://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
