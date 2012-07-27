@@ -1,12 +1,12 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-EAPI="2"
+EAPI="4"
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tooling to support the QEMU Copy-On-Write (QCOW) image format"
-HOMEPAGE="http://www.sourceforge.net/projects/libqcow"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
+HOMEPAGE="https://code.google.com/p/libqcow/"
+SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -15,6 +15,7 @@ IUSE="debug fuse nls unicode"
 
 DEPEND="dev-libs/libuna
 	dev-libs/libbfio
+	dev-libs/openssl
 	nls? (
 		virtual/libiconv
 		virtual/libintl )
