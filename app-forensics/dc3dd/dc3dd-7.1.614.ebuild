@@ -14,12 +14,12 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
 IUSE="nls"
+DEPEND="nls? (
+		virtual/libintl
+		virtual/libiconv
+	)"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
-
-src_prepare() {
-	eautoreconf
-}
 
 src_configure() {
 	econf $(use_enable nls) --enable-hdparm
