@@ -18,9 +18,7 @@ DEPEND="unicode? (
 			virtual/libiconv
 			virtual/libintl )
 	dev-libs/libuna
-	dev-libs/libbfio
-	dev-libs/libfguid
-	dev-libs/libfdatetime"
+	dev-libs/libbfio"
 
 src_configure() {
 	econf --disable-rpath \

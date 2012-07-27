@@ -19,8 +19,6 @@ DEPEND="nls? ( virtual/libiconv
 		unicode? ( dev-libs/libuna )
 		python? ( dev-lang/python )
 		java? ( virtual/jdk )
-		dev-libs/libfdatetime
-		dev-libs/libfguid
 		dev-libs/libuna
 		dev-libs/libbfio"
 

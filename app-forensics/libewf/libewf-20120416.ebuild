@@ -29,9 +29,6 @@ DEPEND="uuid? ( || (
 	)
 	dev-libs/libuna
 	dev-libs/libbfio
-	dev-libs/libodraw
-	dev-libs/libsmdev
-	dev-libs/libsmraw
 	python? ( dev-lang/python )"
 RDEPEND="${DEPEND}"
 
