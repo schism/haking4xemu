@@ -1,13 +1,15 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=4
+
+inherit autotools-utils
 
 MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tools to access the PFF (Personal Folder File) format, used in PST and OST"
-HOMEPAGE="http://www.sourceforge.net/projects/libpff"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-alpha/${MY_P}/${MY_P}.tar.gz"
+HOMEPAGE="http://code.google.com/p/libpff"
+SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -21,15 +23,18 @@ DEPEND="nls? ( virtual/libiconv
 		java? ( virtual/jdk )
 		dev-libs/libuna
 		dev-libs/libbfio"
+AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {
-	econf --disable-rpath \
-		$(use_enable java) \
-		$(use_enable nls) \
-		$(use_with nls libiconv-prefix) \
-		$(use_with nls libintl-prefix) \
-		$(use_enable unicode wide-character-type) \
-		$(use_enable debug debug-output) \
-		$(use_enable debug verbose-output) \
+	local myeconfargs=( '--disable-rpath'
+		$(use_enable java)
+		$(use_enable nls)
+		$(use_with nls libiconv-prefix)
+		$(use_with nls libintl-prefix)
+		$(use_enable unicode wide-character-type)
+		$(use_enable debug debug-output)
+		$(use_enable debug verbose-output)
 		$(use_enable python)
+	)
+	autotools-utils_src_configure
 }
