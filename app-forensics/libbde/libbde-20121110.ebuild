@@ -14,22 +14,17 @@ SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~x86-macos ~x64-macos"
-IUSE="debug python nls unicode uuid"
+IUSE="debug python nls unicode"
 
-DEPEND="uuid? ( || (
-			>=sys-apps/util-linux-2.16
-			<=sys-libs/e2fsprogs-libs-1.41.8
-			sys-darwin/libsystem
-		) )
-	sys-libs/zlib
-	dev-libs/openssl
+DEPEND="
 	nls? (
 		virtual/libintl
 		virtual/libiconv
 	)
+	python? ( dev-lang/python )
+	sys-fs/fuse
 	dev-libs/libuna
 	dev-libs/libbfio
-	python? ( dev-lang/python )
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"
 
@@ -41,6 +36,8 @@ src_configure() {
 		$(use_with nls libiconv-prefix)
 		$(use_with nls libintl-prefix)
 		$(use_enable unicode wide-character-type)
+		$(use_enable debug debug-output)
+		$(use_enable debug verbose-output)
 		$(use_enable python)
 	)
 	autotools-utils_src_configure
