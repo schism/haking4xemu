@@ -3,6 +3,8 @@
 # $Header: $
 
 EAPI=4
+PYTHON_DEPEND=2
+SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
