@@ -14,13 +14,13 @@ SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
-IUSE="debug fuse nls unicode"
+IUSE="debug nls unicode"
 
 DEPEND="
 	nls? (
 		virtual/libiconv
 		virtual/libintl )
-	fuse? ( sys-fs/fuse )
+	sys-fs/fuse
 	dev-libs/libuna
 	dev-libs/libbfio
 	dev-libs/openssl"
@@ -35,7 +35,6 @@ src_configure() {
 		$(use_with nls libiconv-prefix)
 		$(use_with nls libintl-prefix)
 		$(use_enable debug verbose-output)
-		$(use_with fuse libfuse)
 		$(use_enable debug debug-output)
 	)
 	autotools-utils_src_configure
