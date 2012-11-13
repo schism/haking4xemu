@@ -15,13 +15,14 @@ KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
 
 DEPEND="ewf? ( >=app-forensics/libewf-20110610 )
 	qcow? ( dev-libs/libqcow )
+	vhdi? ( dev-libs/libvhdi )
 	aff? ( app-forensics/afflib )
 	dev-perl/DateManip"
 
-IUSE="aff ewf qcow"
+IUSE="aff +ewf +qcow +vhdi"
 
 src_prepare() {
-	epatch ${FILESDIR}/${P}-libqcow.patch
+	epatch ${FILESDIR}/${P}-virtual-support.patch
 	eautoreconf
 }
 
@@ -30,6 +31,7 @@ src_configure() {
 		$(use_with aff afflib)
 		$(use_with ewf libewf)
 		$(use_with qcow libqcow)
+		$(use_with vhdi libvhdi)
 	)
 	autotools-utils_src_configure
 }
