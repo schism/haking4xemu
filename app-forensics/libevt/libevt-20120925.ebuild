@@ -1,10 +1,12 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=4
 
-MY_P=${P/${PN}/${PN}-experimental}
+inherit autotools-utils
+
+MY_P=${P/${PN}/${PN}-alpha}
 DESCRIPTION="Library and tooling to access the Windows Event Log (EVT) format"
 HOMEPAGE="https://code.google.com/p/libevt/"
 SRC_URI="https://${PN}.googlecode.com/files/${MY_P}.tar.gz"
@@ -21,14 +23,17 @@ DEPEND="nls? ( virtual/libiconv
 		dev-libs/libbfio
 		app-forensics/libregf
 		"
+AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {
-	econf --disable-rpath \
-		$(use_enable nls) \
-		$(use_with nls libiconv-prefix) \
-		$(use_with nls libintl-prefix) \
-		$(use_enable unicode wide-character-type) \
-		$(use_enable debug debug-output) \
-		$(use_enable debug verbose-output) \
+	local myeconfargs=( '--disable-rpath'
+		$(use_enable nls)
+		$(use_with nls libiconv-prefix)
+		$(use_with nls libintl-prefix)
+		$(use_enable unicode wide-character-type)
+		$(use_enable debug debug-output)
+		$(use_enable debug verbose-output)
 		$(use_enable python)
+	)
+	autotools-utils_src_configure
 }
