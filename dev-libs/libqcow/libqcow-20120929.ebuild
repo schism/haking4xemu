@@ -28,7 +28,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 DOCS=( AUTHORS ChangeLog NEWS README )
 
 src_configure() {
-	local myeconfig=( '--disable-rpath'
+	local myeconfargs=( '--disable-rpath'
 			$(use_enable nls)
 			$(use_enable unicode wide-character-type)
 			$(use_with nls libiconv-prefix)
