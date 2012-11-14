@@ -21,9 +21,12 @@ DEPEND="ewf? ( >=app-forensics/libewf-20110610 )
 
 IUSE="aff +ewf +qcow +vhdi"
 
+AUTOTOOLS_IN_SOURCE_BUILD=1
+AUTOTOOLS_AUTORECONF=1
+
 src_prepare() {
 	epatch ${FILESDIR}/${P}-virtual-support.patch
-	eautoreconf
+	autotools-utils_src_prepare
 }
 
 src_configure() {
