@@ -17,7 +17,8 @@ IUSE=""
 
 S="${WORKDIR}/${PN}_${PV}"
 
-DEPEND=">=dev-perl/Archive-Zip-1.18
+DEPEND="media-libs/exiftool
+	>=dev-perl/Archive-Zip-1.18
 	dev-perl/Carp-Assert
 	dev-perl/DBI
 	dev-perl/DBD-SQLite
@@ -32,7 +33,6 @@ DEPEND=">=dev-perl/Archive-Zip-1.18
 	dev-perl/Params-Validate
 	dev-perl/XML-LibXML
 	dev-perl/File-Mork
-	dev-perl/Image-ExifTool
 	dev-perl/Mac-PropertyList
 	dev-perl/Parse-Win32Registry"
 RDEPEND="${DEPEND}"
