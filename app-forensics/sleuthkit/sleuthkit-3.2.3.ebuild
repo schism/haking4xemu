@@ -11,7 +11,7 @@ DESCRIPTION="A collection of file system and media management forensic analysis 
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 LICENSE="GPL-2 IBM"
-KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
+KEYWORDS="amd64 arm hppa s390 sparc x86 x86-macos x64-macos"
 
 DEPEND="ewf? ( >=app-forensics/libewf-20110610 )
 	qcow? ( dev-libs/libqcow )

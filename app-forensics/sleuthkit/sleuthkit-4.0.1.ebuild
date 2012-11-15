@@ -25,7 +25,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 AUTOTOOLS_AUTORECONF=1
 
 src_prepare() {
-	epatch ${FILESDIR}/${P}-virtual-support.patch
+	epatch ${FILESDIR}/${PN}-4.0.0-virtual-support.patch
 	autotools-utils_src_prepare
 }
 
