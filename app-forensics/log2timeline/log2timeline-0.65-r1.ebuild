@@ -33,6 +33,7 @@ DEPEND="media-libs/exiftool
 	dev-perl/Params-Validate
 	dev-perl/XML-LibXML
 	dev-perl/File-Mork
+	dev-perl/JSON-XS
 	dev-perl/Mac-PropertyList
 	dev-perl/Parse-Win32Registry"
 RDEPEND="${DEPEND}"

@@ -4,11 +4,12 @@
 
 EAPI=4
 
-inherit perl-module
+inherit perl-module git-2
 
 DESCRIPTION="Log2timeline super timeline tool"
 HOMEPAGE="http://code.google.com/p/log2timeline/"
-SRC_URI="http://${PN}.googlecode.com/files/${PN}_${PV}.tgz"
+SRC_URI=""
+EGIT_REPO_URI="https://code.google.com/p/log2timeline/"
 
 LICENSE="GPL3"
 SLOT="0"
@@ -17,7 +18,8 @@ IUSE=""
 
 S="${WORKDIR}/${PN}_${PV}"
 
-DEPEND=">=dev-perl/Archive-Zip-1.18
+DEPEND="media-libs/exiftool
+	>=dev-perl/Archive-Zip-1.18
 	dev-perl/Carp-Assert
 	dev-perl/DBI
 	dev-perl/DBD-SQLite
@@ -31,8 +33,8 @@ DEPEND=">=dev-perl/Archive-Zip-1.18
 	dev-perl/NetPacket
 	dev-perl/Params-Validate
 	dev-perl/XML-LibXML
-	perl-gcpan/File-Mork
-	perl-gcpan/Image-ExifTool
-	perl-gcpan/Mac-PropertyList
-	perl-gcpan/Parse-Win32Registry"
+	dev-perl/File-Mork
+	dev-perl/JSON-XS
+	dev-perl/Mac-PropertyList
+	dev-perl/Parse-Win32Registry"
 RDEPEND="${DEPEND}"
