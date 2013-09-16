@@ -9,7 +9,8 @@ inherit autotools-utils
 MY_P=${P/${PN}/${PN}-experimental}
 DESCRIPTION="Library and tools to support the Virtual Hard Disk (VHD) image format"
 HOMEPAGE="https://code.google.com/p/libvhdi/"
-SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
+#SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
+SRC_URI="https://googledrive.com/host/0B3fBvzttpiiSY250RjRzRXQ0bDg/${MY_P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
