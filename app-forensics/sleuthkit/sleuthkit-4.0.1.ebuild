@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI="4"
 
-inherit autotools-utils
+#WANT_ANT_TASKS="ant-core ant-ivy ant-junit"
+inherit autotools-utils java-pkg-opt-2 java-ant-2
 
 SLOT=0
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
@@ -13,13 +14,15 @@ SRC_URI="mirror://sourceforge/sleuthkit/${P}.tar.gz"
 LICENSE="GPL-2 IBM"
 KEYWORDS="~amd64 ~arm ~hppa ~s390 ~sparc ~x86 ~x86-macos ~x64-macos"
 
-DEPEND="ewf? ( >=app-forensics/libewf-20110610 )
+DEPEND="ewf? ( >=app-forensics/libewf-20120328 )
+	java? ( >=virtual/jdk-1.6 )
 	qcow? ( dev-libs/libqcow )
 	vhdi? ( dev-libs/libvhdi )
 	aff? ( app-forensics/afflib )
-	dev-perl/DateManip"
+	dev-perl/DateManip
+	sys-libs/zlib"
 
-IUSE="aff +ewf +qcow +vhdi"
+IUSE="aff +ewf java +qcow +vhdi"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
 AUTOTOOLS_AUTORECONF=1
@@ -37,4 +40,10 @@ src_configure() {
 		$(use_with vhdi libvhdi)
 	)
 	autotools-utils_src_configure
+}
+
+src_compile() {
+	autotools-utils_src_compile
+	cd bindings/java
+	eant
 }
