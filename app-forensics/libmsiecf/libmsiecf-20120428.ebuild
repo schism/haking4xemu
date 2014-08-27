@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86 ~x64-macos ~x86-macos"
 IUSE="debug nls unicode"
 
 DEPEND="nls? ( virtual/libintl )
-	dev-libs/libbfio
+	app-forensics/libbfio
 	dev-libs/libuna"
 
 src_configure() {

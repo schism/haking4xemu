@@ -1,0 +1,11 @@
+diff -Naur libuna-20140105/libcsystem/libcsystem_support.h libuna-20140105-r1/libcsystem/libcsystem_support.h
+--- libuna-20140105/libcsystem/libcsystem_support.h	2014-01-05 16:23:11.000000000 +0000
++++ libuna-20140105-r1/libcsystem/libcsystem_support.h	2014-08-20 05:56:10.769043894 +0000
+@@ -24,6 +24,7 @@
+ 
+ #include <common.h>
+ #include <types.h>
++#include <stdio.h>
+ 
+ #include "libcsystem_libcerror.h"
+ 

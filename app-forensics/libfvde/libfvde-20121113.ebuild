@@ -24,7 +24,7 @@ DEPEND="
 	sys-fs/fuse
 	dev-libs/libxml2
 	dev-libs/libuna
-	dev-libs/libbfio
+	app-forensics/libbfio
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"
 

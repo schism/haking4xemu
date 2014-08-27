@@ -22,7 +22,7 @@ DEPEND="nls? ( virtual/libiconv
 		python? ( dev-lang/python )
 		java? ( virtual/jdk )
 		dev-libs/libuna
-		dev-libs/libbfio"
+		app-forensics/libbfio"
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {

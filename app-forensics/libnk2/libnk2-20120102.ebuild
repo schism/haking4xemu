@@ -16,7 +16,7 @@ IUSE="debug nls unicode"
 
 DEPEND="nls? ( virtual/libintl )
 	dev-libs/libuna
-	dev-libs/libbfio"
+	app-forensics/libbfio"
 
 src_configure() {
 	econf --disable-rpath \

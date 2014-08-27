@@ -23,7 +23,7 @@ DEPEND="nls? (
 	fuse? ( sys-fs/fuse )
 	python? ( dev-lang/python )
 	dev-libs/libuna
-	dev-libs/libbfio"
+	app-forensics/libbfio"
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {

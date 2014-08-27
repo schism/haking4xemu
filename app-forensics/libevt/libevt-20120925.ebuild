@@ -20,7 +20,7 @@ DEPEND="nls? ( virtual/libiconv
 			virtual/libintl )
 		unicode? ( dev-libs/libuna )
 		python? ( dev-lang/python )
-		dev-libs/libbfio
+		app-forensics/libbfio
 		app-forensics/libregf
 		"
 AUTOTOOLS_IN_SOURCE_BUILD=1

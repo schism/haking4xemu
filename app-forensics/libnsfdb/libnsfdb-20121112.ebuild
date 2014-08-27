@@ -2,14 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit autotools-utils
+inherit versionator autotools-utils
+AUTOTOOLS_IN_SOURCE_BUILD=1
+MY_DATE="$(get_version_component_range 1)"
 
-MY_P=${P/${PN}/${PN}-experimental}
 DESCRIPTION="Library and tools to read the Notes Storage Facility (NSF) database file format"
 HOMEPAGE="http://code.google.com/p/libnsfdb/"
-SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
+SRC_URI="https://googledrive.com/host/0B3fBvzttpiiSbkI4d1pRQmdMNWc/${PN}-experimental-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -22,14 +23,14 @@ DEPEND="
 		virtual/libiconv
 	)
 	dev-libs/libuna
-	dev-libs/libbfio
+	app-forensics/libbfio
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {
-	local myeconfargs=( '--disable-rpath'
+	local myeconfargs=(
 		$(use_enable nls)
 		$(use_with nls libiconv-prefix)
 		$(use_with nls libintl-prefix)

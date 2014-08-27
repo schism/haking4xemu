@@ -1,13 +1,17 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=5
 
-MY_P=${P/libtableau/libtableau-alpha}
+inherit versionator autotools-utils
+
+AUTOTOOLS_IN_SOURCE_BUILD=1
+MY_DATE="$(get_version_component_range 1)"
+
 DESCRIPTION="Linux/Unix library to support reading values from the Tableau(TM) forensic bridges"
 HOMEPAGE="http://www.sourceforge.net/projects/libtableau"
-SRC_URI="mirror://sourceforge/libtableau/${MY_P}.tar.gz"
+SRC_URI="https://googledrive.com/host/0B3fBvzttpiiScXhxZnpVTFpkX0E/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL"
 SLOT="0"
@@ -18,9 +22,11 @@ DEPEND="nls? ( virtual/libintl )
 	sys-apps/sg3_utils"
 
 src_configure() {
-	econf --disable-rpath \
+	local myeconfargs=(
 		$(use_enable nls) \
 		$(use_enable unicode wide-character-type) \
 		$(use_enable debug debug-output) \
 		$(use_enable debug verbose-output)
+	)
+	autotools-utils_src_configure
 }

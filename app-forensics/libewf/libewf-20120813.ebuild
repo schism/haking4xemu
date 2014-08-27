@@ -28,7 +28,7 @@ DEPEND="uuid? ( || (
 		virtual/libiconv
 	)
 	dev-libs/libuna
-	dev-libs/libbfio
+	app-forensics/libbfio
 	python? ( dev-lang/python )
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"

@@ -1,0 +1,16 @@
+--- libnk2/libnk2_libbfio.h.orig	2014-08-27 04:47:28.327136483 +0000
++++ libnk2/libnk2_libbfio.h	2014-08-27 04:47:41.851136518 +0000
+@@ -41,12 +41,9 @@
+ #if defined( _WIN32 ) && defined( DLL_IMPORT )
+ #define LIBBFIO_DLL_IMPORT
+ #endif
++#endif
+ 
+ #include <libbfio.h>
+ 
+-#else
+-#error Missing libbfio.h
+-#endif
+-
+ #endif
+ 

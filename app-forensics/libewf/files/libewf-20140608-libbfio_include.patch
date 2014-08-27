@@ -1,0 +1,16 @@
+--- libewf-20140608/libmfdata/libmfdata_libbfio.h	2014-04-06 09:28:15.000000000 +0000
++++ libewf-20140608-r1/libmfdata/libmfdata_libbfio.h	2014-08-27 00:02:57.733091888 +0000
+@@ -42,12 +42,9 @@
+ #if defined( _WIN32 ) && defined( DLL_IMPORT )
+ #define LIBBFIO_DLL_IMPORT
+ #endif
++#endif
+ 
+ #include <libbfio.h>
+ 
+-#else
+-#error Missing libbfio.h
+-#endif
+-
+ #endif
+ 

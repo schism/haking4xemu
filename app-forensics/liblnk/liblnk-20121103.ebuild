@@ -22,7 +22,7 @@ DEPEND="
 		virtual/libiconv
 	)
 	python? ( dev-lang/python )
-	dev-libs/libbfio
+	app-forensics/libbfio
 	dev-libs/libuna"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1

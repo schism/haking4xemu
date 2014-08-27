@@ -12,12 +12,12 @@ HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
 SRC_URI=""
 EGIT_REPO_URI="git://github.com/sleuthkit/sleuthkit"
 LICENSE="GPL-2 IBM"
-KEYWORDS=""
+KEYWORDS="-*"
 
 DEPEND="ewf? ( >=app-forensics/libewf-20120328 )
 	java? ( virtual/jdk dev-java/ant-core )
-	qcow? ( dev-libs/libqcow )
-	vhdi? ( dev-libs/libvhdi )
+	qcow? ( app-forensics/libqcow )
+	vhdi? ( app-forensics/libvhdi )
 	aff? ( app-forensics/afflib )
 	dev-perl/DateManip
 	sys-libs/zlib"
@@ -28,7 +28,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 AUTOTOOLS_AUTORECONF=1
 
 src_prepare() {
-	epatch ${FILESDIR}/${PN}-4.0.0-virtual-support.patch
+	epatch ${FILESDIR}/${PN}-4.1.3-virtual-support.patch
 	autotools-utils_src_prepare
 }
 
