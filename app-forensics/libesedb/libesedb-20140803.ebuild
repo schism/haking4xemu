@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python2_7 )
 
 inherit versionator autotools-utils distutils-r1
 
@@ -18,8 +18,10 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="debug nls python unicode"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-DEPEND="unicode? (
+DEPEND="${PYTHON_DEPS}
+	unicode? (
 			virtual/libiconv
 			virtual/libintl )
 	python? ( dev-lang/python )
@@ -27,9 +29,11 @@ DEPEND="unicode? (
 	app-forensics/libbfio"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
-DISTUTILS_IN_SOURCE_BUILD=1
 DISTUTILS_SINGLE_IMPL=1
-EPYTHON=python2.7
+
+pkg_setup() {
+	python-single-r1_pkg_setup
+}
 
 src_configure() {
 	local myeconfargs=(
