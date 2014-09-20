@@ -7,7 +7,7 @@ EAPI="2"
 inherit eutils
 
 DESCRIPTION="Server for Secure Internet Live Conferencing"
-SRC_URI="http://www.silcnet.org/download/server/sources/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/silc/silc/server/sources/${P}.tar.bz2"
 HOMEPAGE="http://silcnet.org/"
 
 SLOT="0"
@@ -45,7 +45,7 @@ src_install() {
 	insinto /usr/share/doc/${PF}/examples
 	doins doc/examples/*.conf
 
-	fperms 600 /etc/silc
+	fperms 750 /etc/silc
 	keepdir /var/log/${PN}
 
 	rm -rf "${D}"/etc/silc/silcd.{pub,prv}
