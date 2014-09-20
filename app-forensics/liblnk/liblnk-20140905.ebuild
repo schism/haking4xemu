@@ -2,14 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit autotools-utils
+PYTHON_COMPAT=( python{2_6,2_7} )
 
-MY_P=${P/${PN}/${PN}-alpha}
+inherit versionator autotools-utils distutils-r1
+
+MY_DATE="$(get_version_component_range 1)"
+
 DESCRIPTION="Library and tools to access the Windows Shortcut File (LNK) Format"
 HOMEPAGE="https://code.google.com/p/liblnk/"
-SRC_URI="http://${PN}.googlecode.com/files/${MY_P}.tar.gz"
+SRC_URI="https://googledrive.com/host/0B3fBvzttpiiSQmluVC1YeDVvZWM/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -26,6 +29,9 @@ DEPEND="
 	dev-libs/libuna"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
+DISTUTILS_IN_SOURCE_BUILD=1
+DISTUTILS_SINGLE_IMPL=1
+EPYTHON=python2.7
 
 src_configure() {
 	local myeconfargs=( '--disable-rpath'
@@ -38,4 +44,21 @@ src_configure() {
 		$(use_enable python)
 	)
 	autotools-utils_src_configure
+	use python && distutils-r1_src_configure
+}
+
+src_compile() {
+	autotools-utils_src_compile
+	if use python; then
+		cd pylnk
+		distutils-r1_src_compile
+	fi
+}
+
+src_install() {
+	autotools-utils_src_install
+	if use python; then
+		cd pylnk
+		distutils-r1_src_install
+	fi
 }
