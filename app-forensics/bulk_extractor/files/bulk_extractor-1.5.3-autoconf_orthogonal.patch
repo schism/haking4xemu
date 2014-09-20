@@ -36,7 +36,7 @@ index 4080cf9..6efe730 100644
 -	      [AC_DEFINE(USE_LIGHTGREP, 1, [Use LIGHTGREP]) lightgrep="yes"],
 -              [])
 +	      [AC_DEFINE(USE_LIGHTGREP, [[test x"$enableval" == "xyes"]] && 1 || 0, [Use LIGHTGREP]) lightgrep=$enableval],
-+	      [AC_DEFINE(USE_LIGHTGREP, 0, [Use RAR decompression]) rar="no"])
++	      [AC_DEFINE(USE_LIGHTGREP, 0, [Use LIGHTGREP]) lightgrep="no"])
  AM_CONDITIONAL([LIGHTGREP_ENABLED], [test "yes" = "$lightgrep"])
  
  
