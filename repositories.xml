@@ -1,0 +1,11 @@
+<repositories version="1.0">
+	<repo quality="experimental" status="unofficial">
+		<name>haking4xemu</name>
+		<description lang="en">Gentoo overlay with various tools</description>
+		<homepage>https://github.com/schism/haking4xemu</homepage>
+		<owner type="person">
+			<name>dacook</name>
+		</owner>
+		<source type="git">git://github.com/schism/haking4xemu.git</source>
+	</repo>
+</repositories>
