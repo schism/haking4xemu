@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit versionator autotools-utils distutils-r1
+inherit versionator autotools-utils python-single-r1
 
 MY_DATE="$(get_version_component_range 1)"
 
@@ -34,6 +34,10 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${MY_DATE}"
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
+pkg_setup() {
+	use python && python-single-r1_pkg_setup
+}
+
 src_configure() {
 	local myeconfargs=( '--disable-rpath'
 		$(use_enable nls)
@@ -45,21 +49,18 @@ src_configure() {
 		$(use_enable python)
 	)
 	autotools-utils_src_configure
-	use python && distutils-r1_src_configure
 }
 
 src_compile() {
 	autotools-utils_src_compile
 	if use python; then
-		cd pybde
-		distutils-r1_src_compile
+		emake -C pybde
 	fi
 }
 
 src_install() {
 	autotools-utils_src_install
 	if use python; then
-		cd pybde
-		distutils-r1_src_install
+		emake -C pybde DESTDIR="${D}" install
 	fi
 }
