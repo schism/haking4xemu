@@ -4,34 +4,36 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python2_7 )
 
-inherit versionator autotools-utils distutils-r1
+inherit versionator autotools-utils python-single-r1
 
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library and tools to access the Windows Shortcut File (LNK) Format"
-HOMEPAGE="https://code.google.com/p/liblnk/"
-SRC_URI="https://googledrive.com/host/0B3fBvzttpiiSQmluVC1YeDVvZWM/${PN}-alpha-${MY_DATE}.tar.gz"
+HOMEPAGE="https://github.com/libyal/liblnk/"
+SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~x64-macos ~x86-macos"
 IUSE="debug nls python unicode"
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 DEPEND="
 	nls? (
 		virtual/libintl
 		virtual/libiconv
 	)
-	python? ( dev-lang/python )
+	python? ( ${PYTHON_DEPS} )
 	app-forensics/libbfio
 	dev-libs/libuna"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
-DISTUTILS_IN_SOURCE_BUILD=1
-DISTUTILS_SINGLE_IMPL=1
-EPYTHON=python2.7
+
+pkg_setup() {
+	use python && python-single-r1_pkg_setup
+}
 
 src_configure() {
 	local myeconfargs=( '--disable-rpath'
@@ -44,21 +46,18 @@ src_configure() {
 		$(use_enable python)
 	)
 	autotools-utils_src_configure
-	use python && distutils-r1_src_configure
 }
 
 src_compile() {
 	autotools-utils_src_compile
 	if use python; then
-		cd pylnk
-		distutils-r1_src_compile
+		emake -C pylnk
 	fi
 }
 
 src_install() {
 	autotools-utils_src_install
 	if use python; then
-		cd pylnk
-		distutils-r1_src_install
+		emake -C pylnk DESTDIR="${D}" install
 	fi
 }
