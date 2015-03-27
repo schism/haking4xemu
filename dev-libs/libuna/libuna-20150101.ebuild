@@ -4,12 +4,13 @@
 
 EAPI=5
 
-inherit eutils
+inherit versionator autotools-utils
 
-MY_P=${P/${PN}/${PN}-alpha}
+MY_DATE="$(get_version_component_range 1)"
+
 DESCRIPTION="Library to support Unicode and ASCII (byte string) conversions"
-HOMEPAGE="https://code.google.com/p/libuna/"
-SRC_URI="https://googledrive.com/host/0B3fBvzttpiiSaXBjN1ZJVzVsbjQ/${MY_P}.tar.gz"
+HOMEPAGE="https://github.com/libyal/libuna/"
+SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -24,19 +25,18 @@ DEPEND="nls? (
 		#dev-libs/libclocale
 		#dev-libs/libcnotify"
 
-src_prepare() {
-	epatch ${FILESDIR}/${P}-stdio.h.patch
-}
+#S="${WORKDIR}/${PN}-${MY_DATE}"
+AUTOTOOLS_IN_SOURCE_BUILD=1
+AUTOTOOLS_AUTORECONF=1
+
+#src_prepare() {
+	#epatch ${FILESDIR}/${P}-libcsystem.patch
+#}
 
 src_configure() {
-	econf --disable-rpath \
-		$(use_enable nls) \
-		$(use_with unicode libiconv-prefix) \
-		$(use_with unicode libintl-prefix) \
+	local myeconfargs=( '--disable-rpath'
+		$(use_enable nls)
 		$(use_enable unicode wide-character-type)
-}
-
-src_install() {
-	default
-	find ${D} -type f -name libuna.pc -delete
+	)
+	autotools-utils_src_configure
 }
