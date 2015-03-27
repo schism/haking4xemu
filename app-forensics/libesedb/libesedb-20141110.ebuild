@@ -30,7 +30,6 @@ DEPEND="${RDEPEND}
 	app-forensics/libbfio"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
-DISTUTILS_SINGLE_IMPL=1
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
