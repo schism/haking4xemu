@@ -18,11 +18,10 @@ SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-expe
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~hppa ~ppc ~x86"
-IUSE="debug fuse threads python unicode"
+IUSE="debug threads python unicode"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 DEPEND="python? ( ${PYTHON_DEPS} )
-		fuse? ( sys-fs/fuse )
 		dev-libs/libuna
 		sys-libs/zlib
 		app-forensics/libbfio"
