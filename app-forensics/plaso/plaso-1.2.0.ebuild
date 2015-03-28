@@ -6,16 +6,15 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit versionator distutils-r1 git-2
+inherit versionator distutils-r1
 
 DESCRIPTION="A tool designed to extract timestamps from various files found on a typical computer system(s) and aggregate them."
-HOMEPAGE="https://github.com/log2timeleine/plaso/"
-SRC_URI=""
-EGIT_REPO_URI="https://github.com/log2timeline/plaso/"
+HOMEPAGE="https://github.com/log2timeline/plaso/"
+SRC_URI="https://github.com/log2timeline/${PN}/archive/v${PV}.tar.gz"
 
 LICENSE="Apache-2"
 SLOT="0"
-KEYWORDS="-*"
+KEYWORDS="~amd64 ~hppa ~ppc ~x86"
 IUSE=""
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
