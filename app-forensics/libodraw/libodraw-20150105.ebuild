@@ -4,16 +4,16 @@
 
 EAPI=5
 
-inherit autotools-utils
+inherit versionator autotools-utils 
 
-MY_P=${P/${PN}/${PN}-alpha}
+MY_DATE="$(get_version_component_range 1)"
 DESCRIPTION="Library to support optical disc (split) RAW formats"
-HOMEPAGE="https://code.google.com/p/libsmlibs/"
-SRC_URI="https://libsmlibs.googlecode.com/files/${MY_P}.tar.gz"
+HOMEPAGE="https://github.com/libyal/libodraw/"
+SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
+KEYWORDS="~x86 ~amd64"
 IUSE="debug nls unicode"
 
 DEPEND="nls? (
@@ -22,10 +22,11 @@ DEPEND="nls? (
 		)
 	dev-libs/libuna
 	app-forensics/libbfio"
+
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {
-	local myeconfargs=( '--disable-rpath'
+	local myeconfargs=(
 		$(use_enable nls)
 		$(use_with nls libiconv-prefix)
 		$(use_with nls libintl-prefix)
