@@ -9,7 +9,7 @@ inherit distutils git-r3
 DESCRIPTION="GRR Rapid Response is an Incident Response Framework"
 HOMEPAGE="http://code.google.com/p/grr/"
 SRC_URI=""
-EGIT_REPO_URI="https://code.google.com/p/grr/"
+EGIT_REPO_URI="https://github.com/google/grr.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"
