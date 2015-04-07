@@ -5,8 +5,8 @@
 EAPI=5
 
 DESCRIPTION="A virtual for the common core libraries used by Joachim Metz' toolset"
-HOMEPAGE="http://code.google.com/p/libyal"
-SRC_URI=""
+HOMEPAGE="https://github.com/libyal/libyal"
+SRC_URI="https://github.com/libyal/libyal/archive/master.zip"
 
 LICENSE="LGPL"
 SLOT="0"
