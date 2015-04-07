@@ -7,7 +7,7 @@ EAPI=5
 inherit distutils git-r3
 
 DESCRIPTION="GRR Rapid Response is an Incident Response Framework"
-HOMEPAGE="http://code.google.com/p/grr/"
+HOMEPAGE="https://github.com/google/grr"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/google/grr.git"
 
