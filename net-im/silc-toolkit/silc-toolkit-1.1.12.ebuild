@@ -13,12 +13,13 @@ SRC_URI="mirror://sourceforge/silc/silc/toolkit/sources/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sparc x86 ~x86-fbsd"
-IUSE="debug gmp ipv6 socks5"
+IUSE="debug gmp iconv ipv6 socks5"
 
 RDEPEND=""
 DEPEND="virtual/pkgconfig
+	gmp? ( dev-libs/gmp )
 	socks5? ( net-proxy/dante )
-	virtual/libiconv"
+	iconv? ( virtual/libiconv )"
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
@@ -42,9 +43,16 @@ src_configure() {
 		--disable-asm
 		--with-simdir=/usr/$(get_libdir)/${PN}/modules
 		$(use_with gmp)
-		$(use_with socks5)
 		$(use_enable debug)
 		$(use_enable ipv6)
 	)
+	if ! use iconv; then
+		# their --with-iconv is inverted but automagic
+		myeconfargs+=( --with-iconv )
+	fi
+	if use socks5; then
+		# their --with-socks5 only works one way
+		myeconfargs+=( --with-socks5 )
+	fi
 	autotools-utils_src_configure
 }
