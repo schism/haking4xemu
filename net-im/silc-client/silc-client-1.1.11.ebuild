@@ -58,16 +58,13 @@ src_configure() {
 src_install() {
 	local myflags=""
 
-	if use perl
-	then
-		R1="s/installsitearch='//"
-		R2="s/';//"
-		perl_sitearch="`perl -V:installsitearch | sed -e ${R1} -e ${R2}`"
-		myflags="${myflags} INSTALLPRIVLIB=/usr/$(get_libdir)"
-		myflags="${myflags} INSTALLARCHLIB=${perl_sitearch}"
-		myflags="${myflags} INSTALLSITELIB=${perl_sitearch}"
-		myflags="${myflags} INSTALLSITEARCH=${perl_sitearch}"
-	fi
+	R1="s/installsitearch='//"
+	R2="s/';//"
+	perl_sitearch="`perl -V:installsitearch | sed -e ${R1} -e ${R2}`"
+	myflags="${myflags} INSTALLPRIVLIB=/usr/$(get_libdir)"
+	myflags="${myflags} INSTALLARCHLIB=${perl_sitearch}"
+	myflags="${myflags} INSTALLSITELIB=${perl_sitearch}"
+	myflags="${myflags} INSTALLSITEARCH=${perl_sitearch}"
 
 	make DESTDIR="${D}" ${myflags} install || die "make install failed"
 
