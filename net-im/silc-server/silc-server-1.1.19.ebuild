@@ -15,7 +15,7 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="ipv6 debug threads"
 
-DEPEND=">=net-im/silc-toolkit-1.1.10"
+DEPEND=""
 RDEPEND="${DEPEND}
 	!<=net-im/silc-client-1.0.1"
 
