@@ -47,6 +47,7 @@ src_configure() {
 		--libdir=/usr/$(get_libdir)/${PN}
 		--docdir=/usr/share/doc/${PF}
 		--disable-optimizations
+		--disable-asm
 		$(use_enable ipv6)
 		$(use_enable debug)
 		$(use_with threads pthreads)
