@@ -34,7 +34,6 @@ src_configure() {
 		"--mandir=/usr/share/man"
 		"--includedir=/usr/include/${PN}"
 		"--libdir=/usr/$(get_libdir)/${PN}"
-		"--enable-shared=yes"
 		$(use_enable ipv6)
 		$(use_enable debug)
 		$(use_with threads pthreads)
