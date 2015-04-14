@@ -19,6 +19,10 @@ IUSE=""
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="${PYTHON_DEPS}
+	dev-python/hachoir-core
+	dev-python/hachoir-parser
+	app-misc/hachoir-metadata
+	dev-python/binplist
 	dev-python/bencode
 	app-forensics/dfvfs
 	dev-python/ipython

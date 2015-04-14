@@ -6,10 +6,10 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit versionator distutils-r1 git-2
+inherit versionator distutils-r1 git-r3
 
 DESCRIPTION="A tool designed to extract timestamps from various files found on a typical computer system(s) and aggregate them."
-HOMEPAGE="https://github.com/log2timeleine/plaso/"
+HOMEPAGE="https://github.com/log2timeline/plaso/"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/log2timeline/plaso/"
 
@@ -20,6 +20,10 @@ IUSE=""
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="${PYTHON_DEPS}
+	dev-python/hachoir-core
+	dev-python/hachoir-parser
+	app-misc/hachoir-metadata
+	dev-python/binplist
 	dev-python/bencode
 	app-forensics/dfvfs
 	dev-python/ipython
