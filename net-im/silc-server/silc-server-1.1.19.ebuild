@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# schism@subverted.org
 
-EAPI="5"
+EAPI=5
 
 inherit eutils autotools-utils user
 
@@ -13,9 +13,12 @@ HOMEPAGE="http://silcnet.org/"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="ipv6 debug threads"
+IUSE="debug gmp iconv ipv6 socks5 threads"
 
-DEPEND=""
+DEPEND="virtual/pkgconfig
+	iconv? ( virtual/iconv )
+	gmp? ( dev-libs/gmp )
+	socks5? ( net-proxy/dante )"
 RDEPEND="${DEPEND}
 	!<=net-im/silc-client-1.0.1"
 
@@ -23,26 +26,39 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_configure() {
 	local myeconfargs=(
-		"--disable-optimizations"
-		"--disable-asm"
-		"--with-logsdir=/var/log/${PN}"
-		"--with-silcd-pid-file=/var/run/silcd.pid"
-		"--docdir=/usr/share/doc/${PF}"
-		"--sysconfdir=/etc/silc"
-		"--datadir=/usr/share/${PN}"
-		"--datarootdir=/usr/share/${PN}"
-		"--mandir=/usr/share/man"
-		"--includedir=/usr/include/${PN}"
-		"--libdir=/usr/$(get_libdir)/${PN}"
+		--with-logsdir="${EPREFIX}/var/log/${PN}"
+		--with-silcd-pid-file="${EPREFIX}/var/run/silcd.pid"
+		--docdir="${EPREFIX}/usr/share/doc/${PF}"
+		--sysconfdir="${EPREFIX}/etc/silc"
+		--datadir="${EPREFIX}/usr/share/${PN}"
+		--datarootdir="${EPREFIX}/usr/share/${PN}"
+		--mandir="${EPREFIX}/usr/share/man"
+		--includedir="${EPREFIX}/usr/include/${PN}"
+		--libdir="${EPREFIX}/usr/$(get_libdir)/${PN}"
+		--disable-optimizations
+		--disable-asm
 		$(use_enable ipv6)
 		$(use_enable debug)
 		$(use_with threads pthreads)
 	)
+	if use gmp; then
+		# their --with-gmp is one-way
+		myeconfargs+=( --with-gmp )
+	fi
+	if ! use iconv; then
+		# their --with-iconv is inverted but automagic
+		myeconfargs+=( --with-iconv )
+	fi
+	if use socks5; then
+		# their --with-socks5 only works one way
+		myeconfargs+=( --with-socks5 )
+	fi
 	autotools-utils_src_configure
 }
 
 src_install() {
-	emake -j1 DESTDIR="${D}" install || die "make install failed"
+	autotools-utils_src_install
+	#emake -j1 DESTDIR="${D}" install || die "make install failed"
 
 	insinto /usr/share/doc/${PF}/examples
 	doins doc/examples/*.conf
@@ -61,9 +77,9 @@ src_install() {
 
 pkg_postinst() {
 	enewuser silcd
-	if [ ! -f "${ROOT}"/etc/silc/silcd.prv ] ; then
+	if [ ! -f "${EPREFIX}"/etc/silc/silcd.prv ] ; then
 		einfo "Creating key pair in /etc/silc"
-		silcd -C "${ROOT}"/etc/silc
-		chmod 600 "${ROOT}"/etc/silc/silcd.{prv,pub}
+		silcd -C "${EPREFIX}"/etc/silc
+		chmod 600 "${EPREFIX}"/etc/silc/silcd.{prv,pub}
 	fi
 }
