@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-inherit autotools-utils java-pkg-opt-2 java-ant-2 git-2
+inherit autotools-utils java-pkg-opt-2 java-ant-2 git-r3
 
 SLOT=0
 DESCRIPTION="A collection of file system and media management forensic analysis tools"

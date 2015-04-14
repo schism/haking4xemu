@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit versionator autotools-utils python-single-r1 git-2
+inherit versionator autotools-utils python-single-r1 git-r3
 
 MY_DATE="$(get_version_component_range 1)"
 DESCRIPTION="Library and tools to access the PFF (Personal Folder File) format, used in PST and OST"

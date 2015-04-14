@@ -5,7 +5,7 @@
 EAPI="5"
 
 PYTHON_COMPAT=( python2_{6,7} )
-inherit distutils-r1 git-2
+inherit distutils-r1 git-r3
 
 DESCRIPTION="Forensic tool for analyzing volatile memory"
 HOMEPAGE="http://www.volatilityfoundation.org/"

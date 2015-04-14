@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit perl-module git-2
+inherit perl-module git-r3
 
 DESCRIPTION="Log2timeline super timeline tool"
 HOMEPAGE="http://code.google.com/p/log2timeline/"
