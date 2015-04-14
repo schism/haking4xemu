@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Forensic tool for analyzing volatile memory"
 HOMEPAGE="http://www.volatilityfoundation.org/"
-SRC_URI="http://downloads.volatilityfoundation.org/releases/${PV}/${P}.tar.gz"
+SRC_URI="https://github.com/volatilityfoundation/${PN}/archive/${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
