@@ -15,3 +15,18 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="iconv nls static static-libs unicode"
 DEPEND="${LIBYAL_DEPEND}"
+
+src_configure() {
+	# these all also depend on libuna, introducing circular dependencies.
+	# Use the local copy for this core lib.
+	local libyal_econf=(
+		"--with-libcstring=no"
+		"--with-libcerror=no"
+		"--with-libcdatetime=no"
+		"--with-libclocale=no"
+		"--with-libcnotify=no"
+		"--with-libcfile=no"
+		"--with-libcsystem=no"
+	)
+	libyal-r1_src_configure
+}
