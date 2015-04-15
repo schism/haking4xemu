@@ -21,9 +21,6 @@
 
 inherit eutils versionator autotools-utils
 
-LIBYAL_DATE="$(get_version_component_range 1)"
-SRC_URI="https://github.com/libyal/${PN}/releases/download/${LIBYAL_DATE}/${PN}-${LIBYAL_RELEASE:=alpha}-${LIBYAL_DATE}.tar.gz"
-
 if [[ ${PV} == 9999* ]] ; then
 	AUTOTOOLS_AUTORECONF=1
 	EGIT_REPO_URI="https://github.com/libyal/${PN}/"
@@ -36,6 +33,12 @@ if [ ! -z ${LIBYAL_PYLIB} ]; then
 	inherit python-single-r1
 	REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 	_LIBYAL_PYUSE="python? ( ${PYTHON_DEPS} )"
+fi
+
+# don't set src_uri if this is a git build
+if [ -z ${EGIT_REPO_URI} ]; then
+	LIBYAL_DATE="$(get_version_component_range 1)"
+	SRC_URI="https://github.com/libyal/${PN}/releases/download/${LIBYAL_DATE}/${PN}-${LIBYAL_RELEASE:=alpha}-${LIBYAL_DATE}.tar.gz"
 fi
 
 # these tools don't handle split builds very gracefully
