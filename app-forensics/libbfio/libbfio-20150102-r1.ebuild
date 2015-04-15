@@ -11,8 +11,17 @@ inherit libyal-r1
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
+KEYWORDS="~x86 ~amd64"
 IUSE="nls iconv threads unicode"
 DEPEND="${LIBYAL_DEPEND}
+	dev-libs/libcstring
+	dev-libs/libcerror
+	dev-libs/libcthreads
+	dev-libs/libcdata
+	dev-libs/libclocale
+	dev-libs/libcnotify
+	dev-libs/libcsplit
+	dev-libs/libcfile
+	dev-libs/libcpath
 	dev-libs/libuna"
 RDEPEND="${DEPEND}"
