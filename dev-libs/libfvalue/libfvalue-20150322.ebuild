@@ -20,7 +20,6 @@ DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libcerror
 	dev-libs/libcthreads
 	dev-libs/libcdata
-	dev-libs/libclocale
 	dev-libs/libcnotify
 	dev-libs/libfdatetime
 	dev-libs/libfguid
