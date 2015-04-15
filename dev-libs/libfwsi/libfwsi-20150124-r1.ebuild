@@ -27,6 +27,5 @@ DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libfdatetime
 	dev-libs/libfole
 	dev-libs/libfguid
-	dev-libs/libfwps
-	dev-libs/libuna"
+	dev-libs/libfwps"
 RDEPEND="${DEPEND}"
