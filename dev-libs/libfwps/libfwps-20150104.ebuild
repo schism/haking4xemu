@@ -14,7 +14,7 @@ inherit libyal-r1
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="${LIBYAL_IUSE}"
+IUSE="debug iconv nls python static-libs threads"
 
 DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libcstring
