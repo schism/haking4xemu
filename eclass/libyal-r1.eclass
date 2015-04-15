@@ -22,11 +22,11 @@
 inherit eutils versionator autotools-utils
 
 LIBYAL_DATE="$(get_version_component_range 1)"
-SRC_URI="${HOMEPAGE}/releases/download/${LIBYAL_DATE}/${PN}-${LIBYAL_RELEASE:=alpha}-${LIBYAL_DATE}.tar.gz"
+SRC_URI="https://github.com/libyal/${PN}/releases/download/${LIBYAL_DATE}/${PN}-${LIBYAL_RELEASE:=alpha}-${LIBYAL_DATE}.tar.gz"
 
 if [[ ${PV} == 9999* ]] ; then
 	AUTOTOOLS_AUTORECONF=1
-	EGIT_REPO_URI="${HOMEPAGE}"
+	EGIT_REPO_URI="https://github.com/libyal/${PN}/"
 	${KEYWORDS:=-*}
 	inherit git-r3
 fi
@@ -35,6 +35,7 @@ if [ ! -z ${LIBYAL_PYLIB} ]; then
 	PYTHON_COMPAT=( python2_7 )
 	inherit python-single-r1
 	REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+	_LIBYAL_PYUSE="python? ( ${PYTHON_DEPS} )"
 fi
 
 # these tools don't hnad split builds very gracefully
@@ -45,10 +46,12 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 # @DESCRIPTION: Offers the standard basic IUSE for libyal-r1
 LIBYAL_IUSE="debug iconv nls python static static-libs threads unicode"
 # @ECLASS-VARIABLE: LIBYAL_DEPEND
-# @DESCRIPTION: Offers the standard basic DEPEND for libyal-r1
-LIBYAL_DEPEND="iconv? ( virtual/libiconv )
-	nls? ( virtual/libintl )
-	python? ( ${PYTHON_DEPS} )"
+# @DESCRIPTION:
+# Offers the basic DEPEND for libyal-r1 (presumes IUSE='iconv nls python',
+# python optional)
+LIBYAL_DEPEND="${_LIBYAL_PYUSE}
+	iconv? ( virtual/libiconv )
+	nls? ( virtual/libintl )"
 
 EXPORT_FUNCTIONS pkg_setup src_configure src_compile src_install
 
@@ -84,12 +87,18 @@ libyal-r1_pkg_setup() {
 # }
 # @CODE
 libyal-r1_src_configure() {
-	# common default, present in every libyal-r1 package
-	local myeconfargs=(
-		$(use_enable unicode wide-character-type)
-		$(use_enable debug debug-output)
-		$(use_enable debug verbose-output)
-	)
+	# for autotools-utils
+	declare -a myeconfargs
+
+	if in_iuse unicode; then
+		myeconfargs+=($(use_enable unicode wide-character-type))
+	fi
+	
+	if in_iuse debug; then
+		myeconfargs+=(
+			$(use_enable debug debug-output)
+			$(use_enable debug verbose-output))
+	fi
 
 	if in_iuse python; then
 		myeconfargs+=($(use_enable python))
