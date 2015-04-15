@@ -17,23 +17,7 @@ KEYWORDS="~amd64 ~hppa ~ppc ~x86"
 IUSE="${LIBYAL_IUSE}"
 
 DEPEND="${LIBYAL_DEPEND}
-	dev-libs/libcstring
-	dev-libs/libcerror
-	dev-libs/libcthreads
-	dev-libs/libcdata
-	dev-libs/libclocale
-	dev-libs/libcnotify
-	dev-libs/libcsplit
 	dev-libs/libuna
-	dev-libs/libcfile
-	dev-libs/libcpath
 	app-forensics/libbfio
-	dev-libs/libfcache
-	dev-libs/libfdata
-	dev-libs/libfdatetime
-	dev-libs/libfguid
-	dev-libs/libfvalue
-	dev-libs/libfwevt
-	dev-libs/libfwnt
 	app-forensics/libexe"
 RDEPEND="${DEPEND}"

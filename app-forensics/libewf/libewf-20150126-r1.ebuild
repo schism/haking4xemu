@@ -26,27 +26,11 @@ DEPEND="${LIBYAL_DEPEND}
 	ssl? ( dev-libs/openssl )
 	zlib? ( sys-libs/zlib )
 	bzip2? ( app-arch/bzip2 )
-	dev-libs/libcstring
-	dev-libs/libcerror
-	dev-libs/libcthreads
-	dev-libs/libcdata
-	dev-libs/libcdatetime
-	dev-libs/libclocale
-	dev-libs/libcnotify
-	dev-libs/libcsplit
 	dev-libs/libuna
-	dev-libs/libcfile
-	dev-libs/libcpath
 	app-forensics/libbfio
-	dev-libs/libfcache
-	dev-libs/libfdata
-	dev-libs/libfvalue
-	dev-libs/libhmac
-	dev-libs/libcaes
 	app-forensics/libodraw
 	app-forensics/libsmdev
-	app-forensics/libsmraw
-	dev-libs/libcsystem"
+	app-forensics/libsmraw"
 RDEPEND="${DEPEND}"
 
 DOCS=( AUTHORS ChangeLog NEWS README documents/header.txt documents/header2.txt )

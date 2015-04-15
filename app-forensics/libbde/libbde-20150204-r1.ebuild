@@ -21,22 +21,5 @@ DEPEND="${LIBYAL_DEPEND}
 	sys-fs/fuse
 	dev-libs/libuna
 	app-forensics/libbfio
-	dev-libs/libcstring
-	dev-libs/libcerror
-	dev-libs/libcthreads
-	dev-libs/libcdata
-	dev-libs/libclocale
-	dev-libs/libcnotify
-	dev-libs/libcsplit
-	dev-libs/libcfile
-	dev-libs/libcpath
-	dev-libs/libfcache
-	dev-libs/libfdata
-	dev-libs/libfdatetime
-	dev-libs/libfguid
-	dev-libs/libfvalue
-	dev-libs/libhmac
-	dev-libs/libcaes
-	dev-libs/libcsystem
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"
