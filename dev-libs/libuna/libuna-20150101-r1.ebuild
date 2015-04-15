@@ -13,5 +13,5 @@ inherit libyal-r1
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="iconv nls static unicode"
+IUSE="iconv nls static static-libs unicode"
 DEPEND="${LIBYAL_DEPEND}"
