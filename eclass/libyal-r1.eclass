@@ -55,13 +55,24 @@ LIBYAL_DEPEND="${_LIBYAL_PYUSE}
 	iconv? ( virtual/libiconv )
 	nls? ( virtual/libintl )"
 
-EXPORT_FUNCTIONS pkg_setup src_configure src_compile src_install
+EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
 
 # @FUNCTION: libyal-r1_pkg_setup
 # @DESCRIPTION:
 # the pkg_setup function to call the appropriate python package setup if needed
 libyal-r1_pkg_setup() {
 	in_iuse python && use python && python-single-r1_pkg_setup
+}
+
+# @FUNCTION: libyal-r1_src_prepare
+# @DESCRIPTION:
+# If the ebuild is a live (git) ebuild, runs the appropriate script to pull in
+# the dependency libraries so build will succeed (whether or not they're used).
+libyal-r1_src_prepare() {
+	if [ ! -z ${EGIT_REPO_URI} ]; then
+		sh "${S}/synclibs.sh"
+	fi
+	autotools-utils_src_prepare
 }
 
 # @FUNCTION: libyal-r1_src_configure
