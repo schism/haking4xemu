@@ -4,16 +4,16 @@
 
 EAPI=5
 
-DESCRIPTION="Library and tools to access the Extensible Storage Engine (ESE) Database File (EDB) format"
-HOMEPAGE="http://github.com/libyal/libesedb/"
+DESCRIPTION="Library to access the Windows Resource Compiler (WRC) format"
+HOMEPAGE="https://github.com/libyal/libwrc"
 LIBYAL_RELEASE="experimental"
-LIBYAL_PYLIB="pyesedb"
+LIBYAL_PYLIB="pywrc"
 
 inherit libyal-r1
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~hppa ~ppc ~x86"
 IUSE="${LIBYAL_IUSE}"
 
 DEPEND="${LIBYAL_DEPEND}
@@ -24,17 +24,16 @@ DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libclocale
 	dev-libs/libcnotify
 	dev-libs/libcsplit
+	dev-libs/libuna
 	dev-libs/libcfile
 	dev-libs/libcpath
+	app-forensics/libbfio
 	dev-libs/libfcache
 	dev-libs/libfdata
 	dev-libs/libfdatetime
 	dev-libs/libfguid
 	dev-libs/libfvalue
+	dev-libs/libfwevt
 	dev-libs/libfwnt
-	dev-libs/libfmapi
-	dev-libs/libmapidb
-	dev-libs/libcsystem
-	dev-libs/libuna
-	app-forensics/libbfio"
+	app-forensics/libexe"
 RDEPEND="${DEPEND}"

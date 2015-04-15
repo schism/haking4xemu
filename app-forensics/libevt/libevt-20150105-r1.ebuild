@@ -4,10 +4,10 @@
 
 EAPI=5
 
-DESCRIPTION="Library and tools to access the Extensible Storage Engine (ESE) Database File (EDB) format"
-HOMEPAGE="http://github.com/libyal/libesedb/"
-LIBYAL_RELEASE="experimental"
-LIBYAL_PYLIB="pyesedb"
+DESCRIPTION="Library and tooling to access the Windows Event Log (EVT) format"
+HOMEPAGE="https://github.com/libyal/libevt"
+LIBYAL_RELEASE="alpha"
+LIBYAL_PYLIB="pyevt"
 
 inherit libyal-r1
 
@@ -24,17 +24,20 @@ DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libclocale
 	dev-libs/libcnotify
 	dev-libs/libcsplit
+	dev-libs/libuna
 	dev-libs/libcfile
 	dev-libs/libcpath
+	app-forensics/libbfio
 	dev-libs/libfcache
 	dev-libs/libfdata
 	dev-libs/libfdatetime
 	dev-libs/libfguid
 	dev-libs/libfvalue
 	dev-libs/libfwnt
-	dev-libs/libfmapi
-	dev-libs/libmapidb
-	dev-libs/libcsystem
-	dev-libs/libuna
-	app-forensics/libbfio"
+	dev-libs/libfwevt
+	app-forensics/libexe
+	app-forensics/libregf
+	app-forensics/libwrc
+	dev-libs/libcdirectory
+	dev-libs/libcsystem"
 RDEPEND="${DEPEND}"

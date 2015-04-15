@@ -4,18 +4,17 @@
 
 EAPI=5
 
-DESCRIPTION="Library and tools to access the Extensible Storage Engine (ESE) Database File (EDB) format"
-HOMEPAGE="http://github.com/libyal/libesedb/"
-LIBYAL_RELEASE="experimental"
-LIBYAL_PYLIB="pyesedb"
+DESCRIPTION="Library and tools to access the Windows NT Registry File (REGF) format."
+HOMEPAGE="http://github.com/libyal/libregf/"
+LIBYAL_RELEASE="alpha"
+LIBYAL_PYLIB="pyregf"
 
 inherit libyal-r1
 
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="${LIBYAL_IUSE}"
-
+IUSE="fuse ${LIBYAL_IUSE}"
 DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libcstring
 	dev-libs/libcerror
@@ -24,17 +23,18 @@ DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libclocale
 	dev-libs/libcnotify
 	dev-libs/libcsplit
+	dev-libs/libuna
 	dev-libs/libcfile
 	dev-libs/libcpath
+	app-forensics/libbfio
 	dev-libs/libfcache
 	dev-libs/libfdata
 	dev-libs/libfdatetime
 	dev-libs/libfguid
-	dev-libs/libfvalue
 	dev-libs/libfwnt
-	dev-libs/libfmapi
-	dev-libs/libmapidb
+	dev-libs/libfole
+	dev-libs/libfwps
+	dev-libs/libfwsi
 	dev-libs/libcsystem
-	dev-libs/libuna
-	app-forensics/libbfio"
+	fuse? ( sys-fs/fuse )"
 RDEPEND="${DEPEND}"
