@@ -6,6 +6,7 @@ EAPI=5
 
 DESCRIPTION="Library for cross-platform C error functions"
 HOMEPAGE="https://github.com/libyal/libcerror"
+LIBYAL_RELEASE="alpha"
 
 inherit libyal-r1
 
