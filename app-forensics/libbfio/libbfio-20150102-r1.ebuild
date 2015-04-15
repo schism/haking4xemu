@@ -15,3 +15,4 @@ KEYWORDS="~x86 ~amd64 ~x64-macos ~x86-macos"
 IUSE="nls iconv threads unicode"
 DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libuna"
+RDEPEND="${DEPEND}"
