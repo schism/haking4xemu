@@ -17,15 +17,5 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug iconv nls python static-libs threads"
 
 DEPEND="${LIBYAL_DEPEND}
-	dev-libs/libcstring
-	dev-libs/libcerror
-	dev-libs/libcthreads
-	dev-libs/libcdata
-	dev-libs/libclocale
-	dev-libs/libcnotify
-	dev-libs/libuna
-	dev-libs/libfdatetime
-	dev-libs/libfole
-	dev-libs/libfguid
-	dev-libs/libfwps"
+	dev-libs/libuna"
 RDEPEND="${DEPEND}"
