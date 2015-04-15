@@ -24,7 +24,6 @@ inherit eutils versionator autotools-utils
 if [[ ${PV} == 9999* ]] ; then
 	AUTOTOOLS_AUTORECONF=1
 	EGIT_REPO_URI="https://github.com/libyal/${PN}/"
-	${KEYWORDS:=-*}
 	inherit git-r3
 fi
 
