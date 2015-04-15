@@ -38,7 +38,7 @@ if [ ! -z ${LIBYAL_PYLIB} ]; then
 	_LIBYAL_PYUSE="python? ( ${PYTHON_DEPS} )"
 fi
 
-# these tools don't hnad split builds very gracefully
+# these tools don't handle split builds very gracefully
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 # post-inheritance eclass variables
