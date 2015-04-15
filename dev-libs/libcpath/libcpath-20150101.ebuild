@@ -17,5 +17,8 @@ IUSE="iconv nls static-libs unicode"
 
 DEPEND="${LIBYAL_DEPEND}
 	dev-libs/libcstring
-	dev-libs/libcerror"
+	dev-libs/libcerror
+	dev-libs/libclocale
+	dev-libs/libcsplit
+	dev-libs/libuna"
 RDEPEND="${DEPEND}"
