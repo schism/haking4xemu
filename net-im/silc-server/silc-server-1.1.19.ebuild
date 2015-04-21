@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="debug gmp iconv ipv6 socks5 threads"
 
 DEPEND="virtual/pkgconfig
-	iconv? ( virtual/iconv )
+	iconv? ( virtual/libiconv )
 	gmp? ( dev-libs/gmp )
 	socks5? ( net-proxy/dante )"
 RDEPEND="${DEPEND}
