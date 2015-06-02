@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tools to access the Microsoft Internet Explorer (MSIE) Cache File (index.dat) files"
-HOMEPAGE="http://github.com/libyal/libmsiecf/"
+HOMEPAGE="https://github.com/libyal/libmsiecf/"
 LIBYAL_RELEASE="alpha"
 LIBYAL_PYLIB="pymsiecf"
 

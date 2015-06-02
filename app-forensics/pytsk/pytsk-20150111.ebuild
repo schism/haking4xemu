@@ -10,7 +10,7 @@ inherit versionator autotools-utils distutils-r1
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Python bindings for the Sleuthkit"
-HOMEPAGE="http://github.com/py4n6/pytsk/"
+HOMEPAGE="https://github.com/py4n6/pytsk/"
 SRC_URI="https://github.com/py4n6/${PN}/releases/download/${MY_DATE}/${PN}-${MY_DATE}.tgz"
 
 LICENSE="Apache-2"

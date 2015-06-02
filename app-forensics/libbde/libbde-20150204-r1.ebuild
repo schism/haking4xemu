@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tools to support the BitLocker Drive Encryption (BDE) encrypted volumes."
-HOMEPAGE="http://github.com/libyal/libbde/"
+HOMEPAGE="https://github.com/libyal/libbde/"
 
 LIBYAL_PYLIB="pybde"
 LIBYAL_RELEASE="alpha"

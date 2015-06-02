@@ -11,7 +11,7 @@ inherit versionator autotools-utils python-single-r1
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library and tooling to support the Microsoft Outlook Nickfile (NK2) format"
-HOMEPAGE="http://github.com/libyal/libnk2/"
+HOMEPAGE="https://github.com/libyal/libnk2/"
 SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL"

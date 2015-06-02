@@ -11,7 +11,7 @@ inherit versionator autotools-utils python-single-r1
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library providing device abstraction"
-HOMEPAGE="http://github.com/libyal/libsmdev/"
+HOMEPAGE="https://github.com/libyal/libsmdev/"
 SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"

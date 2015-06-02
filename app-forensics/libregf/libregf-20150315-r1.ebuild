@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tools to access the Windows NT Registry File (REGF) format."
-HOMEPAGE="http://github.com/libyal/libregf/"
+HOMEPAGE="https://github.com/libyal/libregf/"
 LIBYAL_RELEASE="alpha"
 LIBYAL_PYLIB="pyregf"
 

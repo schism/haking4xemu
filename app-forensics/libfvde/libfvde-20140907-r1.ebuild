@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tools for reading FileVault Drive Encryption (FVDE) encrypted volumes."
-HOMEPAGE="http://github.com/libyal/libfvde/"
+HOMEPAGE="https://github.com/libyal/libfvde/"
 LIBYAL_RELEASE="experimental"
 
 inherit libyal-r1

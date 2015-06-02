@@ -9,7 +9,7 @@ inherit versionator autotools-utils
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library and tools for reading FileVault Drive Encryption (FVDE) encrypted volumes."
-HOMEPAGE="http://github.com/libyal/libfvde/"
+HOMEPAGE="https://github.com/libyal/libfvde/"
 SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-experimental-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"

@@ -10,9 +10,9 @@ inherit versionator autotools-utils python-single-r1 git-r3
 
 MY_DATE="$(get_version_component_range 1)"
 DESCRIPTION="Library and tools to access the PFF (Personal Folder File) format, used in PST and OST"
-HOMEPAGE="http://github.com/libyal/libpff"
+HOMEPAGE="https://github.com/libyal/libpff"
 #SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-experimental-${MY_DATE}.tar.gz"
-EGIT_REPO_URI="http://github.com/libyal/libpff"
+EGIT_REPO_URI="https://github.com/libyal/libpff"
 EGIT_COMMIT="06397add0d8c966c8f0a861dd755d43cd7ef1596"
 
 LICENSE="LGPL-3"

@@ -11,8 +11,8 @@ inherit versionator autotools-utils python-single-r1
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library and tools to support the BitLocker Drive Encryption (BDE) encrypted volumes."
-HOMEPAGE="http://code.google.com/p/libbde/"
-SRC_URI="http://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
+HOMEPAGE="https://code.google.com/p/libbde/"
+SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"

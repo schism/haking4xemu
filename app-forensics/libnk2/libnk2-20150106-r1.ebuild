@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tooling to support the Microsoft Outlook Nickfile (NK2) format"
-HOMEPAGE="http://github.com/libyal/libnk2/"
+HOMEPAGE="https://github.com/libyal/libnk2/"
 LIBYAL_RELEASE="alpha"
 LIBYAL_PYLIB="pynk2"
 

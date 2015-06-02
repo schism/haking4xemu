@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library and tools to access the Extensible Storage Engine (ESE) Database File (EDB) format"
-HOMEPAGE="http://github.com/libyal/libesedb/"
+HOMEPAGE="https://github.com/libyal/libesedb/"
 LIBYAL_RELEASE="experimental"
 LIBYAL_PYLIB="pyesedb"
 

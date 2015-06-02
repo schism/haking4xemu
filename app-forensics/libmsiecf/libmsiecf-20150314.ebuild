@@ -11,7 +11,7 @@ inherit versionator autotools-utils python-single-r1
 MY_DATE="$(get_version_component_range 1)"
 
 DESCRIPTION="Library and tools to access the Microsoft Internet Explorer (MSIE) Cache File (index.dat) files"
-HOMEPAGE="http://github.com/libyal/libmsiecf/"
+HOMEPAGE="https://github.com/libyal/libmsiecf/"
 SRC_URI="https://github.com/libyal/${PN}/releases/download/${MY_DATE}/${PN}-alpha-${MY_DATE}.tar.gz"
 
 LICENSE="LGPL-3"

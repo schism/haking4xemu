@@ -4,7 +4,7 @@
 EAPI=5
 
 DESCRIPTION="Implementation of the EWF (SMART and EnCase) image format"
-HOMEPAGE="http://github.com/libyal/libewf/"
+HOMEPAGE="https://github.com/libyal/libewf/"
 LIBYAL_RELEASE="experimental"
 LIBYAL_PYLIB="pyewf"
 
