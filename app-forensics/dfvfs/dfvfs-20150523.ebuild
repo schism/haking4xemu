@@ -1,9 +1,10 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: schism $
 
 EAPI=5
-
+DISTUTILS_IN_SOURCE_BUILD=1
+DISTUTILS_SINGLE_IMPL=1
 PYTHON_COMPAT=( python2_7 )
 
 inherit versionator distutils-r1
@@ -36,3 +37,5 @@ DEPEND="${PYTHON_DEPS}
 	app-forensics/libvmdk[${PYTHON_USEDEP}]
 	app-forensics/libvshadow[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
+
+PATCHES=( "${FILESDIR}"/${P}_exclude-tests.patch )
