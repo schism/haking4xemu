@@ -28,6 +28,12 @@ RDEPEND="${DEPEND}
 
 DOCS=( NEWS.txt README.txt )
 
+PATCHES=(
+	"${FILESDIR}"/${PN}-4.1.0-system-sqlite.patch
+	"${FILESDIR}"/${PN}-4.1.0-tools-shared-libs.patch
+	"${FILESDIR}"/${PN}-4.1.3-external_type.patch
+)
+
 src_configure() {
 	local myeconfargs=(
 		$(use_with aff afflib)
