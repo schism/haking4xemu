@@ -46,7 +46,10 @@ fi
 # post-inheritance eclass variables
 # @ECLASS-VARIABLE: LIBYAL_IUSE
 # @DESCRIPTION: Offers the standard basic IUSE for libyal-r1
-LIBYAL_IUSE="debug iconv nls python static static-libs threads unicode"
+LIBYAL_IUSE="debug iconv nls static static-libs threads unicode"
+if [ ! -z ${LIBYAL_PYLIB} ]; then
+	LIBYAL_IUSE="${LIBYAL_IUSE} python"
+fi
 # @ECLASS-VARIABLE: LIBYAL_DEPEND
 # @DESCRIPTION:
 # Offers the basic DEPEND for libyal-r1 (presumes IUSE='iconv nls python',
