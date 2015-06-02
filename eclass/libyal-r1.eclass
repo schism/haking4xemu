@@ -19,7 +19,8 @@
 # @DESCRIPTION: The name of the Python bindings this library may create (e.g. pyexe for libexe)
 # @DEFAULT_UNSET
 
-inherit eutils versionator autotools-utils
+# these tools don't handle split builds very gracefully
+AUTOTOOLS_IN_SOURCE_BUILD=1
 
 if [[ ${PV} == 9999* ]] ; then
 	AUTOTOOLS_AUTORECONF=1
@@ -34,14 +35,13 @@ if [ ! -z ${LIBYAL_PYLIB} ]; then
 	_LIBYAL_PYUSE="python? ( ${PYTHON_DEPS} )"
 fi
 
+inherit eutils versionator autotools-utils
+
 # don't set src_uri if this is a git build
 if [ -z ${EGIT_REPO_URI} ]; then
 	LIBYAL_DATE="$(get_version_component_range 1)"
 	SRC_URI="https://github.com/libyal/${PN}/releases/download/${LIBYAL_DATE}/${PN}-${LIBYAL_RELEASE:=alpha}-${LIBYAL_DATE}.tar.gz"
 fi
-
-# these tools don't handle split builds very gracefully
-AUTOTOOLS_IN_SOURCE_BUILD=1
 
 # post-inheritance eclass variables
 # @ECLASS-VARIABLE: LIBYAL_IUSE
