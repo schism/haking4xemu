@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit versionator autotools-utils distutils-r1
+inherit versionator distutils-r1
 
 MY_DATE="$(get_version_component_range 1)"
 
