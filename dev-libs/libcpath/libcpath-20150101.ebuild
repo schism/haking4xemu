@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Library for cross-platform C path functions"
-HOMEPAGE="https://github.com/libyal/libclocale"
+HOMEPAGE="https://github.com/libyal/libcpath"
 LIBYAL_RELEASE="alpha"
 
 inherit libyal-r1
