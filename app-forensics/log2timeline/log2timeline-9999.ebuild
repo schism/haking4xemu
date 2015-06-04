@@ -16,8 +16,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-S="${WORKDIR}/${PN}_${PV}"
-
 DEPEND="media-libs/exiftool
 	>=dev-perl/Archive-Zip-1.18
 	dev-perl/Carp-Assert
