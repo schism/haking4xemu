@@ -7,7 +7,7 @@ AUTOTOOLS_AUTORECONF=1
 AUTOTOOLS_IN_SOURCE_BUILD=1
 #WANT_ANT_TASKS="ant-core ant-ivy ant-junit"
 
-inherit autotools-utils java-pkg-opt-2 java-ant-2
+inherit java-pkg-opt-2 java-ant-2 autotools-utils
 
 DESCRIPTION="A collection of file system and media management forensic analysis tools"
 HOMEPAGE="http://www.sleuthkit.org/sleuthkit/"
