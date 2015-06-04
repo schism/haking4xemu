@@ -1,2 +1,0 @@
-# requires a yet-unreleased version of sleuthkit, use sleuthkit-9999
-=app-forensics/pytsk-20150406
