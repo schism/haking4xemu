@@ -17,5 +17,5 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-perl/HTML-Parser
-	virtual/perl-Module-Build
+	|| ( virtual/perl-Module-Build dev-perl/Module-Build )
 	dev-lang/perl"
