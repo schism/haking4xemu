@@ -17,4 +17,4 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 S=${WORKDIR}/${PN}
-DEPEND="dev-lang/perl virtual/perl-Module-Build"
+DEPEND="dev-lang/perl dev-perl/Module-Build"
