@@ -24,7 +24,7 @@ DEPEND="dev-db/sqlite:3
 	java? ( >=virtual/jdk-1.6 )
 	sys-libs/zlib"
 RDEPEND="${DEPEND}
-	dev-perl/DateManip"
+	dev-perl/Date-Manip"
 
 DOCS=( NEWS.txt README.txt )
 
